@@ -1,0 +1,72 @@
+﻿@model IEnumerable<HomeHelpCallsWebSite.Models.CallsViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>קריאות שטופלו</h2>
+
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DOC_NBR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RQSTD_SHIP_DATE)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.STRM_NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CALL_DSCR)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.APT_NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CALL_STAT_FULL)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DOC_NBR)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RQSTD_SHIP_DATE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.STRM_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CALL_DSCR)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.APT_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DSTN_NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CALL_STAT_FULL)
+                </td>
+
+                <td>
+
+                    @Html.ActionLink("פרטים", "Details", new { id = item.DOC_NBR }) |
+                    @Html.ActionLink("טיפול", "Details", new { id = item.DOC_NBR })
+
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

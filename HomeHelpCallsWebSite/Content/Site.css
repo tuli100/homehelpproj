@@ -1,12 +1,14 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    direction: rtl !important;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    direction: rtl !important;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -21,4 +23,113 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.overlay {
+    z-index: 500;
+    position: absolute;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.loading-spinner {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+}
+
+/* Styles for dataTables
+-----------------------------------------------------------*/
+.dataTables_processing {
+    display: none !important;
+    color: transparent !important;
+    background-color: transparent !important;
+}
+
+.dataTables_wrapper .dataTables_length {
+    float: left !important;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: right !important;
+    text-align: right !important;
+}
+/*
+	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
+	*/
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+
+    /* Force table to not be like tables anymore */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+        th {
+            display: none;
+        }
+
+    /*tr {
+        margin: 0 0 1rem 0;
+    }*/
+
+        tr:nth-child(odd) {
+            background:url() #eee;
+            border:groove;
+        }
+
+        tr:nth-child(even) {
+            background: #ccc;
+            border: groove;
+        }
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-right: 100%;
+    }
+
+        /*td:before {
+            /* Now like a table header */
+            /*position: absolute;*/
+            /* Top/left values mimic padding */
+            /*top: 0;
+            right: 6px;
+            width: 45%;
+            padding-left: 10px;
+            white-space: nowrap;
+        }*/
+
 }

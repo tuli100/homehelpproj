@@ -1,0 +1,96 @@
+﻿@model HomeHelpCallsWebSite.Models.CallsViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>קריאה מספר - @Html.DisplayFor(model => model.DOC_NBR) </h2>
+
+<p>
+    @Html.ActionLink("טיפול", "Edit", new { id = Model.DOC_NBR }) |
+    @Html.ActionLink("חזרה לרשימה", "Index")
+
+</p>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LINE_EVNT_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LINE_EVNT_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RQSTD_SHIP_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RQSTD_SHIP_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STRM_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STRM_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CALL_DSCR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CALL_DSCR)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.APT_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.APT_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CELL_PHONE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CELL_PHONE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EMAIL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EMAIL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CALL_STAT_FULL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CALL_STAT_FULL)
+        </dd>
+
+        @*<dt>
+            @Html.DisplayNameFor(model => model.HAS_IMAGES)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HAS_IMAGES)
+        </dd>*@
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("טיפול", "Edit", new { id = Model.DOC_NBR }) |
+    @Html.ActionLink("חזרה לרשימה", "Index")
+
+</p>
