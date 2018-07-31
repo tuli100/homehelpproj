@@ -1,0 +1,44 @@
+﻿@model IEnumerable<HomeHelpCallsWebSite.Models.LineViewModel>
+
+
+
+<h2>קריאה מספר - @Html.DisplayFor(model => Model.First().DOC_NBR) </h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PART_CODE_NAME)
+        </th> 
+        <th>
+            @Html.DisplayNameFor(model => model.QNTY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TXT_DSCR)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PART_CODE_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QNTY)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TXT_DSCR)
+            </td>
+            <td>
+                @Html.ActionLink("שינוי כמות", "Edit", new { id = item.DOC_NBR })|
+                @Html.ActionLink("מחיקה", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+    <p>
+        @Html.ActionLink("הוספת פריט", "Create", new { id = Model.First().DOC_NBR })
+    </p>
+
+</table>

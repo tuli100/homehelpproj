@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<HomeHelpCallsWebSite.Models.CallsViewModel>
 
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -55,9 +54,9 @@
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
                     @Html.ActionLink("פרטים", "Details", new { id = item.DOC_NBR })  |
-
-                    @Html.ActionLink("טיפול", "Details", new { id = item.DOC_NBR })
-                    @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                    @*@Html.ActionLink("טיפול", "Details", new { id = item.DOC_NBR })*@
+                    @*@Html.ActionLink("טיפול", "~/Views/LineParts/Details", new { DOC_NBR = item.DOC_NBR })*@
+                    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = item.DOC_NBR }, null)
                 </td>
             </tr>
         }

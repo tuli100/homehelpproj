@@ -7,7 +7,7 @@
 <h2>קריאה מספר - @Html.DisplayFor(model => model.DOC_NBR) </h2>
 
 <p>
-    @Html.ActionLink("טיפול", "Edit", new { id = Model.DOC_NBR }) |
+    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.DOC_NBR }, null)
     @Html.ActionLink("חזרה לרשימה", "Index")
 
 </p>
@@ -79,18 +79,13 @@
             @Html.DisplayFor(model => model.CALL_STAT_FULL)
         </dd>
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.HAS_IMAGES)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HAS_IMAGES)
-        </dd>*@
-
     </dl>
 </div>
 <p>
-    @Html.ActionLink("טיפול", "Edit", new { id = Model.DOC_NBR }) |
-    @Html.ActionLink("חזרה לרשימה", "Index")
+    @*@Html.ActionLink("טיפול", "Edit", new { id = Model.DOC_NBR }) |*@
+    @Html.ActionLink("חזרה לרשימה", "Index")|
+    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.DOC_NBR }, null)
 
 </p>
+
+

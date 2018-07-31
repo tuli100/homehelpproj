@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+using HomeHelpCallsWebSite.Infrastructure.Data.Models;
 
 namespace HomeHelpCallsWebSite.Models
 {
@@ -37,6 +37,7 @@ namespace HomeHelpCallsWebSite.Models
         [Display(Name = "סטטוס")]
         public string CALL_STAT_FULL { get; set; }
         public Nullable<decimal> HAS_IMAGES { get; set; }
+        public virtual ICollection<LineModel> Calllines { get; set; }
 
         public long Id
         {

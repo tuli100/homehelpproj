@@ -22,5 +22,6 @@ namespace HomeHelpCallsWebSite
         public string PRMY_STRM_CODE { get; set; }
         public string TMP_PART_NAME_Y_N { get; set; }
         public string PART_GRP_CODE { get; set; }
+        public string PART_CODE_NAME { get; set; }
     }
 }

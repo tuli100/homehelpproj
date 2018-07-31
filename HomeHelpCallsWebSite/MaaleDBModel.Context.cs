@@ -30,5 +30,6 @@ namespace HomeHelpCallsWebSite
         public virtual DbSet<VUMM_HH_HNDL_CALLS> VUMM_HH_HNDL_CALLS { get; set; }
         public virtual DbSet<VUMM_HH_OPEN_CALLS> VUMM_HH_OPEN_CALLS { get; set; }
         public virtual DbSet<VUMM_HH_PARTS> VUMM_HH_PARTS { get; set; }
+        public virtual DbSet<VUMM_HH_CALLS_LINES> VUMM_HH_CALLS_LINES { get; set; }
     }
 }
