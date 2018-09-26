@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using HomeHelpCallsWebSite.Infrastructure.Data.Models;
 
 namespace HomeHelpCallsWebSite.Models
@@ -9,9 +10,11 @@ namespace HomeHelpCallsWebSite.Models
     {
 
         [Display(Name = "מספר קריאה")]
-        public long DOC_NBR { get; set; }
+        [Column ("DOC_NBR") ]
+        public long doc_nbr { get; set; }
         [Display(Name = "מספר שורה")]
-        public int LINE_NBR { get; set; }
+        [Column("LINE_NBR")]
+        public int line_nbr { get; set; }
         [Display(Name = "תאריך פתיחת הקריאה")]
         [DataType(DataType.Date)]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -37,11 +40,11 @@ namespace HomeHelpCallsWebSite.Models
         [Display(Name = "סטטוס")]
         public string CALL_STAT_FULL { get; set; }
         public Nullable<decimal> HAS_IMAGES { get; set; }
-        public virtual ICollection<LineModel> Calllines { get; set; }
+        public virtual ICollection<LineModel> CallLines { get; set; }
 
         public long Id
         {
-            get { return this.DOC_NBR; }
+            get { return this.doc_nbr; }
         }
     }
     }

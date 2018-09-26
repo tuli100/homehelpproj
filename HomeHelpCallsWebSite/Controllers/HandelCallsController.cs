@@ -9,16 +9,17 @@ using System.Web;
 using System.Web.Mvc;
 using HomeHelpCallsWebSite.Models;
 using AutoMapper;
+using HomeHelpCallsWebSite.Infrastructure.Data;
 
 namespace HomeHelpCallsWebSite.Controllers
 {
     public class HandelCallsController : Controller
     {
-        private MaaleDBEntities _db;
+        private ApplicationDbContext _conntext;
         private IMapper _mapper;
 
         public HandelCallsController() {
-            _db = new MaaleDBEntities();
+            _conntext = new ApplicationDbContext();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_HNDL_CALLS, CallsViewModel>());
             _mapper = config.CreateMapper();
         }
@@ -26,7 +27,7 @@ namespace HomeHelpCallsWebSite.Controllers
         // GET: HandelCalls
         public async Task<ActionResult> Index()
         {
-            var dto = await _db.VUMM_HH_HNDL_CALLS.ToListAsync();
+            var dto = await _conntext.VUMM_HH_HNDL_CALLS.ToListAsync();
             var vm = _mapper.Map<List<VUMM_HH_HNDL_CALLS>, IEnumerable<CallsViewModel>>(dto);
             return View(vm);
         }
@@ -38,7 +39,7 @@ namespace HomeHelpCallsWebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VUMM_HH_HNDL_CALLS dto = await _db.VUMM_HH_HNDL_CALLS.FindAsync(id);
+            VUMM_HH_HNDL_CALLS dto = await _conntext.VUMM_HH_HNDL_CALLS.FindAsync(id);
             if (dto == null)
             {
                 return HttpNotFound();
@@ -131,7 +132,7 @@ namespace HomeHelpCallsWebSite.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                _conntext.Dispose();
             }
             base.Dispose(disposing);
         }

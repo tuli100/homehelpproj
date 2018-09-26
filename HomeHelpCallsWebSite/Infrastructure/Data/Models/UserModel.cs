@@ -7,15 +7,15 @@ namespace HomeHelpCallsWebSite.Infrastructure.Data.Models
 {
     public class UserModel //: IdentityUser<Guid>
     {
-        public string USER_NAME { get; set; }
-        public long USER_ID { get; set; }
-        public decimal IS_ADMIN { get; set; }
-        public string STRM_CODE { get; set; }
-        public string SMSUSER { get; set; }
-        public string STC_NBR { get; set; }
+        public string name { get; set; }
+        public long id { get; set; }
+        public bool is_admin { get; set; }
+        public StrmModel strm { get; set; }
+        public string smsUser { get; set; }
+        public string stc { get; set; }
         public long Id
         {
-            get { return this.USER_ID; }
+            get { return this.id; }
         }
     }
 }

@@ -34,9 +34,9 @@ LineParts.parts.selectPart = function (e) {
             setTimeout(function () {//The input doesn't exist yet, waiting for it to be created.
                 var input = modalBody.find('input[type=search]');
                 input.focus().keypress(function (e) {
-                    if (e.which == 13) { //Is the key Enter?
+                    if (e.which === 13) { //Is the key Enter?
                         var rows = table.$('tr', { "page": "current" }); //Get all rows
-                        if (rows.length == 1) { //Is there only one row?
+                        if (rows.length === 1) { //Is there only one row?
                             $(rows[0]).addClass('selected'); //Select the row
                             LineParts.parts.rowSelected(cell, table);
                         }

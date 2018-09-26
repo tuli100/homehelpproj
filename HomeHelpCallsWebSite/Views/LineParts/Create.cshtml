@@ -1,90 +1,170 @@
 ﻿@model HomeHelpCallsWebSite.Models.LineViewModel
 
 @{
-                ViewBag.Title = "Create";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<p>
+    <div>
+        @Html.ActionLink("חזרה לרשימת הפריטים", "Index", new { id = Model.doc_nbr })
+    </div>
+</p>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+<div class="form-horizontal">
 
-          <div class="form-group">
-            @Html.LabelFor(model => model.PART_CODE_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.PART_CODE, Model.Parts, new { id = "partsList1", @class = "selectPart form-control" })
-                @Html.ValidationMessageFor(model => model.PART_CODE, "", new { @class = "text-danger" })
-            </div>
+    @*<div class="autocomplete" style="width:300px;">
+          <input id="myInput" type="text" name="myPart" placeholder="פריט">
+        </div>*@
+
+    <p>
+        Enter part name @Html.TextBox("Part")
+        @*<input type="submit" id="GetParts" value="Submit" />*@
+    </p>
+    <span id="rData"></span>
+
+
+    @*<div class="ui-widget, ui-helper-clearfix">
+        <label for="tags">part: </label>
+        <input id="parts" type="text">
+    </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.part_code, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TXT_DSCR, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TXT_DSCR, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TXT_DSCR, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.QNTY, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.QNTY, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.QNTY, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.LINE_NBR, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.LINE_NBR, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.LINE_NBR, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.DOC_NBR, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.DOC_NBR, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DOC_NBR, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        @Html.HiddenFor(m => m.DOC_NBR)
-
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="הוסף" class="btn btn-default" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-11">
-                <button></button>
-                <input type="cancel" value="ביטול" class="btn btn-default" />
-            </div>
-        </div>
-
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.qnty, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div>
+        @Html.DisplayFor(model => model.unit_name)
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="הוסף" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
-    @Html.ActionLink("חזרה לרשימת הפריטים", "Index", new { id = Model.DOC_NBR })
+    @Html.HiddenFor(m => m.doc_nbr)
+    @Html.HiddenFor(m => m.parent_strm_code)
 </div>
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/LineParts/script-bootstrap-select.js"></script>
+
+    @*<script>
+
+        $(function () {
+            //$(document).ready(function () {
+           
+            $("#parts").autocomplete({
+                minLength: 3,
+                autoFocus: true,
+                source : ["rrr","ttt"]
+                @*source: function (request, response) {
+                   $.ajax({
+                       type: "POST",
+                       url: '@Url.Action("GetFilterdParts")',
+                       dataType: "json",
+                       data: {
+                           //strm: $("#doc_nbr").val,
+                           term: request.term
+                       },
+                       success: function (data) {
+                            response($.map(data, function (c) {
+                                return {
+                                    label: c.part_code_name,
+                                    value: c.part_code
+                                }
+                            }));
+                       }
+                   });
+                }
+            });
+        });
+
+    </script>*@
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        //var data = JSON.stringify({
+        //    'term': request.term,
+        //    'doc': $("#parent_strm_code")
+        //});
+
+
+        $("#Part").autocomplete({
+
+            source: function (request, response) {
+
+                $.ajax({
+
+                    url: "/LineParts/GetFilterdParts",
+
+                    type: "POST",
+
+                    dataType: "json",
+
+                    data: {
+                        term: request.term,
+                        doc: 6020970
+                    },
+                    success: function (data) {
+
+                        response($.map(data, function (item) {
+
+                            return { label: item.part_code_name, value: item.part_code };
+
+                        }))
+
+
+
+
+                    }
+
+                })
+
+            },
+
+            messages: {
+
+                noResults: "", results: ""
+
+            }
+
+        });
+
+    })
+
+</script>
 
 }

@@ -1,0 +1,33 @@
+﻿@model  IEnumerable<HomeHelpCallsWebSite.Models.PartViewModel>
+
+<h2> בחר פריט </h2>
+
+<table class="table" id=" partsTable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PART_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PART_LONG_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UNIT_NAME)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PART_CODE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PART_LONG_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UNIT_NAME)
+            </td>
+        </tr>
+    }
+
+</table>

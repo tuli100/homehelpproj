@@ -20,5 +20,6 @@ namespace HomeHelpCallsWebSite
         public string SMSUSER { get; set; }
         public string STC_NBR { get; set; }
         public Nullable<decimal> USER_ID { get; set; }
+        public string MOVE_TO_STRM { get; set; }
     }
 }

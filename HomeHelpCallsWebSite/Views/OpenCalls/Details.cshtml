@@ -4,11 +4,24 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>קריאה מספר - @Html.DisplayFor(model => model.DOC_NBR) </h2>
+<h2>קריאה מספר - @Html.DisplayFor(model => model.doc_nbr) </h2>
 
 <p>
-    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.DOC_NBR }, null)
+    @*@Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.doc_nbr }, null)|*@
+
     @Html.ActionLink("חזרה לרשימה", "Index")
+
+    @*<div class="form-group">
+        <div class="col-md-offset-2 col-md-11">
+            <input type="button" value="טיפול" class="btn btn-default" onclick="'../Line_parts/';" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-11">
+            <input type="button" value="ביטול" class="btn btn-default" onclick="history.back()" />
+        </div>
+    </div>*@
 
 </p>
 
@@ -83,8 +96,9 @@
 </div>
 <p>
     @*@Html.ActionLink("טיפול", "Edit", new { id = Model.DOC_NBR }) |*@
-    @Html.ActionLink("חזרה לרשימה", "Index")|
-    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.DOC_NBR }, null)
+    @*@Html.ActionLink("", "Index")|*@
+
+    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.doc_nbr }, null)
 
 </p>
 

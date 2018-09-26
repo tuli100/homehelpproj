@@ -11,15 +11,18 @@
 }
 else
 {
-    @Html.ValidationSummary()
+    @*@Html.ValidationSummary()
     <div class="form-group">
         <label class="control-label sr-only" for="UserName">
             סלולארי:
         </label>
         @Html.TextBoxFor(m => m.USER_NAME, new { @class = "form-control", placeholder = "טלפון:" })
-    </div>
+    </div>*@
 
-    @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "POST", OnBegin = "budget.approveCharge.enableLoading", OnComplete = "budget.approveCharge.disableLoading" }))
+
+    <input type="tel" value="טלפון סלולארי" class="text-right"/>
+
+    @*@using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "POST", OnBegin = "budget.approveCharge.enableLoading", OnComplete = "budget.approveCharge.disableLoading" }))
     {
         <div class="input-container">
             @Html.TextBoxFor(m => m.SmsPassword, new { @class = "password-box" })
@@ -34,12 +37,12 @@ else
             </button>
             לא קיבלת?&nbsp;<a href="#">שלח שוב</a>
         </div>
-    }
-    @using (Ajax.BeginForm("GetNewPassword", "Budget", new { }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "hidden" }))
+    }*@
+    @*@using (Ajax.BeginForm("GetNewPassword", "Budget", new { }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "hidden" }))
     {
         <button id="getPassword" type="submit" class="btn btn-default">
             אישור
         </button>
-    }
+    }*@
 
 }

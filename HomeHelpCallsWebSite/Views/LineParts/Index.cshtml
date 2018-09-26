@@ -1,44 +1,54 @@
 ﻿@model IEnumerable<HomeHelpCallsWebSite.Models.LineViewModel>
 
+<h2>קריאה מספר - @Html.DisplayFor(model => Model.First().doc_nbr) </h2>
 
-
-<h2>קריאה מספר - @Html.DisplayFor(model => Model.First().DOC_NBR) </h2>
-
-<table class="table">
+<table class="table" id="CallLinesTable">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.PART_CODE_NAME)
-        </th> 
-        <th>
-            @Html.DisplayNameFor(model => model.QNTY)
+            @Html.DisplayNameFor(model => model.part_code)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TXT_DSCR)
+            @Html.DisplayNameFor(model => model.qnty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.unit_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.txt_dscr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.parent_strm_code)
         </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PART_CODE_NAME)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QNTY)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TXT_DSCR)
-            </td>
-            <td>
-                @Html.ActionLink("שינוי כמות", "Edit", new { id = item.DOC_NBR })|
-                @Html.ActionLink("מחיקה", "Delete", new { id = item.ID })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.part_code_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.qnty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.unit_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.txt_dscr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.parent_strm_code)
+        </td>
+        <td>
+            @Html.ActionLink("שינוי כמות", "Edit", new { id = item.LINE_ID })|
+            @Html.ActionLink("מחיקה", "Delete", new { id = item.LINE_ID })
+        </td>
+    </tr>
     }
 
     <p>
-        @Html.ActionLink("הוספת פריט", "Create", new { id = Model.First().DOC_NBR })
+        @Html.ActionLink("הוספת פריט", "Create", new { id = Model.First().doc_nbr })
     </p>
 
 </table>

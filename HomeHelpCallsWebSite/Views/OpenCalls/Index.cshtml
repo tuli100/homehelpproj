@@ -9,12 +9,14 @@
 
 @*<p>
         @Html.ActionLink("Create New", "Create")
-    </p>*@
+</p>*@
+
+
 <div class="table-responsive">
-    <table class="table">
+    <table class="table" id="OpenCallsTable">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DOC_NBR)
+                @Html.DisplayNameFor(model => model.doc_nbr)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RQSTD_SHIP_DATE)
@@ -36,7 +38,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DOC_NBR)
+                    @Html.DisplayFor(modelItem => item.doc_nbr)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RQSTD_SHIP_DATE)
@@ -53,13 +55,13 @@
 
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                    @Html.ActionLink("פרטים", "Details", new { id = item.DOC_NBR })  |
-                    @*@Html.ActionLink("טיפול", "Details", new { id = item.DOC_NBR })*@
-                    @*@Html.ActionLink("טיפול", "~/Views/LineParts/Details", new { DOC_NBR = item.DOC_NBR })*@
-                    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = item.DOC_NBR }, null)
+                    @Html.ActionLink("פרטים", "Details", new { id = item.doc_nbr })  |
+                
+                    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = item.doc_nbr }, null)
                 </td>
             </tr>
         }
 
     </table>
 </div>
+

@@ -37,14 +37,16 @@ warning 6002: The table/view 'DBTRANS.MM_HH_USERS' does not have a primary key d
           <Property Name="SMSUSER" Type="varchar2" MaxLength="16" />
           <Property Name="STC_NBR" Type="varchar2" MaxLength="15" />
           <Property Name="USER_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="MOVE_TO_STRM" Type="varchar2" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_CALLS_LINES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VUMM_HH_CALLS_LINES">
+          
           <Key>
-            <PropertyRef Name="DOC_NBR" />
-            <PropertyRef Name="LINE_NBR" />
+            <PropertyRef Name="LINE_ID" />
           </Key>
+          <Property Name="LINE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
           <Property Name="DOC_NBR" Type="number" Precision="11" Scale="0" Nullable="false" />
           <Property Name="LINE_NBR" Type="number" Precision="6" Scale="0" Nullable="false" />
           <Property Name="PART_CODE" Type="varchar2" MaxLength="20" />
@@ -54,6 +56,7 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_CALLS_LINES' does not have a prima
           <Property Name="UNIT_CODE" Type="number" Precision="6" Scale="0" />
           <Property Name="UNIT_NAME" Type="varchar2" MaxLength="10" />
           <Property Name="TXT_DSCR" Type="varchar2" MaxLength="40" />
+          <Property Name="PARENT_STRM_CODE" Type="varchar2" MaxLength="6" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_HNDL_CALLS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -154,11 +157,13 @@ FROM "DBTRANS"."MM_HH_LGSTC_FRCST" "MM_HH_LGSTC_FRCST"</DefiningQuery>
 "MM_HH_USERS"."STRM_CODE" AS "STRM_CODE", 
 "MM_HH_USERS"."SMSUSER" AS "SMSUSER", 
 "MM_HH_USERS"."STC_NBR" AS "STC_NBR", 
-"MM_HH_USERS"."USER_ID" AS "USER_ID"
+"MM_HH_USERS"."USER_ID" AS "USER_ID", 
+"MM_HH_USERS"."MOVE_TO_STRM" AS "MOVE_TO_STRM"
 FROM "DBTRANS"."MM_HH_USERS" "MM_HH_USERS"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VUMM_HH_CALLS_LINES" EntityType="Self.VUMM_HH_CALLS_LINES" store:Type="Views" store:Schema="DBTRANS">
             <DefiningQuery>SELECT 
+"VUMM_HH_CALLS_LINES"."LINE_ID" AS "LINE_ID", 
 "VUMM_HH_CALLS_LINES"."DOC_NBR" AS "DOC_NBR", 
 "VUMM_HH_CALLS_LINES"."LINE_NBR" AS "LINE_NBR", 
 "VUMM_HH_CALLS_LINES"."PART_CODE" AS "PART_CODE", 
@@ -167,7 +172,8 @@ FROM "DBTRANS"."MM_HH_USERS" "MM_HH_USERS"</DefiningQuery>
 "VUMM_HH_CALLS_LINES"."QNTY" AS "QNTY", 
 "VUMM_HH_CALLS_LINES"."UNIT_CODE" AS "UNIT_CODE", 
 "VUMM_HH_CALLS_LINES"."UNIT_NAME" AS "UNIT_NAME", 
-"VUMM_HH_CALLS_LINES"."TXT_DSCR" AS "TXT_DSCR"
+"VUMM_HH_CALLS_LINES"."TXT_DSCR" AS "TXT_DSCR", 
+"VUMM_HH_CALLS_LINES"."PARENT_STRM_CODE" AS "PARENT_STRM_CODE"
 FROM "DBTRANS"."VUMM_HH_CALLS_LINES" "VUMM_HH_CALLS_LINES"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VUMM_HH_HNDL_CALLS" EntityType="Self.VUMM_HH_HNDL_CALLS" store:Type="Views" store:Schema="DBTRANS">
@@ -266,6 +272,7 @@ FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
           <Property Name="SMSUSER" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Name="STC_NBR" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="USER_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="MOVE_TO_STRM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="VUMM_HH_HNDL_CALLS">
           <Key>
@@ -349,8 +356,7 @@ FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
         </EntityContainer>
         <EntityType Name="VUMM_HH_CALLS_LINES">
           <Key>
-            <PropertyRef Name="DOC_NBR" />
-            <PropertyRef Name="LINE_NBR" />
+            <PropertyRef Name="LINE_ID" />
           </Key>
           <Property Name="DOC_NBR" Type="Int64" Nullable="false" />
           <Property Name="LINE_NBR" Type="Int32" Nullable="false" />
@@ -361,6 +367,8 @@ FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
           <Property Name="UNIT_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TXT_DSCR" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
+          <Property Name="LINE_ID" Type="Decimal" Nullable="false" />
+          <Property Name="PARENT_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -384,6 +392,7 @@ FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
           <EntitySetMapping Name="MM_HH_USERS">
             <EntityTypeMapping TypeName="MaaleDBModel.MM_HH_USERS">
               <MappingFragment StoreEntitySet="MM_HH_USERS">
+                <ScalarProperty Name="MOVE_TO_STRM" ColumnName="MOVE_TO_STRM" />
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
                 <ScalarProperty Name="IS_ADMIN" ColumnName="IS_ADMIN" />
@@ -471,6 +480,8 @@ FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
           <EntitySetMapping Name="VUMM_HH_CALLS_LINES">
             <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_CALLS_LINES">
               <MappingFragment StoreEntitySet="VUMM_HH_CALLS_LINES">
+                <ScalarProperty Name="PARENT_STRM_CODE" ColumnName="PARENT_STRM_CODE" />
+                <ScalarProperty Name="LINE_ID" ColumnName="LINE_ID" />
                 <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
                 <ScalarProperty Name="TXT_DSCR" ColumnName="TXT_DSCR" />
                 <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />

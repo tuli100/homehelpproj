@@ -23,5 +23,7 @@ namespace HomeHelpCallsWebSite
         public string UNIT_NAME { get; set; }
         public string TXT_DSCR { get; set; }
         public string PART_CODE_NAME { get; set; }
+        public decimal LINE_ID { get; set; }
+        public string PARENT_STRM_CODE { get; set; }
     }
 }
