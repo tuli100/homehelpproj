@@ -39,15 +39,18 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.doc_nbr)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RQSTD_SHIP_DATE)
+                    @Html.DisplayFor(modelItem => item.CALL_DSCR)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.STRM_NAME)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CALL_DSCR)
+                    @Html.DisplayFor(modelItem => item.RQSTD_SHIP_DATE)
+                    @*@if (!item.RQSTD_SHIP_TIME.Equals("00:00"))
+                    {*@
+                    @Html.DisplayFor(modelItem => item.RQSTD_SHIP_TIME)
+                    @*}*@
+
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.APT_NAME)

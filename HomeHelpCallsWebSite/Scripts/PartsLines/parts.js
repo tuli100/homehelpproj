@@ -1,17 +1,16 @@
 ﻿$(document).ready(initialize);
 
-var form;
-
-function initialize() {
+function initialize(){
     $('#parts-modal').modal('hide');
-};
+    $('#searchPart').click('selectPart');
+}
 
-LineParts.parts.selectPart = function (e) {
+PartsLines.selectPart = function (e) {
     var cell = $(e.target).closest('td');
     Site.enableLoading();
     $.ajax({
         type: 'POST',
-        url: LineParts.parts.getPartsUrl,
+        url: PartsLines.parts.getPartsUrl,
         //data: { transactionType: transactionType },
         success: function (data, textStatus, jqXHR) {
             var modalBody = $('#parts-modal .modal-body');
@@ -28,7 +27,7 @@ LineParts.parts.selectPart = function (e) {
             });
             data.on('click', 'tr', function () {
                 $(this).addClass('selected');
-                LineParts.parts.rowSelected(cell, table);
+                PartsLines.parts.rowSelected(cell, table);
             });
             $('#parts-modal').modal('show');
             setTimeout(function () {//The input doesn't exist yet, waiting for it to be created.
@@ -38,7 +37,7 @@ LineParts.parts.selectPart = function (e) {
                         var rows = table.$('tr', { "page": "current" }); //Get all rows
                         if (rows.length === 1) { //Is there only one row?
                             $(rows[0]).addClass('selected'); //Select the row
-                            LineParts.parts.rowSelected(cell, table);
+                            PartsLines.parts.rowSelected(cell, table);
                         }
                     };
                 });
@@ -51,7 +50,7 @@ LineParts.parts.selectPart = function (e) {
     });
 };
 
-LineParts.parts.rowSelected = function (cell, table) {
+PartsLines.rowSelected = function (cell, table) {
     cell.find('input[type=hidden]').val(table.row('.selected').data()[0]);
     cell.find('span.part-name-display').text(table.row('.selected').data()[2]);
     cell.find('input[name=ReceiverDisplayName]').val(table.row('.selected').data()[2]);

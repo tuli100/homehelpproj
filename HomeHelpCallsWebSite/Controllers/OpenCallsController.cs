@@ -32,6 +32,17 @@ namespace HomeHelpCallsWebSite.Controllers
         {
             var dto = await _conntext.VUMM_HH_OPEN_CALLS.ToListAsync();
             var vm = _mapper.Map<List<VUMM_HH_OPEN_CALLS>, IEnumerable<CallsViewModel>>(dto);
+            foreach (var item  in vm)
+            {
+                if (item.RQSTD_SHIP_DATE.Value.ToShortTimeString() == "00:00")
+                {
+                    item.RQSTD_SHIP_TIME = "";
+                }
+                else
+                {
+                    item.RQSTD_SHIP_TIME = item.RQSTD_SHIP_DATE.Value.ToShortTimeString();
+                }
+            }
             return View(vm);
         }
 

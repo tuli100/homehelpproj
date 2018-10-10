@@ -17,7 +17,9 @@ namespace HomeHelpCallsWebSite
                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/namespaces.js",
+                        "~/Scripts/site.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -30,10 +32,20 @@ namespace HomeHelpCallsWebSite
                       "~/Content/bootstrap.css",
                       "~/Content/DataTables/css/dataTables.bootstrap.css",
                       "~/Content/site.css",
-                       "~/Content/bootstrap-rtl.css"
+                       "~/Content/bootstrap-rtl.css",
+                       "~/Content/themes/base/autocomplete.css"
                       ));
 
-           
+            #region LineParts
+            bundles.Add(new ScriptBundle("~/bundles/PartsLines/parts").Include(
+                      "~/Scripts/PartsLines/parts.js"));
+
+          
+            bundles.Add(new StyleBundle("~/Content/PartsLines/parts").Include(
+                      "~/Content/PartsLines/parts.css"));
+            #endregion LineParts
+
+
         }
     }
 }

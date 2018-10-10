@@ -21,8 +21,12 @@ namespace HomeHelpCallsWebSite.Models
         public Nullable<System.DateTime> LINE_EVNT_DATE { get; set; }
         [Display(Name = "תאריך יעד")]
         [DataType(DataType.DateTime)]
-       // [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> RQSTD_SHIP_DATE { get; set; }
+        [Display(Name = "זמן יעד")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:MM}")]
+        public string RQSTD_SHIP_TIME { get; set; }
         public string STRM_CODE { get; set; }
         [Display(Name = "מחסן")]
         public string STRM_NAME { get; set; }

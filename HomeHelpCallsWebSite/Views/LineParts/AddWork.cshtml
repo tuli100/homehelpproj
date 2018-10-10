@@ -1,0 +1,78 @@
+﻿@model HomeHelpCallsWebSite.Models.LineViewModel
+
+@{
+    ViewBag.Title = "AddWork";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <div>
+        @Html.ActionLink("חזרה לרשימת הפריטים", "Index", new { id = Model.doc_nbr })
+    </div>
+</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @*<h4 class="col-md-offset-2">שעות עבודה</h4>*@
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+         <div class="form-group">
+            <div class="ui-widget">
+                <label class="control-label col-md-2">עובד</label>
+                @*@Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })*@
+                <div class="col-md-10">
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control py-2 border-left-0 border", id = "part_code" , type="search"} })
+                        <div class="input-group-btn " >
+                            <button type="submit" class="btn btn-default border-right-0 border">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.qnty, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div>
+            @Html.DisplayFor(Model => Model.unit_name)
+            @Html.HiddenFor(Model => Model.doc_nbr)
+            @Html.HiddenFor(Model => Model.parent_strm_code)
+            @Html.HiddenFor(Model => Model.part_code)
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="הוסף" class="btn btn-default"  />
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("חזרה לרשית הפריטים", "Index")
+</div>*@

@@ -138,6 +138,22 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_PARTS' does not have a primary key
           <Property Name="PART_GRP_CODE" Type="varchar2" MaxLength="4" />
           <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBTRANS.VUMM_HH_WORK_PARTS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VUMM_HH_WORK_PARTS">
+          <Key>
+            <PropertyRef Name="PART_CODE" />
+          </Key>
+          <Property Name="PART_CODE" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="PART_LONG_NAME" Type="varchar2" MaxLength="40" />
+          <Property Name="PART_SHRT_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="UNIT_CODE" Type="number" Precision="6" Scale="0" />
+          <Property Name="UNIT_NAME" Type="varchar2" MaxLength="10" />
+          <Property Name="PRMY_STRM_CODE" Type="varchar2" MaxLength="6" />
+          <Property Name="TMP_PART_NAME_Y_N" Type="varchar2" MaxLength="1" />
+          <Property Name="PART_GRP_CODE" Type="varchar2" MaxLength="4" />
+          <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
+        </EntityType>
         <EntityContainer Name="MaaleDBModelStoreContainer">
           <EntitySet Name="MM_HH_LGSTC_FRCST" EntityType="Self.MM_HH_LGSTC_FRCST" store:Type="Tables" store:Schema="DBTRANS">
             <DefiningQuery>SELECT 
@@ -244,6 +260,19 @@ FROM "DBTRANS"."VUMM_HH_OPEN_CALLS" "VUMM_HH_OPEN_CALLS"</DefiningQuery>
 "VUMM_HH_PARTS"."PART_GRP_CODE" AS "PART_GRP_CODE", 
 "VUMM_HH_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME"
 FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VUMM_HH_WORK_PARTS" EntityType="Self.VUMM_HH_WORK_PARTS" store:Type="Views" store:Schema="DBTRANS">
+            <DefiningQuery>SELECT 
+"VUMM_HH_WORK_PARTS"."PART_CODE" AS "PART_CODE", 
+"VUMM_HH_WORK_PARTS"."PART_LONG_NAME" AS "PART_LONG_NAME", 
+"VUMM_HH_WORK_PARTS"."PART_SHRT_NAME" AS "PART_SHRT_NAME", 
+"VUMM_HH_WORK_PARTS"."UNIT_CODE" AS "UNIT_CODE", 
+"VUMM_HH_WORK_PARTS"."UNIT_NAME" AS "UNIT_NAME", 
+"VUMM_HH_WORK_PARTS"."PRMY_STRM_CODE" AS "PRMY_STRM_CODE", 
+"VUMM_HH_WORK_PARTS"."TMP_PART_NAME_Y_N" AS "TMP_PART_NAME_Y_N", 
+"VUMM_HH_WORK_PARTS"."PART_GRP_CODE" AS "PART_GRP_CODE", 
+"VUMM_HH_WORK_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME"
+FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -353,6 +382,7 @@ FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
           <EntitySet Name="VUMM_HH_OPEN_CALLS" EntityType="Self.VUMM_HH_OPEN_CALLS" />
           <EntitySet Name="VUMM_HH_PARTS" EntityType="Self.VUMM_HH_PARTS" />
           <EntitySet Name="VUMM_HH_CALLS_LINES" EntityType="MaaleDBModel.VUMM_HH_CALLS_LINES" />
+          <EntitySet Name="VUMM_HH_WORK_PARTS" EntityType="MaaleDBModel.VUMM_HH_WORK_PARTS" />
         </EntityContainer>
         <EntityType Name="VUMM_HH_CALLS_LINES">
           <Key>
@@ -369,6 +399,20 @@ FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
           <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
           <Property Name="LINE_ID" Type="Decimal" Nullable="false" />
           <Property Name="PARENT_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VUMM_HH_WORK_PARTS">
+          <Key>
+            <PropertyRef Name="PART_CODE" />
+          </Key>
+          <Property Name="PART_CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PART_LONG_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PART_SHRT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UNIT_CODE" Type="Int32" />
+          <Property Name="PRMY_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="TMP_PART_NAME_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PART_GRP_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
+          <Property Name="UNIT_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -491,6 +535,21 @@ FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
                 <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
                 <ScalarProperty Name="LINE_NBR" ColumnName="LINE_NBR" />
                 <ScalarProperty Name="DOC_NBR" ColumnName="DOC_NBR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VUMM_HH_WORK_PARTS">
+            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_WORK_PARTS">
+              <MappingFragment StoreEntitySet="VUMM_HH_WORK_PARTS">
+                <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />
+                <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
+                <ScalarProperty Name="PART_GRP_CODE" ColumnName="PART_GRP_CODE" />
+                <ScalarProperty Name="TMP_PART_NAME_Y_N" ColumnName="TMP_PART_NAME_Y_N" />
+                <ScalarProperty Name="PRMY_STRM_CODE" ColumnName="PRMY_STRM_CODE" />
+                <ScalarProperty Name="UNIT_CODE" ColumnName="UNIT_CODE" />
+                <ScalarProperty Name="PART_SHRT_NAME" ColumnName="PART_SHRT_NAME" />
+                <ScalarProperty Name="PART_LONG_NAME" ColumnName="PART_LONG_NAME" />
+                <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

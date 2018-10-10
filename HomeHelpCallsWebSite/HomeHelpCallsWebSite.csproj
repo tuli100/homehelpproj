@@ -547,7 +547,7 @@
     <Compile Include="MM_HH_USERS.cs">
       <DependentUpon>MaaleDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CallsViewModel.cs" />
+    <Compile Include="ViewModels\CallsViewModel.cs" />
     <Compile Include="ViewModels\LineViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PartCreateViewModel.cs" />
@@ -564,6 +564,9 @@
       <DependentUpon>MaaleDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="VUMM_HH_PARTS.cs">
+      <DependentUpon>MaaleDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VUMM_HH_WORK_PARTS.cs">
       <DependentUpon>MaaleDBModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -694,6 +697,8 @@
     <Content Include="Content\images\sort_both.png" />
     <Content Include="Content\images\sort_desc.png" />
     <Content Include="Content\images\sort_desc_disabled.png" />
+    <Content Include="Content\PartsLines\parts.css" />
+    <Content Include="Content\search.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -904,10 +909,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\LineParts\parts.js" />
-    <Content Include="Scripts\LineParts\bootstrapSelectConfig.js" />
-    <Content Include="Scripts\LineParts\SelectPartsCofig.js" />
+    <Content Include="Scripts\PartsLines\parts.js" />
+    <Content Include="Scripts\PartsLines\bootstrapSelectConfig.js" />
+    <Content Include="Scripts\PartsLines\SelectPartsCofig.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\namespaces.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -938,11 +944,13 @@
     <Content Include="Views\Account\login.cshtml" />
     <Content Include="Views\Shared\LoginView.cshtml" />
     <Content Include="Views\Parts\SelectPartView.cshtml" />
+    <Content Include="Views\LineParts\PartsSelect.cshtml" />
+    <Content Include="Views\LineParts\testView.cshtml" />
+    <Content Include="Views\LineParts\AddWork.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Infrastructure\Authentication\" />
-    <Folder Include="Views\EditCallLines\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />

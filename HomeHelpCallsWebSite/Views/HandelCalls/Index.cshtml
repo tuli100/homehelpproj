@@ -11,24 +11,19 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DOC_NBR)
+                @Html.DisplayNameFor(model => model.doc_nbr)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RQSTD_SHIP_DATE)
             </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.STRM_NAME)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CALL_DSCR)
             </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.APT_NAME)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CALL_STAT_FULL)
             </th>
 
             <th></th>
@@ -38,32 +33,29 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DOC_NBR)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RQSTD_SHIP_DATE)
+                    @Html.DisplayFor(modelItem => item.doc_nbr)
+                    @Html.DisplayFor(modelItem => item.CALL_DSCR)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.STRM_NAME)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CALL_DSCR)
+                    @Html.DisplayFor(modelItem => item.RQSTD_SHIP_DATE)
+                    @*@if (!item.RQSTD_SHIP_TIME.Equals("00:00"))
+                    {*@
+                        @Html.DisplayFor(modelItem => item.RQSTD_SHIP_TIME)
+                    @*}*@
+
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.APT_NAME)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DSTN_NAME)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CALL_STAT_FULL)
-                </td>
 
                 <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                    @Html.ActionLink("פרטים", "Details", new { id = item.doc_nbr })  |
 
-                    @Html.ActionLink("פרטים", "Details", new { id = item.DOC_NBR }) |
-                    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = item.DOC_NBR }, null)
-
+                    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = item.doc_nbr }, null)
                 </td>
             </tr>
         }

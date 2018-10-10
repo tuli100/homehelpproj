@@ -7,11 +7,11 @@
 
 @*<h2>Edit</h2>*@
 
-@*<p>
+<p>
     <div>
-        @Html.ActionLink("חזרה לרשימת השורות", "Index", new { id = Model.doc_nbr })
+        @Html.ActionLink("חזרה לרשימת הפריטים", "Index", new { id = Model.doc_nbr })
     </div>
-</p>*@
+</p>
 
 
 @using (Html.BeginForm())
@@ -27,7 +27,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @value = Model.part_code_name, @class = "form-control" } })
+            @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @value = Model.part_code_name, @class = "form-control", @disabled = "disabled" } })
         </div>
     </div>
 
@@ -51,10 +51,11 @@
 
     @Html.HiddenFor(model => model.line_nbr)
     @Html.HiddenFor(model => model.doc_nbr)
+    @Html.HiddenFor(model => model.part_code)
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="שמור" class="btn btn-default" />
         </div>
     </div>
 

@@ -1847,11 +1847,11 @@ dd {
     .dl-horizontal dt {
         float: right;
         width: 160px;
-        overflow: hidden;
+        overflow: auto;
         clear: right;
         text-align: right;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        /*text-overflow: ellipsis;*/
+        white-space: pre-wrap;
     }
 
     .dl-horizontal dd {

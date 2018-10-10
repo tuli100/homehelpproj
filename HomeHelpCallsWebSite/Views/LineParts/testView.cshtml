@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "testView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>testView</h2>
+
+<div class="ui-widget">
+    <label for="part">פריט: </label>
+    <input id="part">
+</div>
+
+<div id="doc_nbr">6020970</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+  
+    <script>
+
+        $('#part').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/LineParts/GetFilterdParts/json',
+                    dataType: "json",
+                    data: {
+                        input: request.term,
+                        state: $('#doc_nbr').val(),
+                        //maxRows: 15
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.label,
+                                value: item.value
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $('#part').value(ui.item.state);
+            }
+        });
+
+               
+        //var myObject = { doc_nbr: $("#part").value, input: $("#part").value };
+        //$("#part").autocomplete({
+        //    source:
+        //$.getJSON('/LineParts/GetFilterdParts/json', myObject, function (dataVal) {
+        //    //Use Your result
+        //});
+
+        //$(function () {
+        //    function SelectPart(message) {
+        //        $("<div>").text(message).prependTo("#input_part");
+        //        $("#input_part").scrollTop(0);
+        //    }
+
+        //    function (request, response) {
+        //            $.ajax({
+        //                url: "search.php",
+        //                dataType: "jsonp",
+        //                data: {
+        //                    term: request.term
+        //                },
+        //                success: function (data) {
+        //                    response(data);
+        //                }
+        //            });
+        //        },
+        //        minLength: 2,
+        //        select: function (event, ui) {
+        //            SelectPart(ui.item.value);
+        //        }
+        //    });
+        //});
+
+
+    </script>

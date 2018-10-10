@@ -1,0 +1,36 @@
+﻿@model  IEnumerable<HomeHelpCallsWebSite.Models.PartViewModel>
+
+@{
+    ViewBag.Title = "PartsSelect";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> בחר פריט </h2>
+
+
+<table class="table" id=" partsTable">
+    @*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PART_CODE_NAME) <br/>
+        
+            @Html.DisplayNameFor(model => model.UNIT_NAME)
+        </th>
+    </tr>*@
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td onclick="">
+                @Html.DisplayFor(modelItem => item.PART_CODE_NAME) <br />
+
+                @Html.DisplayFor(modelItem => item.UNIT_NAME)               
+            </td>
+            <td>
+                @*@Html.ActionLink("בחר", "Create", "LineParts", new { id = Model.First().doc_nbr, part = item.PART_CODE_NAME }, null)*@
+                @Html.ActionLink("בחר", null, null, new { id = Model.First().doc_nbr, part = item.PART_CODE_NAME }, null)
+            </td>
+        </tr>
+
+    }
+
+</table>
+

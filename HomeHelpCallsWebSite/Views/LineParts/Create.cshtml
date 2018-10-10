@@ -16,155 +16,279 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-
-    @*<div class="autocomplete" style="width:300px;">
-          <input id="myInput" type="text" name="myPart" placeholder="פריט">
-        </div>*@
-
-    <p>
-        Enter part name @Html.TextBox("Part")
-        @*<input type="submit" id="GetParts" value="Submit" />*@
-    </p>
-    <span id="rData"></span>
+    @*<h4 class="col-md-offset-2">פריטים</h4>*@
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-    @*<div class="ui-widget, ui-helper-clearfix">
-        <label for="tags">part: </label>
-        <input id="parts" type="text">
-    </div>*@
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.part_code, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
+
+        @*<div class="autocomplete" style="width:300px;">
+              <input id="myInput" type="text" name="myPart" placeholder="פריט">
+            </div>*@
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.part_code, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.part_code, new { htmlAttributes = new { @class = "form-control", id = "input_part" } })
+                    @Html.ValidationMessageFor(model => model.part_code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+
+        <div class="form-group">
+            <div class="ui-widget">
+                @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })
+                <div class="col-md-10" direction="rtl">
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control", id = "part_code" } })
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.qnty, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div>
+            @Html.DisplayFor(Model => Model.unit_name)
+        </div>
+
+
+        <div>
+            @Html.HiddenFor(Model => Model.doc_nbr)
+            @Html.HiddenFor(Model => Model.parent_strm_code)
+            @Html.HiddenFor(Model => Model.part_code)
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="הוסף" class="btn btn-default" />
+            </div>
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.qnty, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div>
-        @Html.DisplayFor(model => model.unit_name)
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="הוסף" class="btn btn-default" />
-        </div>
-    </div>
-</div>
-}
-
-<div>
-    @Html.HiddenFor(m => m.doc_nbr)
-    @Html.HiddenFor(m => m.parent_strm_code)
-</div>
+    }
 
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 
-    @*<script>
 
-        $(function () {
-            //$(document).ready(function () {
-           
-            $("#parts").autocomplete({
-                minLength: 3,
-                autoFocus: true,
-                source : ["rrr","ttt"]
-                @*source: function (request, response) {
-                   $.ajax({
-                       type: "POST",
-                       url: '@Url.Action("GetFilterdParts")',
-                       dataType: "json",
-                       data: {
-                           //strm: $("#doc_nbr").val,
-                           term: request.term
-                       },
-                       success: function (data) {
-                            response($.map(data, function (c) {
-                                return {
-                                    label: c.part_code_name,
-                                    value: c.part_code
-                                }
-                            }));
-                       }
-                   });
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+        <link href="~/Content/search.css" rel="stylesheet" />
+        <script>
+
+            $('#part_code').autocomplete({
+                source: ["One", "Two", "Three", "Four", "Five"],
+                //    function (request, response) {
+                //    $.ajax({
+                //        url: '/LineParts/GetFilterdParts',
+                //        dataType: "json",
+                //        data: {
+                //            input: request.term,
+                //            doc_nbr: $('#doc_nbr').val()
+                //            //maxRows: 15
+                //        },
+                //        success: function (data) {
+                //            response($.map(data, function (item) {
+                //                return {
+                //                    label: item.label,
+                //                    value: item.value
+                //                }
+                //            }))
+                //        }
+                //    })
+                //},
+                select: function (event, ui) {
+                    $('#part_code').value(ui.item.state);
                 }
             });
-        });
 
-    </script>*@
-
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-        //var data = JSON.stringify({
-        //    'term': request.term,
-        //    'doc': $("#parent_strm_code")
-        //});
+        </script>
 
 
-        $("#Part").autocomplete({
+        @*<script type="text/javascript">
+                    PartsLines.selectPart = '@Url.Action("Create")';
+            </script>*@
 
-            source: function (request, response) {
+        @*<script>
+
+                function selectRow(cell, table) {
+                    cell.find('input[type=hidden]').val(table.row('.selected').data()[0]);
+                    cell.find('span.user-name-display').text(table.row('.selected').data()[2]);
+                    cell.find('input[name=ReceiverDisplayName]').val(table.row('.selected').data()[2]);
+                    $('#users-modal').modal('hide');
+                    cell.closest('tr').find('td:nth-child(3) input').focus();
+                };
+
+
+
+                //Site.enableLoading();
+                var partstr = $("#input_part").val();
+                var doc = $("#doc_nbr").val();
+
 
                 $.ajax({
-
-                    url: "/LineParts/GetFilterdParts",
-
-                    type: "POST",
-
-                    dataType: "json",
-
-                    data: {
-                        term: request.term,
-                        doc: 6020970
+                    type: 'POST',
+                    url: "/LINE_PARTS",
+                    data: { doc_nbr: doc, part },
+                    success: function (data, textStatus, jqXHR) {
+                        var modalBody = $('#parts-modal .modal-body');
+                        modalBody.empty();
+                        data = $(data);
+                        modalBody.append(data);
+                        var table = data.DataTable({
+                            columnDefs: [{ targets: [0, 1], visible: false, searchable: false }],
+                            autoWidth: false,
+                            order: [[1, 'desc'], [2, 'asc']],
+                            language: {
+                                url: "//cdn.datatables.net/plug-ins/1.10.11/i18n/Hebrew.json"
+                            }
+                        });
+                        data.on('click', 'tr', function () {
+                            $(this).addClass('selected');
+                            selectRow(cell, table);
+                        });
+                        $('#parts-modal').modal('show');
+                        setTimeout(function () {//The input doesn't exist yet, waiting for it to be created.
+                            var input = modalBody.find('input[type=search]');
+                            input.focus().keypress(function (e) {
+                                if (e.which == 13) { //Is the key Enter?
+                                    var rows = table.$('tr', { "page": "current" }); //Get all rows
+                                    if (rows.length == 1) { //Is there only one row?
+                                        $(rows[0]).addClass('selected'); //Select the row
+                                        selectRow(cell, table);
+                                    }
+                                };
+                            });
+                        }, 500);
                     },
-                    success: function (data) {
-
-                        response($.map(data, function (item) {
-
-                            return { label: item.part_code_name, value: item.part_code };
-
-                        }))
-
-
-
-
+                    error: Site.unauthorizedAjaxHandler,
+                    complete: function () {
+                        Site.disableLoading();
                     }
+                });
+            </script>*@
 
-                })
 
-            },
 
-            messages: {
+        @*<script>
+                //function arrayToTable(tableData) {
+                //    var table = $('<table></table>');
+                //    $(tableData).each(function (i, rowData) {
+                //        var row = $('<tr></tr>');
+                //        $(rowData).each(function (j, cellData) {
+                //            row.append($('<td>' + cellData + '</td>'));
+                //        });
+                //        table.append(row);
+                //    });
+                //    return table;
+                //}
+                //$(document).ready(function () {
+                //    $("#searchPart").click(function () {
+                //        //$(this).hide();
+                //        var partstr = $("#input_part").val();
+                //       // alert("You entered " + partstr);
 
-                noResults: "", results: ""
+                        $.ajax({
+                            type: "GET",
+                            url: "/API/PARTS"
+                            data: "id :" + partstr,
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (resultData) {
+                                ////here is your json.
+                                //// process it
+                                //var table = $('<table></table>');
+                                //$(resultData).each(function (i, rowData) {
+                                //    var row = $('<tr></tr>');
+                                //    $(rowData).each(function (j, cellData) {
+                                //        row.append($('<td>' + cellData + '</td>'));
+                                //    });
+                                //    table.append(row);
+                                //});
+                                $("#dialog").append(resultData);
+                                //(arrayToTable(data));
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            }
+                        })
+                    });
+                });
 
-            }
+            </script>*@
 
-        });
 
-    })
 
-</script>
 
-}
+
+        @*<script type="text/javascript">
+                $(function () {
+                    $("#dialog").dialog({
+                        autoOpen: false,
+                        modal: true,
+                        title: "View Parts"
+                    });
+                    $("#searchPart").click(function () {
+                        var partStr = $("#input_part").val;
+                        //$(this).closest("tr").find("td").eq(0).html();
+                        $.ajax({
+                            type: "POST",
+                            url: "/Home/PartsView",
+                            data: '{doc_nbr" + "' + doc_nbr + '"part: "' + partStr + '" }',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "html",
+                            success: function (response) {
+                                $('#dialog').html(response);
+                                $('#dialog').dialog('open');
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    });
+                });
+            </script>*@
+    }

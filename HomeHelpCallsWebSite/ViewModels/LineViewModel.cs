@@ -33,28 +33,34 @@ namespace HomeHelpCallsWebSite.Models
         public string parent_strm_code { get; set; }
 
         [Column("PART_CODE")]
+        [Display(Name = "קוד פריט")]
+        //[Required(ErrorMessage = "חובה לבחור פריט")]
         public string part_code { get; set; }
 
         [Column("PART_CODE_NAME")]
-        [Display(Name = "שם פריט")]
+        [Display(Name =  "פריט")]
         public string part_code_name { get; set; }
 
         //[Display (Name = "פריט")]
         //[Required(ErrorMessage = "בחר פריט")]
         //public PartViewModel PartV { get; set; }
+
         [Column("UNIT_NAME")]
         [Display(Name = "יחידות")]
-        public String unit_name {get; set;}
+        public string unit_name {get; set;}
 
-        public IEnumerable<SelectListItem> Parts { get; set; }
+        //public IEnumerable<SelectListItem> Parts { get; set; }
+        //public IEnumerable<string> part_codes_list { get; set; }
+        //public IEnumerable<string> part_names_list { get; set; }
 
-        public PartViewModel[] PartsJ { get; set; }
+        //public PartViewModel[] PartsJ { get; set; }
 
         //public string PartsJSON
         //{
         //    get { return JsonConvert.SerializeObject(Parts); }
         //    set { PartsJ = JsonConvert.DeserializeObject<PartViewModel[]>(value); }
         //}
+
         public long Id
         {
             get { return this.LINE_ID; }
