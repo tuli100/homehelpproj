@@ -33,7 +33,8 @@ namespace HomeHelpCallsWebSite.Models
 
         //[Display(Name = "פריט מזדמן")]
         //public string TMP_PART_NAME_Y_N { get; set; }
-
+        [Column("DFLT_PART")]
+        public int dflt_part { get; set; }
         //[Display(Name = "קבוצת פריט")]
         //public string PART_GRP_CODE { get; set; }
 

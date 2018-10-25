@@ -10,10 +10,9 @@ namespace HomeHelpCallsWebSite
         {
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/bootstrap.js",
-                        "~/Scripts/bootstrap-rtl.js",
-                        "~/Scripts/jquery-ui-1.10.2.js",
-                        "~/Scripts/jquery-ui-1.12.1.js"
+                        //"~/Scripts/bootstrap.min.js",
+                        "~/Scripts/bootstrap-rtl.min.js",
+                        "~/Scripts/jquery-ui-{version}.min.js"
                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -29,11 +28,10 @@ namespace HomeHelpCallsWebSite
          
                      
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/DataTables/css/dataTables.bootstrap.css",
+                      //"~/Content/bootstrap.min.css",
+                      "~/Content/DataTables/css/dataTables.bootstrap.min.css",
                       "~/Content/site.css",
-                       "~/Content/bootstrap-rtl.css",
-                       "~/Content/themes/base/autocomplete.css"
+                       "~/Content/bootstrap-rtl.min.css"                       
                       ));
 
             #region LineParts

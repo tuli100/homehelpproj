@@ -38,5 +38,6 @@ namespace HomeHelpCallsWebSite
         public string BILL_TO_CUST_CODE { get; set; }
         public Nullable<System.DateTime> OPEN_DATE { get; set; }
         public Nullable<decimal> HAS_IMAGES { get; set; }
+        public string CALL_RMRK { get; set; }
     }
 }

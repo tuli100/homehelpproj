@@ -7,21 +7,11 @@
 <h2>קריאה מספר - @Html.DisplayFor(model => model.doc_nbr) </h2>
 
 <p>
-    @*@Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.doc_nbr }, null)|*@
-
-    @Html.ActionLink("חזרה לרשימה", "Index")
-
-    @*<div class="form-group">
-        <div class="col-md-offset-2 col-md-11">
-            <input type="button" value="טיפול" class="btn btn-default" onclick="'../Line_parts/';" />
-        </div>
+    <div class="btn-group" role="group">
+        <a class="btn btn-success" data-toggle="modal" data-target=".closemodal" title="סיום טיפול וסגירה"><span class="glyphicon glyphicon-check"></span> סגירה </a>
+        <a class="btn btn-primary" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
+        <a class="btn btn-info" href="@Url.Action("ChangeStatus", "OpenCalls",  new { id = Model.doc_nbr })" title="שינוי סטטוס"><span class=" glyphicon glyphicon-edit"></span> שינוי סטטוס </a>
     </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-11">
-            <input type="button" value="ביטול" class="btn btn-default" onclick="history.back()" />
-        </div>
-    </div>*@
 
 </p>
 
@@ -98,8 +88,7 @@
     @*@Html.ActionLink("טיפול", "Edit", new { id = Model.DOC_NBR }) |*@
     @*@Html.ActionLink("", "Index")|*@
 
-    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.doc_nbr }, null)
-
+  
 </p>
 
 

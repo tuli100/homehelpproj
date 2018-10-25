@@ -27,6 +27,8 @@ namespace HomeHelpCallsWebSite.Infrastructure.Data
         public virtual DbSet<VUMM_HH_PARTS> VUMM_HH_PARTS { get; set; }
         public virtual DbSet<VUMM_HH_CALLS_LINES> VUMM_HH_CALLS_LINES { get; set; }
         public virtual DbSet<VUMM_HH_WORK_PARTS> VUMM_HH_WORK_PARTS{ get; set; }
+        public virtual DbSet<VUMM_HH_STRMS_USERS> VUMM_HH_STRMS_USERS { get; set; }
+        public virtual DbSet<VUMM_HH_STATUS_LIST> VUMM_HH_STATUS_LIST { get; set; }
 
         public DbProviderFactory DbProviderFactory { get { return _dbProviderFactory.Value; } }
 
@@ -34,6 +36,10 @@ namespace HomeHelpCallsWebSite.Infrastructure.Data
             : base("OracleDbContext")
         {
             _dbProviderFactory = new Lazy<DbProviderFactory>(() => this.Database.Connection.GetPropertyValue<DbProviderFactory>("DbProviderFactory", ReflectionExtesions.NON_PUBLIC));
+        }
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -48,6 +54,9 @@ namespace HomeHelpCallsWebSite.Infrastructure.Data
             modelBuilder.Entity<VUMM_HH_WORK_PARTS>().HasKey(c => c.PART_CODE);
             modelBuilder.Entity<VUMM_HH_CALLS_LINES>().HasKey(c => c.LINE_ID);
             modelBuilder.Entity<MM_HH_USERS>().HasKey(c => c.USER_NAME);
+            modelBuilder.Entity<VUMM_HH_STRMS_USERS>().HasKey(c => c.STRM_CODE);
+            modelBuilder.Entity<VUMM_HH_STATUS_LIST>().HasKey(c => c.STEP_CODE);
+
             
             typeof(DbContext).Assembly.GetTypes().Where(t => typeof(IMapping).IsAssignableFrom(t)).ForEach(t =>
             {

@@ -2,7 +2,7 @@
 
 namespace HomeHelpCallsWebSite.Infrastructure
 {
-    public class FormsAuthenticationService
+    public class FormsAuthenticationService: IFormsAuthentication
     {
         public void SignIn(string userName, bool createPersistentCookie)
         {

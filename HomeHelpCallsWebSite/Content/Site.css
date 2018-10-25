@@ -19,11 +19,50 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-/*input,
+input,
 select,
 textarea {
     max-width: 280px;
-}*/
+    border-radius: 4px 4px;
+}
+
+.input-group {
+    max-width: 280px;
+    border-radius : 4px 4px;
+}
+/****************** 23/10/18 *************/
+.rounded {
+    border-radius: 0.25rem !important;
+}
+
+.rounded-top {
+    border-top-left-radius: 0.25rem !important;
+    border-top-right-radius: 0.25rem !important;
+}
+
+.rounded-right {
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
+}
+
+.rounded-bottom {
+    border-bottom-right-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+.rounded-left {
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.rounded-0 {
+    border-radius: 0 !important;
+}
+/****************** 23/10/18 *************/
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error {
@@ -104,13 +143,14 @@ textarea {
         margin: 0 0 1rem 0;
     }*/
 
-        tr:nth-child(odd) {
-            background:url() #eee;
-            border:groove;
-        }
+    tr:nth-child(odd) {
+        background: #eee;
+        /*url() #ccc;*/
+        border: groove;
+    }
 
         tr:nth-child(even) {
-            background: #ccc;
+            background: #eee;
             border: groove;
         }
     td {
@@ -119,7 +159,7 @@ textarea {
         border-bottom: 1px solid #eee;
         position: relative;
         padding-right: 100%;
-        word-break:break-all;
+        //word-break:break-all;
        
     }
 

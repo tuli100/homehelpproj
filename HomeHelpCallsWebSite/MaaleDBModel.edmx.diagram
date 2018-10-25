@@ -12,6 +12,8 @@
         <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_PARTS" Width="2.375" PointX="9.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_CALLS_LINES" Width="2.875" PointX="5.625" PointY="3.125" />
         <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_WORK_PARTS" Width="2.375" PointX="8.875" PointY="3.125" />
+        <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_STRMS_USERS" Width="2.75" PointX="6.375" PointY="6.75" />
+        <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_STATUS_LIST" Width="1.5" PointX="0.75" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

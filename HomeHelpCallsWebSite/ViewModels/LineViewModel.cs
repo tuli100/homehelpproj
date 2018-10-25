@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
-using HomeHelpCallsWebSite.Infrastructure.Data.Models;
 using Newtonsoft.Json;
+using HomeHelpCallsWebSite.ViewModels;
 
 namespace HomeHelpCallsWebSite.Models
 {
@@ -22,6 +20,7 @@ namespace HomeHelpCallsWebSite.Models
 
         [Column("TXT_DSCR")]
         [Display(Name = "הערה")]
+        [MaxLength(40, ErrorMessage = "ההערה אינה יכולה להיות ארוכה יותר מ-40 תווים.")]
         public string txt_dscr { get; set; }
 
         [Column("QNTY")]
@@ -34,32 +33,30 @@ namespace HomeHelpCallsWebSite.Models
 
         [Column("PART_CODE")]
         [Display(Name = "קוד פריט")]
-        //[Required(ErrorMessage = "חובה לבחור פריט")]
         public string part_code { get; set; }
 
         [Column("PART_CODE_NAME")]
         [Display(Name =  "פריט")]
         public string part_code_name { get; set; }
 
-        //[Display (Name = "פריט")]
-        //[Required(ErrorMessage = "בחר פריט")]
-        //public PartViewModel PartV { get; set; }
+        [Column("PART_NAME")]
+        [Display (Name = "פריט")]
+        public string part_name { get; set; }
 
         [Column("UNIT_NAME")]
         [Display(Name = "יחידות")]
         public string unit_name {get; set;}
 
-        //public IEnumerable<SelectListItem> Parts { get; set; }
-        //public IEnumerable<string> part_codes_list { get; set; }
-        //public IEnumerable<string> part_names_list { get; set; }
+        public SelectList WParts { get; set; }
 
-        //public PartViewModel[] PartsJ { get; set; }
+        public CallsViewModel call { get; set; }
 
-        //public string PartsJSON
-        //{
-        //    get { return JsonConvert.SerializeObject(Parts); }
-        //    set { PartsJ = JsonConvert.DeserializeObject<PartViewModel[]>(value); }
-        //}
+        [Display(Name = "הערה")]
+        [MaxLength(60, ErrorMessage = "ההערה אינה יכולה להיות ארוכה יותר מ-60 תווים.")]
+        public string stat_rmrk { get; set; }
+
+        //public SelectList statusList { get; set { createStatusList(status)} }
+        //public int status { get; set; }
 
         public long Id
         {

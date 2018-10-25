@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>קריאות שטופלו</h2>
+<h2>קריאות בטיפול</h2>
 
 <div class="table-responsive">
     <table class="table">
@@ -25,7 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.APT_NAME)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.CALL_STAT_FULL)
+            </th>
             <th></th>
         </tr>
 
@@ -33,6 +35,7 @@
         {
             <tr>
                 <td>
+                    <a class="btn btn-outline-light" title="פרטים נוספים" href="@Url.Action("Details", "HandelCalls",  new { id = item.doc_nbr })"><span class="glyphicon glyphicon-info-sign"></span></a>
                     @Html.DisplayFor(modelItem => item.doc_nbr)
                     @Html.DisplayFor(modelItem => item.CALL_DSCR)
                 </td>
@@ -41,21 +44,20 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RQSTD_SHIP_DATE)
-                    @*@if (!item.RQSTD_SHIP_TIME.Equals("00:00"))
-                    {*@
-                        @Html.DisplayFor(modelItem => item.RQSTD_SHIP_TIME)
-                    @*}*@
 
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.APT_NAME)
                 </td>
-
+                 <td>
+                    @Html.DisplayFor(modelItem => item.CALL_STAT_FULL)
+                </td>
                 <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                    @Html.ActionLink("פרטים", "Details", new { id = item.doc_nbr })  |
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-success" href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-wrench"></span> טיפול </a>
+                        <a class="btn btn-primary" href="@Url.Action("Edit", "HandelCalls",  new { id = item.doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
 
-                    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = item.doc_nbr }, null)
+                    </div>
                 </td>
             </tr>
         }

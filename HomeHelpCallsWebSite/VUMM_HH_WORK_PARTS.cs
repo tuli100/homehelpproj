@@ -23,5 +23,7 @@ namespace HomeHelpCallsWebSite
         public string PART_GRP_CODE { get; set; }
         public string PART_CODE_NAME { get; set; }
         public string UNIT_NAME { get; set; }
+        public string RSRV_STRM_CODE { get; set; }
+        public Nullable<int> DFLT_PART { get; set; }
     }
 }

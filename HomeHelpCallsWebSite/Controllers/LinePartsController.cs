@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using HomeHelpCallsWebSite;
 using AutoMapper;
 using HomeHelpCallsWebSite.Models;
-using HomeHelpCallsWebSite.Infrastructure.Data.Models;
 using HomeHelpCallsWebSite.Infrastructure.Data;
-using Newtonsoft.Json;
 using System.Linq.Dynamic.Core;
+using System;
 
 namespace HomeHelpCallsWebSite.Controllers
 {
+    [Authorize]
     public class LinePartsController : Controller
     {
         private ApplicationDbContext _conntext;
         private IMapper _linesMapper;
         private IMapper _partsMapper;
         private IMapper _workPartsMapper;
-        private CallModel _CallModel;
+        private IMapper _callMapper;
         private string _parent_strm_code;
 
 
@@ -32,16 +29,19 @@ namespace HomeHelpCallsWebSite.Controllers
             _conntext = new ApplicationDbContext();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_CALLS_LINES, LineViewModel>());
             _linesMapper = config.CreateMapper();
-            var config2 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_PARTS, PartViewModel>());
+            var config2 = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<VUMM_HH_PARTS, PartViewModel>(MemberList.Source);
+            });
             _partsMapper = config2.CreateMapper();
             var config3 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_WORK_PARTS, PartViewModel>());
             _workPartsMapper = config3.CreateMapper();
         }
 
-        // GET: LineParts
-        public async Task<ActionResult> Index(long id)
+         // GET: LineParts
+        public async Task<ActionResult> Index(long id, bool isOpen = true )
         {
-            var res = _conntext.VUMM_HH_CALLS_LINES.ToList().Where<VUMM_HH_CALLS_LINES>(w => w.DOC_NBR == id);
+            var res = _conntext.VUMM_HH_CALLS_LINES.Where<VUMM_HH_CALLS_LINES>(w => w.DOC_NBR == id);
             var vm = _linesMapper.Map<IEnumerable<LineViewModel>>(res);
             return View(vm);
         }
@@ -62,14 +62,6 @@ namespace HomeHelpCallsWebSite.Controllers
             return View(vm);
         }
 
-        ////[NonAction]
-        //public IEnumerable<SelectListItem> GetPartsSelectList(string parent_strm_code)  
-        //{
-        //    var res = _conntext.VUMM_HH_PARTS.ToList().Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == parent_strm_code);
-        //    IEnumerable<PartViewModel> partsl = _partsMapper.Map<IEnumerable<VUMM_HH_PARTS>, List<PartViewModel>>(res);
-        //    var partssl = partsl.Select(x => new SelectListItem { Value = x.PART_CODE, Text = x.PART_CODE_NAME });
-        //    return new SelectList(partssl, "Value", "Text");
-        //}
 
         #region LineParts
 
@@ -80,28 +72,32 @@ namespace HomeHelpCallsWebSite.Controllers
             return View(parts);
         }
 
-        public ActionResult workPartsSelect(long id, string grp, string inputcode)
+        public SelectList FindWorkPart( string strm) //, string inputcode)
         {
-            var parts = FindWorkPart(grp, inputcode);
-            parts.First().doc_nbr = id;
-            return View(parts);
-        }
-
-        public IEnumerable<PartViewModel> FindWorkPart( string grp, string inputcode)
-        {
-            grp = string.Concat(grp, '0');
-            if (string.IsNullOrEmpty(inputcode))
+           
+            PartViewModel dflt_part;
+            SelectList sl;
+            IEnumerable<PartViewModel> partsl = null;
+            var res = _conntext.VUMM_HH_WORK_PARTS.Where(w => w.RSRV_STRM_CODE.Equals(strm));
+            partsl = _workPartsMapper.Map<IEnumerable<VUMM_HH_WORK_PARTS>, IEnumerable<PartViewModel>>(res);
+            if (partsl.Count() == 1)
             {
-                inputcode = grp;
+                dflt_part = partsl.First();
             }
-            var res = _conntext.VUMM_HH_WORK_PARTS.ToList().Where<VUMM_HH_WORK_PARTS>(w => w.PART_CODE_NAME.Contains(inputcode) && w.PART_GRP_CODE.Equals(grp));
-            if( res.Count() == 0 )
+            else
             {
-                res = _conntext.VUMM_HH_WORK_PARTS.ToList().Where<VUMM_HH_WORK_PARTS>(w => w.PART_CODE_NAME.Contains(inputcode) && w.PART_GRP_CODE.Equals(grp));
+                try
+                {
+                    dflt_part = partsl.Where(w => w.dflt_part == 1).First();
+                }
+                catch
+                {
+                    sl = new SelectList(partsl, "part_code", "part_long_name");
+                    return sl;
+                }
             }
-            IEnumerable<PartViewModel> partsl = _workPartsMapper.Map<IEnumerable<VUMM_HH_WORK_PARTS>, IEnumerable<PartViewModel>>(res);
-            
-            return partsl;
+            sl = new SelectList(partsl, "part_code", "part_long_name", dflt_part.PART_CODE);
+            return sl;
         }
 
      
@@ -111,28 +107,18 @@ namespace HomeHelpCallsWebSite.Controllers
             {
                 inputcode = strm;
             }
-            var res = _conntext.VUMM_HH_PARTS.ToList().Where<VUMM_HH_PARTS>(w => w.PART_CODE_NAME.Contains(inputcode) && w.PRMY_STRM_CODE.Equals(strm));
-            if (res.Count() == 0)
-            {
-                res = _conntext.VUMM_HH_PARTS.ToList().Where<VUMM_HH_PARTS>(w => w.PART_CODE_NAME.Contains(inputcode) && w.PRMY_STRM_CODE.Equals(strm));
-            }
+
+            var res = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PART_CODE_NAME.Contains(inputcode) && w.PRMY_STRM_CODE.Equals(strm));
             IEnumerable<PartViewModel> partsl = _partsMapper.Map<IEnumerable<VUMM_HH_PARTS>, IEnumerable<PartViewModel>>(res);
 
             return partsl;
         }
 
-        //public Task<T> FindPartAsync<T>(string strm, string inputcode)
-        //{
-
-        //    return Task.Run(() => this.FindPart<T>(strm, inputcode));
-        //}
-
-
         [HttpPost]
         public JsonResult FindPartJson(long doc_nbr, string input)
         {
             var strm = GetParentStrmCode(doc_nbr);
-            var part_list = _conntext.VUMM_HH_PARTS.ToList().Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm);
+            var part_list = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm);
             var part = part_list.Where(p => p.PART_CODE_NAME.Contains(input));   //TODO CHECK CASE SENSETIVE  // StringComparison.CurrentCultureIgnoreCase));
             return Json(part);
         }
@@ -140,105 +126,23 @@ namespace HomeHelpCallsWebSite.Controllers
         public JsonResult GetFilterdParts(long doc_nbr, string input="צינור")
         {
             var strm = GetParentStrmCode(doc_nbr);
-            var res = _conntext.VUMM_HH_PARTS.ToList().Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm);
+            var res = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm);
             IEnumerable<PartViewModel> parts = _partsMapper.Map<IEnumerable<VUMM_HH_PARTS>, IEnumerable<PartViewModel>>(res);
             parts = parts.Where(x => x.PART_CODE_NAME.Contains(input));
             return Json(parts, JsonRequestBehavior.AllowGet);
         }
 
-        ////[NonAction]
-        //public PartViewModel[] GetPartsByStrm(string strm)
-        //{
-        //    var res = _conntext.VUMM_HH_PARTS.ToList().Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm);
-        //    PartViewModel[] partsl = _partsMapper.Map<IEnumerable<VUMM_HH_PARTS>, IEnumerable<PartViewModel>>(res).ToArray<PartViewModel>();
-        //    return partsl;
-        //}
-
         #endregion LineParts
-        //public ActionResult GetParts(string strm, string inputcode)
-        //{
-        //    //string strm = GetParentStrmCode(doc_nbr);
-        //    //string strm = "70" ;
-        //    //string inputcode = "70";
-        //     IEnumerable < VUMM_HH_PARTS > res;
-        //    //var res = _conntext.VUMM_HH_PARTS.ToList().Where<VUMM_HH_PARTS>(w => w.PART_CODE.Equals(inputcode) && w.PRMY_STRM_CODE.Equals(strm));
-        //    if (!string.IsNullOrEmpty(inputcode))
-        //    {
-        //         res = _conntext.VUMM_HH_PARTS.ToList().Where<VUMM_HH_PARTS>(w => w.PART_CODE_NAME.Contains(inputcode) && w.PRMY_STRM_CODE.Equals(strm));
-        //    }
-        //    else
-        //    {
-        //        inputcode = strm;
-        //        res = _conntext.VUMM_HH_PARTS.ToList().Where<VUMM_HH_PARTS>(w => w.PART_CODE_NAME.Contains(inputcode) && w.PRMY_STRM_CODE.Equals(strm));
-        //    }
-        //        //PartViewModel parts = _partsMapper.Map<PartViewModel>(res);
-        //    IEnumerable<PartViewModel> parts = _partsMapper.Map<IEnumerable<VUMM_HH_PARTS>, IEnumerable<PartViewModel>>(res);
-        //    return PartialView("SelectPartView",parts);
-        //}
-
-
-
-        public string GetParentStrmCode( long doc_nbr)
+              private string GetParentStrmCode( long doc_nbr)
         {
             var call = _conntext.VUMM_HH_OPEN_CALLS.Find(doc_nbr);
             return call.PARENT_STRM_CODE;
         }
 
-        //// GET: parts
-        //public IEnumerable<SelectListItem> GetPartsCodesSelectList(string parent_strm_code)  
-        //{
-        //    var res = _conntext.VUMM_HH_PARTS.ToList();
-        //    IEnumerable<PartModel> partsl = _partsMapper.Map<IEnumerable<VUMM_HH_PARTS>, List<PartModel>>(res).Where(m => m.strm_code == parent_strm_code);
-        //    var partssl = partsl.Select(x => new SelectListItem { Value = x.part_code, Text = x.part_code });
-        //    return new SelectList(partssl, "Value", "Text");
-
-        //}
-
-        //[HttpPost]
-        //public ActionResult PartsView(string strm, string partStr)
-        //{
-        //    //var strm = GetParentStrmCode(doc_nbr);
-        //    var p = GetPartsByPartCode(strm, partStr);
-        //    if (p == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    if (p.Count<PartViewModel>() == 1)
-        //    {
-        //        return PartialView(p);
-        //    }
-        //    else
-        //    {
-        //        return PartialView(p);
-        //    }
-        //}
-
-        //// GET: LineParts/Create
-        //public ActionResult Create(long id, PartViewModel part = null)
-        //{
-        //    var call = _conntext.VUMM_HH_OPEN_CALLS.Find(id);
-        //    this._parent_strm_code = call.PARENT_STRM_CODE;
-        //    //if(!string.IsNullOrEmpty(part))
-        //    //{
-        //    //    var pcn = getPartNameById(part);
-        //    //}
-        //    LineViewModel vm = new LineViewModel
-        //    {
-        //        //PartsJ = GetPartsByStrm(this._parent_strm_code),
-        //        //Parts = GetPartsSelectList(this._parent_strm_code),
-        //        doc_nbr = id,
-        //        part_code = part.PART_CODE,
-        //        part_code_name = part.PART_CODE_NAME
-        //    };
-        //    return View(vm);
-        //}
-
-
         // GET: LineParts/Create
         public ActionResult Create(long id, string part = "")
         {
             var call = _conntext.VUMM_HH_OPEN_CALLS.Find(id);
-            this._parent_strm_code = call.PARENT_STRM_CODE;
             LineViewModel vm = new LineViewModel
             {
                 doc_nbr = id,
@@ -299,12 +203,24 @@ namespace HomeHelpCallsWebSite.Controllers
         public ActionResult AddWork(long id, string part = "")
         {
             var call = _conntext.VUMM_HH_OPEN_CALLS.Find(id);
-            this._parent_strm_code = call.PARENT_STRM_CODE;
+            SelectList partsList = FindWorkPart(call.STRM_CODE);
+            //var part_code = "";
+            //try
+            //{
+            //    part_code = partsList.SelectedValues.ToString();
+            //}
+            //catch
+            //{
+            //   //no problem
+            //}
             LineViewModel vm = new LineViewModel
             {
                 doc_nbr = id,
                 part_code_name = part,
-                qnty =1
+                qnty = 1,
+                WParts = partsList,
+                //part_code = part_code
+
             };
             return View(vm);
         }
@@ -314,47 +230,36 @@ namespace HomeHelpCallsWebSite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddWork([Bind(Include = "doc_nbr, part_code_name, qnty, txt_dscr, line_nbr")] LineViewModel iVm)
+        public async Task<ActionResult> AddWork([Bind(Include = "doc_nbr, part_code, qnty, txt_dscr, line_nbr")] LineViewModel iVm)
         {
             if (ModelState.IsValid)
             {
                 var strm = GetParentStrmCode(iVm.doc_nbr);
+                if(strm is null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
                 var input_part = iVm.part_code;
-                var partsList = FindWorkPart(strm, iVm.part_code_name);
                 if (string.IsNullOrEmpty(iVm.part_code_name))
                 {
                     ModelState.AddModelError("part_code_name", "חובה להזין קלט בשדה חיפוש");
                 }
-                if (partsList == null)
+              
+                if (iVm.qnty == 0)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                if (partsList.Count<PartViewModel>() == 1)
-                {
-                    if (iVm.qnty == 0)
-                    {
-                        ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
-                        return View(iVm);
-                    }
-                    iVm.part_code = partsList.First().PART_CODE;
-                    await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
-                    return RedirectToAction("Index", new { id = iVm.doc_nbr });
-                }
-                if (partsList.Count() > 1)
-                {
-                    //return RedirectToAction("PartsSelect", new { id = iVm.doc_nbr, strm = strm, inputcode = input_part });
-                    partsList.First().doc_nbr = iVm.doc_nbr;
-                    return PartialView("PartsSelect", partsList);
-                }
-                else
-                {
-                    ModelState.AddModelError("part_code_name", "לא נמצא פריט מתאים");
+                    ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
                     return View(iVm);
                 }
+                await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+                return RedirectToAction("Index", new { id = iVm.doc_nbr });
+                
             }
             else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                var call = _conntext.VUMM_HH_OPEN_CALLS.Find(iVm.doc_nbr);
+                iVm.WParts = FindWorkPart(call.STRM_CODE);
+                return View(iVm);
             }
         }
 
@@ -386,19 +291,13 @@ namespace HomeHelpCallsWebSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                //VUMM_HH_CALLS_LINES dto = await _conntext.VUMM_HH_CALLS_LINES.SingleOrDefaultAsync(m => m.PART_CODE_NAME == iVm.part_code_name);
-                //dto.QNTY = iVm.QNTY;
-                //dto.TXT_DSCR = iVm.rmrk;
-
                 if (iVm.qnty == 0)
                 {
                     ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
                     return View(iVm);
                 }
 
-                await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_update_lft", iVm.doc_nbr, iVm.line_nbr, iVm.qnty, iVm.txt_dscr);
-                // _conntext.Entry(dto).State = EntityState.Modified;
-                //await _conntext.SaveChangesAsync();
+                await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_update_qnty_lft", iVm.doc_nbr, iVm.line_nbr, iVm.qnty, iVm.txt_dscr);
                 return RedirectToAction("Index", new { id = iVm.doc_nbr });
             }
             else

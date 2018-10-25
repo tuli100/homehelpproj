@@ -32,5 +32,7 @@ namespace HomeHelpCallsWebSite
         public virtual DbSet<VUMM_HH_PARTS> VUMM_HH_PARTS { get; set; }
         public virtual DbSet<VUMM_HH_CALLS_LINES> VUMM_HH_CALLS_LINES { get; set; }
         public virtual DbSet<VUMM_HH_WORK_PARTS> VUMM_HH_WORK_PARTS { get; set; }
+        public virtual DbSet<VUMM_HH_STRMS_USERS> VUMM_HH_STRMS_USERS { get; set; }
+        public virtual DbSet<VUMM_HH_STATUS_LIST> VUMM_HH_STATUS_LIST { get; set; }
     }
 }

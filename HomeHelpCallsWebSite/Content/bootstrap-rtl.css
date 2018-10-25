@@ -1851,7 +1851,7 @@ dd {
         clear: right;
         text-align: right;
         /*text-overflow: ellipsis;*/
-        white-space: pre-wrap;
+        /*white-space: pre-wrap;*/
     }
 
     .dl-horizontal dd {
@@ -3116,7 +3116,8 @@ table th[class*="col-"] {
             .table-responsive > .table > thead > tr > td,
             .table-responsive > .table > tbody > tr > td,
             .table-responsive > .table > tfoot > tr > td {
-                white-space: nowrap;
+                white-space: normal;
+                /*white-space: nowrap;  hamutal*/
             }
 
         .table-responsive > .table-bordered {

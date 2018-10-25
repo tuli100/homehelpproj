@@ -25,12 +25,13 @@
                 @*@Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })*@
                 <div class="col-md-10">
                     <div class="input-group">
-                        @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control py-2 border-left-0 border", id = "part_code" , type="search"} })
-                        <div class="input-group-btn " >
+                        @*@Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control py-2 border-left-0 border", id = "part_code", type = "search" } })*@
+                        @Html.DropDownListFor(model => model.part_code, Model.WParts, htmlAttributes: new { @class = "btn btn-default dropdown-toggle" })
+                        @*<div class="input-group-btn ">
                             <button type="submit" class="btn btn-default border-right-0 border">
                                 <i class="glyphicon glyphicon-search"></i>
                             </button>
-                        </div>
+                        </div>*@
                     </div>
                     @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
                 </div>
@@ -49,9 +50,24 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.qnty, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.qnty,"שעות עבודה", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.DropDownListFor(model => model.qnty, new SelectList(
+                   new List<Object>{
+                        new { value = 0.5 , text = "0.5 חצי שעה"  },
+                        new { value = 1.0 , text = "1 שעה" },
+                        new { value = 1.5 , text = "1:30 שעה וחצי"},
+                        new { value = 2.0 , text = "2 שעתיים"  },
+                        new { value = 2.5 , text = "2:30 שעתיים וחצי" },
+                        new { value = 3.0 , text = "3 שעות"},
+                        new { value = 3.5 , text = "3.5 שעות"  },
+                        new { value = 4.0 , text = "4 שעות" },
+                       
+                     },
+                   "value",
+                   "text",
+                    2), htmlAttributes: new { @class = "btn btn-default dropdown-toggle" })
                 @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
             </div>
         </div>

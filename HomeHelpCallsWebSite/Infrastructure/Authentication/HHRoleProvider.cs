@@ -18,7 +18,7 @@ namespace HomeHelpCallsWebSite.Infrastructure.Authentication
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
-            usernames.ForEach(u => GetUsersEntityManager().AddUserRoles(u, roleNames));
+            throw new NotImplementedException();
         }
 
         public override void CreateRole(string roleName)

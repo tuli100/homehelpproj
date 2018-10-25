@@ -21,5 +21,7 @@ namespace HomeHelpCallsWebSite
         public string STC_NBR { get; set; }
         public Nullable<decimal> USER_ID { get; set; }
         public string MOVE_TO_STRM { get; set; }
+        public string PASSWORDH { get; set; }
+        public string EMAIL_USER { get; set; }
     }
 }

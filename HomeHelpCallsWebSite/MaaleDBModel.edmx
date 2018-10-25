@@ -38,6 +38,8 @@ warning 6002: The table/view 'DBTRANS.MM_HH_USERS' does not have a primary key d
           <Property Name="STC_NBR" Type="varchar2" MaxLength="15" />
           <Property Name="USER_ID" Type="number" Precision="38" Scale="0" />
           <Property Name="MOVE_TO_STRM" Type="varchar2" MaxLength="100" />
+          <Property Name="PASSWORDH" Type="varchar2" MaxLength="100" />
+          <Property Name="EMAIL_USER" Type="varchar2" MaxLength="60" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_CALLS_LINES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -74,6 +76,7 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_HNDL_CALLS' does not have a primar
           <Property Name="STRM_CODE" Type="varchar2" MaxLength="6" />
           <Property Name="STRM_NAME" Type="varchar2" MaxLength="20" />
           <Property Name="CALL_DSCR" Type="varchar2" MaxLength="81" />
+          <Property Name="CALL_RMRK" Type="varchar2" MaxLength="40" />
           <Property Name="APT_CODE" Type="varchar2" MaxLength="10" />
           <Property Name="APT_NAME" Type="varchar2" MaxLength="4000" />
           <Property Name="APT_SHRT_NAME" Type="varchar2" MaxLength="49" />
@@ -106,6 +109,7 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_OPEN_CALLS' does not have a primar
           <Property Name="STRM_CODE" Type="varchar2" MaxLength="6" />
           <Property Name="STRM_NAME" Type="varchar2" MaxLength="20" />
           <Property Name="CALL_DSCR" Type="varchar2" MaxLength="81" />
+          <Property Name="CALL_RMRK" Type="varchar2" MaxLength="40" />
           <Property Name="APT_CODE" Type="varchar2" MaxLength="10" />
           <Property Name="APT_NAME" Type="varchar2" MaxLength="4000" />
           <Property Name="APT_SHRT_NAME" Type="varchar2" MaxLength="49" />
@@ -139,6 +143,26 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_PARTS' does not have a primary key
           <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'DBTRANS.VUMM_HH_STATUS_LIST' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VUMM_HH_STATUS_LIST">
+          <Key>
+            <PropertyRef Name="STEP_CODE" />
+          </Key>
+          <Property Name="STEP_CODE" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="STEP_DSCR" Type="varchar2" MaxLength="40" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBTRANS.VUMM_HH_STRMS_USERS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VUMM_HH_STRMS_USERS">
+          <Key>
+            <PropertyRef Name="STRM_CODE" />
+            <PropertyRef Name="USER_NAME" />
+          </Key>
+          <Property Name="STRM_CODE" Type="varchar2" MaxLength="6" Nullable="false" />
+          <Property Name="STRM_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="USER_NAME" Type="varchar2" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_WORK_PARTS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VUMM_HH_WORK_PARTS">
           <Key>
@@ -153,6 +177,8 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_WORK_PARTS' does not have a primar
           <Property Name="TMP_PART_NAME_Y_N" Type="varchar2" MaxLength="1" />
           <Property Name="PART_GRP_CODE" Type="varchar2" MaxLength="4" />
           <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
+          <Property Name="RSRV_STRM_CODE" Type="varchar2" MaxLength="6" />
+          <Property Name="DFLT_PART" Type="number" Precision="6" Scale="0" />
         </EntityType>
         <EntityContainer Name="MaaleDBModelStoreContainer">
           <EntitySet Name="MM_HH_LGSTC_FRCST" EntityType="Self.MM_HH_LGSTC_FRCST" store:Type="Tables" store:Schema="DBTRANS">
@@ -174,7 +200,9 @@ FROM "DBTRANS"."MM_HH_LGSTC_FRCST" "MM_HH_LGSTC_FRCST"</DefiningQuery>
 "MM_HH_USERS"."SMSUSER" AS "SMSUSER", 
 "MM_HH_USERS"."STC_NBR" AS "STC_NBR", 
 "MM_HH_USERS"."USER_ID" AS "USER_ID", 
-"MM_HH_USERS"."MOVE_TO_STRM" AS "MOVE_TO_STRM"
+"MM_HH_USERS"."MOVE_TO_STRM" AS "MOVE_TO_STRM", 
+"MM_HH_USERS"."PASSWORDH" AS "PASSWORDH", 
+"MM_HH_USERS"."EMAIL_USER" AS "EMAIL_USER"
 FROM "DBTRANS"."MM_HH_USERS" "MM_HH_USERS"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VUMM_HH_CALLS_LINES" EntityType="Self.VUMM_HH_CALLS_LINES" store:Type="Views" store:Schema="DBTRANS">
@@ -203,6 +231,7 @@ FROM "DBTRANS"."VUMM_HH_CALLS_LINES" "VUMM_HH_CALLS_LINES"</DefiningQuery>
 "VUMM_HH_HNDL_CALLS"."STRM_CODE" AS "STRM_CODE", 
 "VUMM_HH_HNDL_CALLS"."STRM_NAME" AS "STRM_NAME", 
 "VUMM_HH_HNDL_CALLS"."CALL_DSCR" AS "CALL_DSCR", 
+"VUMM_HH_HNDL_CALLS"."CALL_RMRK" AS "CALL_RMRK", 
 "VUMM_HH_HNDL_CALLS"."APT_CODE" AS "APT_CODE", 
 "VUMM_HH_HNDL_CALLS"."APT_NAME" AS "APT_NAME", 
 "VUMM_HH_HNDL_CALLS"."APT_SHRT_NAME" AS "APT_SHRT_NAME", 
@@ -231,6 +260,7 @@ FROM "DBTRANS"."VUMM_HH_HNDL_CALLS" "VUMM_HH_HNDL_CALLS"</DefiningQuery>
 "VUMM_HH_OPEN_CALLS"."STRM_CODE" AS "STRM_CODE", 
 "VUMM_HH_OPEN_CALLS"."STRM_NAME" AS "STRM_NAME", 
 "VUMM_HH_OPEN_CALLS"."CALL_DSCR" AS "CALL_DSCR", 
+"VUMM_HH_OPEN_CALLS"."CALL_RMRK" AS "CALL_RMRK", 
 "VUMM_HH_OPEN_CALLS"."APT_CODE" AS "APT_CODE", 
 "VUMM_HH_OPEN_CALLS"."APT_NAME" AS "APT_NAME", 
 "VUMM_HH_OPEN_CALLS"."APT_SHRT_NAME" AS "APT_SHRT_NAME", 
@@ -261,6 +291,19 @@ FROM "DBTRANS"."VUMM_HH_OPEN_CALLS" "VUMM_HH_OPEN_CALLS"</DefiningQuery>
 "VUMM_HH_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME"
 FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="VUMM_HH_STATUS_LIST" EntityType="Self.VUMM_HH_STATUS_LIST" store:Type="Views" store:Schema="DBTRANS">
+            <DefiningQuery>SELECT 
+"VUMM_HH_STATUS_LIST"."STEP_CODE" AS "STEP_CODE", 
+"VUMM_HH_STATUS_LIST"."STEP_DSCR" AS "STEP_DSCR"
+FROM "DBTRANS"."VUMM_HH_STATUS_LIST" "VUMM_HH_STATUS_LIST"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VUMM_HH_STRMS_USERS" EntityType="Self.VUMM_HH_STRMS_USERS" store:Type="Views" store:Schema="DBTRANS">
+            <DefiningQuery>SELECT 
+"VUMM_HH_STRMS_USERS"."STRM_CODE" AS "STRM_CODE", 
+"VUMM_HH_STRMS_USERS"."STRM_NAME" AS "STRM_NAME", 
+"VUMM_HH_STRMS_USERS"."USER_NAME" AS "USER_NAME"
+FROM "DBTRANS"."VUMM_HH_STRMS_USERS" "VUMM_HH_STRMS_USERS"</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VUMM_HH_WORK_PARTS" EntityType="Self.VUMM_HH_WORK_PARTS" store:Type="Views" store:Schema="DBTRANS">
             <DefiningQuery>SELECT 
 "VUMM_HH_WORK_PARTS"."PART_CODE" AS "PART_CODE", 
@@ -271,7 +314,9 @@ FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
 "VUMM_HH_WORK_PARTS"."PRMY_STRM_CODE" AS "PRMY_STRM_CODE", 
 "VUMM_HH_WORK_PARTS"."TMP_PART_NAME_Y_N" AS "TMP_PART_NAME_Y_N", 
 "VUMM_HH_WORK_PARTS"."PART_GRP_CODE" AS "PART_GRP_CODE", 
-"VUMM_HH_WORK_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME"
+"VUMM_HH_WORK_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME", 
+"VUMM_HH_WORK_PARTS"."RSRV_STRM_CODE" AS "RSRV_STRM_CODE", 
+"VUMM_HH_WORK_PARTS"."DFLT_PART" AS "DFLT_PART"
 FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -302,6 +347,8 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <Property Name="STC_NBR" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="USER_ID" Type="Decimal" Precision="38" Scale="0" />
           <Property Name="MOVE_TO_STRM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORDH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL_USER" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="VUMM_HH_HNDL_CALLS">
           <Key>
@@ -331,6 +378,7 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <Property Name="BILL_TO_CUST_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="OPEN_DATE" Type="DateTime" />
           <Property Name="HAS_IMAGES" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="CALL_RMRK" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="VUMM_HH_OPEN_CALLS">
           <Key>
@@ -360,6 +408,7 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <Property Name="BILL_TO_CUST_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="OPEN_DATE" Type="DateTime" />
           <Property Name="HAS_IMAGES" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="CALL_RMRK" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="VUMM_HH_PARTS">
           <Key>
@@ -383,6 +432,8 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <EntitySet Name="VUMM_HH_PARTS" EntityType="Self.VUMM_HH_PARTS" />
           <EntitySet Name="VUMM_HH_CALLS_LINES" EntityType="MaaleDBModel.VUMM_HH_CALLS_LINES" />
           <EntitySet Name="VUMM_HH_WORK_PARTS" EntityType="MaaleDBModel.VUMM_HH_WORK_PARTS" />
+          <EntitySet Name="VUMM_HH_STRMS_USERS" EntityType="MaaleDBModel.VUMM_HH_STRMS_USERS" />
+          <EntitySet Name="VUMM_HH_STATUS_LIST" EntityType="MaaleDBModel.VUMM_HH_STATUS_LIST" />
         </EntityContainer>
         <EntityType Name="VUMM_HH_CALLS_LINES">
           <Key>
@@ -413,6 +464,24 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <Property Name="PART_GRP_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
           <Property Name="UNIT_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RSRV_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="DFLT_PART" Type="Int32" />
+        </EntityType>
+        <EntityType Name="VUMM_HH_STRMS_USERS">
+          <Key>
+            <PropertyRef Name="STRM_CODE" />
+            <PropertyRef Name="USER_NAME" />
+          </Key>
+          <Property Name="STRM_CODE" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="STRM_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="USER_NAME" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VUMM_HH_STATUS_LIST">
+          <Key>
+            <PropertyRef Name="STEP_CODE" />
+          </Key>
+          <Property Name="STEP_CODE" Type="Int32" Nullable="false" />
+          <Property Name="STEP_DSCR" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -436,6 +505,8 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <EntitySetMapping Name="MM_HH_USERS">
             <EntityTypeMapping TypeName="MaaleDBModel.MM_HH_USERS">
               <MappingFragment StoreEntitySet="MM_HH_USERS">
+                <ScalarProperty Name="EMAIL_USER" ColumnName="EMAIL_USER" />
+                <ScalarProperty Name="PASSWORDH" ColumnName="PASSWORDH" />
                 <ScalarProperty Name="MOVE_TO_STRM" ColumnName="MOVE_TO_STRM" />
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
@@ -449,6 +520,7 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <EntitySetMapping Name="VUMM_HH_HNDL_CALLS">
             <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_HNDL_CALLS">
               <MappingFragment StoreEntitySet="VUMM_HH_HNDL_CALLS">
+                <ScalarProperty Name="CALL_RMRK" ColumnName="CALL_RMRK" />
                 <ScalarProperty Name="DOC_NBR" ColumnName="DOC_NBR" />
                 <ScalarProperty Name="LINE_NBR" ColumnName="LINE_NBR" />
                 <ScalarProperty Name="LINE_EVNT_DATE" ColumnName="LINE_EVNT_DATE" />
@@ -479,6 +551,7 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <EntitySetMapping Name="VUMM_HH_OPEN_CALLS">
             <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_OPEN_CALLS">
               <MappingFragment StoreEntitySet="VUMM_HH_OPEN_CALLS">
+                <ScalarProperty Name="CALL_RMRK" ColumnName="CALL_RMRK" />
                 <ScalarProperty Name="DOC_NBR" ColumnName="DOC_NBR" />
                 <ScalarProperty Name="LINE_NBR" ColumnName="LINE_NBR" />
                 <ScalarProperty Name="LINE_EVNT_DATE" ColumnName="LINE_EVNT_DATE" />
@@ -541,6 +614,8 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <EntitySetMapping Name="VUMM_HH_WORK_PARTS">
             <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_WORK_PARTS">
               <MappingFragment StoreEntitySet="VUMM_HH_WORK_PARTS">
+                <ScalarProperty Name="DFLT_PART" ColumnName="DFLT_PART" />
+                <ScalarProperty Name="RSRV_STRM_CODE" ColumnName="RSRV_STRM_CODE" />
                 <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />
                 <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
                 <ScalarProperty Name="PART_GRP_CODE" ColumnName="PART_GRP_CODE" />
@@ -550,6 +625,23 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
                 <ScalarProperty Name="PART_SHRT_NAME" ColumnName="PART_SHRT_NAME" />
                 <ScalarProperty Name="PART_LONG_NAME" ColumnName="PART_LONG_NAME" />
                 <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VUMM_HH_STRMS_USERS">
+            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_STRMS_USERS">
+              <MappingFragment StoreEntitySet="VUMM_HH_STRMS_USERS">
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="STRM_NAME" ColumnName="STRM_NAME" />
+                <ScalarProperty Name="STRM_CODE" ColumnName="STRM_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VUMM_HH_STATUS_LIST">
+            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_STATUS_LIST">
+              <MappingFragment StoreEntitySet="VUMM_HH_STATUS_LIST">
+                <ScalarProperty Name="STEP_DSCR" ColumnName="STEP_DSCR" />
+                <ScalarProperty Name="STEP_CODE" ColumnName="STEP_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

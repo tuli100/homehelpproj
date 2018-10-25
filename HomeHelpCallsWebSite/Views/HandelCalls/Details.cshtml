@@ -7,14 +7,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>קריאה מספר - @Html.DisplayFor(model => model.DOC_NBR) </h2>
+<h2>קריאה מספר - @Html.DisplayFor(model => model.doc_nbr) </h2>
 
 <p>
-    @Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.DOC_NBR }, null)
-    @Html.ActionLink("חזרה לרשימה", "Index")
+    <div class="btn-group" role="group">
+        <a class="btn btn-success" data-toggle="modal" data-target=".closemodal" title="סיום טיפול וסגירה"><span class="glyphicon glyphicon-check"></span> סגירה </a>
+        <a class="btn btn-primary" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
+        <a class="btn btn-info" href="@Url.Action("ChangeStatus", "OpenCalls",  new { id = Model.doc_nbr })" title="שינוי סטטוס"><span class=" glyphicon glyphicon-edit"></span> שינוי סטטוס </a>
+    </div>
 
 </p>
-
 <div>
 
     <hr />
@@ -84,18 +86,18 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.HAS_IMAGES)
-        </dt>
+                @Html.DisplayNameFor(model => model.HAS_IMAGES)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.HAS_IMAGES)
-        </dd>*@
+            <dd>
+                @Html.DisplayFor(model => model.HAS_IMAGES)
+            </dd>*@
 
     </dl>
 </div>
-<p>
+@*<p>
     @Html.ActionLink("טיפול", "Index", "LineParts", new { id = Model.DOC_NBR }, null)|
     @Html.ActionLink("חזרה לרשימה", "Index")
 
 
-</p>
+</p>*@
