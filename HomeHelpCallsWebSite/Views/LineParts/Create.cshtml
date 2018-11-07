@@ -5,80 +5,144 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
+@*<p>
     <div>
         @Html.ActionLink("חזרה לרשימת הפריטים", "Index", new { id = Model.doc_nbr })
     </div>
-</p>
+</p>*@
 
-@using (Html.BeginForm())
+@*<div class="loader"></div>*@
+
+@using (Html.BeginForm()) // "Create", "LineParts", new AjaxOptions { HttpMethod = "POST"}))
 {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
     @*<h4 class="col-md-offset-2">פריטים</h4>*@
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <div class="ui-widget">
-                @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })
-                <div class="col-md-10" direction="rtl">
-                    <div class="input-group">
-                        @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control", id = "part_code" } })
-                        <div class="input-group-btn input-group-prepend">
-                            <button type="submit" class="btn btn-default">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                        </div>
+    <div class="form-group">
+        <div class="ui-widget">
+            @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })
+            <div class="col-md-10" direction="rtl">
+                <div class="input-group">
+                    @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control", id = "part_code" } })
+                    <div class="input-group-btn input-group-prepend">
+                        <button type="submit" class="btn btn-default">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                        @*<a class="btn btn-default" data-toggle="modal" data-target=".searchmodal" title="חיפוש פריט"><span class="glyphicon glyphicon-search"></span></a>*@
+
                     </div>
-                    @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
                 </div>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.qnty, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div>
-            @Html.DisplayFor(Model => Model.unit_name)
-        </div>
-
-
-        <div>
-            @Html.HiddenFor(Model => Model.doc_nbr)
-            @Html.HiddenFor(Model => Model.parent_strm_code)
-            @Html.HiddenFor(Model => Model.part_code)
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="הוסף" class="btn btn-default" />
+                @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
             </div>
         </div>
     </div>
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
+    <div class="form-group">
+        @Html.LabelFor(model => model.qnty, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div>
+        @Html.DisplayFor(Model => Model.unit_name)
+    </div>
+
+    <div>
+        @Html.HiddenFor(Model => Model.doc_nbr)
+        @Html.HiddenFor(Model => Model.parent_strm_code)
+        @Html.HiddenFor(Model => Model.part_code)
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-1 col-md-1 col-md-offset-2">
+            <input type="submit" value="הוסף" class="btn btn-default" />
+        </div>
+        <div class="col-sm-1 col-md-1 col-md-offset-2">
+            <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
+        </div>
+     </div>
+</div>
     }
 
+
+@*<div class="modal fade searchmodal">
+    <form class="form-inline" method="get" action="@Url.Action("Create", "LineParts")">
+        @Html.AntiForgeryToken()
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                    <div class="modal-title"><h3> בחר פריט </h3></div>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        @model  IEnumerable<HomeHelpCallsWebSite.Models.PartViewModel>
+
+                        <table class="table" id=" partsTable">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PART_CODE_NAME)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PRMY_STRM_CODE)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PART_CODE)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.PART_LONG_NAME)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UNIT_NAME)
+                                </th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PART_CODE_NAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PRMY_STRM_CODE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PART_CODE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PART_LONG_NAME)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UNIT_NAME)
+                                    </td>
+                                </tr>
+                            }
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default glyphicon glyphicon-remove" data-dismiss="modal"> ביטול</button>
+                    <button class="btn btn-primary glyphicon glyphicon-ok" type="submit"> סגור</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>*@
 
 
 

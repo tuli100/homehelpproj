@@ -123,7 +123,7 @@ namespace HomeHelpCallsWebSite.Controllers
             return Json(part);
         }
 
-        public JsonResult GetFilterdParts(long doc_nbr, string input="צינור")
+        public JsonResult GetFilterdParts(long doc_nbr, string input="")
         {
             var strm = GetParentStrmCode(doc_nbr);
             var res = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm);
@@ -133,16 +133,32 @@ namespace HomeHelpCallsWebSite.Controllers
         }
 
         #endregion LineParts
-              private string GetParentStrmCode( long doc_nbr)
+        private string GetParentStrmCode( long doc_nbr)
         {
-            var call = _conntext.VUMM_HH_OPEN_CALLS.Find(doc_nbr);
-            return call.PARENT_STRM_CODE;
+            string strm;
+            try
+            {
+                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(doc_nbr).STRM_CODE;
+            }
+            catch
+            {
+                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(doc_nbr).STRM_CODE;
+            }
+            return strm;
         }
 
         // GET: LineParts/Create
         public ActionResult Create(long id, string part = "")
         {
-            var call = _conntext.VUMM_HH_OPEN_CALLS.Find(id);
+            //string strm;
+            //try
+            //{
+            //    strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
+            //}
+            //catch
+            //{
+            //    strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
+            //}
             LineViewModel vm = new LineViewModel
             {
                 doc_nbr = id,
@@ -157,7 +173,7 @@ namespace HomeHelpCallsWebSite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "doc_nbr, part_code_name, qnty, txt_dscr, line_nbr")] LineViewModel iVm)
+        public async Task<ActionResult> Create([Bind(Include = "doc_nbr, part_code_name, qnty, txt_dscr, line_nbr, call")] LineViewModel iVm)
         {
             if (ModelState.IsValid)
             {
@@ -202,27 +218,26 @@ namespace HomeHelpCallsWebSite.Controllers
 
         public ActionResult AddWork(long id, string part = "")
         {
-            var call = _conntext.VUMM_HH_OPEN_CALLS.Find(id);
-            SelectList partsList = FindWorkPart(call.STRM_CODE);
-            //var part_code = "";
-            //try
-            //{
-            //    part_code = partsList.SelectedValues.ToString();
-            //}
-            //catch
-            //{
-            //   //no problem
-            //}
-            LineViewModel vm = new LineViewModel
+            string strm;
+            try
             {
-                doc_nbr = id,
-                part_code_name = part,
-                qnty = 1,
-                WParts = partsList,
-                //part_code = part_code
-
-            };
-            return View(vm);
+                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
+            }
+            catch
+            {
+                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
+            }
+            SelectList partsList = FindWorkPart(strm);
+               
+            LineViewModel vm = new LineViewModel
+                {
+                    doc_nbr = id,
+                    part_code_name = part,
+                    qnty = 1,
+                    WParts = partsList,
+                    //part_code = part_code
+                };
+                return View(vm);
         }
 
         // POST: LineParts/Create
@@ -256,9 +271,16 @@ namespace HomeHelpCallsWebSite.Controllers
             }
             else
             {
-
-                var call = _conntext.VUMM_HH_OPEN_CALLS.Find(iVm.doc_nbr);
-                iVm.WParts = FindWorkPart(call.STRM_CODE);
+                string strm;
+                try
+                {
+                    strm = _conntext.VUMM_HH_OPEN_CALLS.Find(iVm.doc_nbr).STRM_CODE;
+                }
+                catch
+                {
+                    strm = _conntext.VUMM_HH_HNDL_CALLS.Find(iVm.doc_nbr).STRM_CODE;
+                }
+                iVm.WParts = FindWorkPart(strm);
                 return View(iVm);
             }
         }

@@ -1,22 +1,24 @@
 ﻿@model IEnumerable<HomeHelpCallsWebSite.Models.LineViewModel>
 
+@{
+    ViewBag.Title = "שורות";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 @*<h3>טיפול</h3>*@
 <h4>קריאה מספר - @Html.DisplayFor(model => Model.First().doc_nbr) </h4>
 
-<h4> @Html.DisplayFor(model => Model.First().part_name) </h4>
-<h4>  @Html.DisplayFor(model => Model.First().txt_dscr) </h4>
+<h4> @Html.DisplayFor(model => Model.First().part_name)  @Html.DisplayFor(model => Model.First().txt_dscr)  </h4>
+
 
 <div class="btn-group" role="group">
-
-     <a class="btn btn-success" data-toggle="modal" data-target=".closemodal" title="סיום טיפול וסגירה"><span class="glyphicon glyphicon-check"></span> סגירה </a>
- 
+    <a class="btn btn-success" data-toggle="modal" data-target=".closemodal" title="סיום טיפול וסגירה"><span class="glyphicon glyphicon-check"></span> סגירה </a>
     <a class="btn btn-primary" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.First().doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
     <a class="btn btn-info" href="@Url.Action("ChangeStatus", "OpenCalls",  new { id = Model.First().doc_nbr })" title="שינוי סטטוס"><span class=" glyphicon glyphicon-edit"></span> שינוי סטטוס </a>
 
     @*@Html.ActionLink("סגירה", "Close", "OpenCalls", new { id = Model.First().doc_nbr, stat = 300 }, new { @class = "btn glyphicon glyphicon-check btn-success", title = "סיום טיפול וסגירה" })
-        @Html.ActionLink("העברה", "Edit", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary glyphicon glyphicon-share", title = "העברה למחסן אחר" })
-        @Html.ActionLink("שינוי סטטוס", "CangeStatus", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-info glyphicon glyphicon-edit", title = "שינוי סטטוס לטיפול עתידי" })*@
-
+    @Html.ActionLink("העברה", "Edit", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary glyphicon glyphicon-share", title = "העברה למחסן אחר" })
+    @Html.ActionLink("שינוי סטטוס", "CangeStatus", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-info glyphicon glyphicon-edit", title = "שינוי סטטוס לטיפול עתידי" })*@
 </div>
 
 <table class="table" id="CallLinesTable">
@@ -31,47 +33,51 @@
             @Html.DisplayNameFor(model => model.txt_dscr)
         </th>
         @*<th>
-                @Html.DisplayNameFor(model => model.parent_strm_code)
-            </th>*@
+           @Html.DisplayNameFor(model => model.parent_strm_code)
+        </th>*@
         <th></th>
     </tr>
 
     @foreach (var item in Model.Skip(1))
     {
-        <tr>
-            @if (item.part_code_name != null)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.part_code_name)
-                </td>
-            }
-            @if (item.qnty != null && item.unit_name != null)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.qnty)
-
-                    @Html.DisplayFor(modelItem => item.unit_name)
-
-                </td>
-            }
-
-            @if (item.txt_dscr != null)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.txt_dscr)
-                </td>
-            }
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.parent_strm_code)
-                </td>*@
+    <tr>
+        @if (item.part_code_name != null)
+        {
             <td>
-                @Html.ActionLink("עריכה", "Edit", new { id = item.LINE_ID })  |
+                @Html.DisplayFor(modelItem => item.part_code_name)
+            </td>
+        }
+        @if (item.qnty != null && item.unit_name != null)
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.qnty)
 
-                @Html.ActionLink("מחיקה", "Delete", new { id = item.LINE_ID }, new { onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');" })
+                @Html.DisplayFor(modelItem => item.unit_name)
+
+            </td>
+        }
+
+        @if (item.txt_dscr != null)
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.txt_dscr)
+            </td>
+        }
+        @*<td>
+            @Html.DisplayFor(modelItem => item.parent_strm_code)
+        </td>*@
+
+            <td>
+                           
+                <a class="btn btn-default" href="@Url.Action("Edit", "LineParts",  new { id = item.line_nbr })" title="עריכה"><span class=" glyphicon glyphicon-pencil"></span> עריכה </a>
+                <a class="btn float-right right" style="color:red" href="@Url.Action("Delete", "LineParts",  new { id = item.line_nbr })" title=""><span class=" glyphicon glyphicon-remove"></span> </a>
+               
+                @*@Html.ActionLink("מחיקה", "Delete", new { id = item.LINE_ID }, new { onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');" })*@
                 @* @Html.ActionLink("מחיקה", "Delete", new { id = item.LINE_ID }, new { onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');" })*@
 
             </td>
-        </tr>
+        <td class="tr-for-media"></td>
+    </tr>
     }
 
 
@@ -84,8 +90,12 @@
     <p>
 
         <div class="btn-group" role="group">
+            <a class="btn btn-primary" href="@Url.Action("Create", "LineParts",  new { id = Model.First().doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-plus"></span> פריטים </a>
+            <a class="btn btn-primary" href="@Url.Action("AddWork", "LineParts",  new { id = Model.First().doc_nbr })" title=""><span class=" glyphicon glyphicon-user"></span>שעות עבודה </a>
+
+            @*
             @Html.ActionLink("הוספת פריט", "Create", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("הוספת שעות עבודה", "AddWork", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("הוספת שעות עבודה", "AddWork", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary" })*@
         </div>
         <br />
 

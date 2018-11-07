@@ -29,6 +29,7 @@ namespace HomeHelpCallsWebSite.Infrastructure.Data
         public virtual DbSet<VUMM_HH_WORK_PARTS> VUMM_HH_WORK_PARTS{ get; set; }
         public virtual DbSet<VUMM_HH_STRMS_USERS> VUMM_HH_STRMS_USERS { get; set; }
         public virtual DbSet<VUMM_HH_STATUS_LIST> VUMM_HH_STATUS_LIST { get; set; }
+        public virtual DbSet<VUMM_HH_IMAGES_LINKS> VUMM_HH_IMAGES_LINKS { get; set; }
 
         public DbProviderFactory DbProviderFactory { get { return _dbProviderFactory.Value; } }
 
@@ -56,6 +57,7 @@ namespace HomeHelpCallsWebSite.Infrastructure.Data
             modelBuilder.Entity<MM_HH_USERS>().HasKey(c => c.USER_NAME);
             modelBuilder.Entity<VUMM_HH_STRMS_USERS>().HasKey(c => c.STRM_CODE);
             modelBuilder.Entity<VUMM_HH_STATUS_LIST>().HasKey(c => c.STEP_CODE);
+            modelBuilder.Entity<VUMM_HH_IMAGES_LINKS>().HasKey(c => c.DOC_NBR);
 
             
             typeof(DbContext).Assembly.GetTypes().Where(t => typeof(IMapping).IsAssignableFrom(t)).ForEach(t =>

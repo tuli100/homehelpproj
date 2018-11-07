@@ -1,0 +1,27 @@
+﻿@model IEnumerable<HomeHelpCallsWebSite.ViewModels.ImagesViewModelcs>
+
+
+@{
+    ViewBag.Title = "Images";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>Images</h2>*@
+<h2></h2>
+
+<div class="table-responsive">
+    <table class="table">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src=@item.file_name allowfullscreen></iframe>
+                    </div>
+                </td>
+            </tr>
+
+        }
+        </table>
+</div>

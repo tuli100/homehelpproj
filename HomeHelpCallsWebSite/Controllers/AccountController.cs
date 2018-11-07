@@ -85,6 +85,8 @@ namespace HomeHelpCallsWebSite.Controllers
                         //var logindetails = loginInfo.First();
                         // Login In.    
                         this.SignInUser(model.Username, strms, false);
+                      //  this.SignInUser.
+                        
                         // Info.    
                         return this.RedirectToLocal(returnUrl);
                     }

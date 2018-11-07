@@ -58,6 +58,8 @@ namespace HomeHelpCallsWebSite.Models
         public SelectList StatusList { get; set; }
         //public int status { get; set; }
 
+        public bool isOpen { get; set; }
+
         //public virtual ICollection<LineModel> CallLines { get; set; }
 
         public long Id

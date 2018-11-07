@@ -22,6 +22,7 @@ namespace HomeHelpCallsWebSite.Controllers
         private IMapper _callsMapper;
         private IMapper _hndlCallsMapper;
         private IMapper _strmsMapper;
+        private IMapper _imageMapper;
         private readonly int firm = 25;
 
         public OpenCallsController()
@@ -31,37 +32,180 @@ namespace HomeHelpCallsWebSite.Controllers
             _callsMapper = config.CreateMapper();
             var config2 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_STRMS_USERS, StrmViewModel>());
             _strmsMapper = config2.CreateMapper();
-            var config3 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_STRMS_USERS, StrmViewModel>(MemberList.Source));
+            var config3 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_HNDL_CALLS, CallsViewModel>(MemberList.Source));
             _hndlCallsMapper = config3.CreateMapper();
-
+            var config4 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_HNDL_CALLS, CallsViewModel>(MemberList.Source));
+            _imageMapper = config4.CreateMapper();
         }
 
+        //    // GET: OpenCalls
+        //    public async Task<ActionResult> Index(String searchString)
+        //    {
+        //        var user = User.Identity.Name;
 
-        // GET: OpenCalls
-        public async Task<ActionResult> Index()
+        //        var ctx = Request.GetOwinContext();
+        //        var authenticationManager = ctx.Authentication;
+        //        var tt = authenticationManager.User.Claims.SingleOrDefault(w => w.Type == ClaimTypes.Role);
+        //        IEnumerable<VUMM_HH_OPEN_CALLS> dto;
+        //        if (tt.Value.Contains("*"))
+        //            {
+        //                dto =  _conntext.VUMM_HH_OPEN_CALLS;
+        //            }
+        //            else
+        //            {
+        //                dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => tt.Value.Contains(w.STRM_CODE));
+        //            }
+        //            var vm = _callsMapper.Map<IEnumerable<VUMM_HH_OPEN_CALLS>, IEnumerable<CallsViewModel>>(dto);
+        //            if (vm.Count() > 0)
+        //            {
+        //                foreach (var item in vm)
+        //                {
+        //                    if (item.RQSTD_SHIP_DATE.Value.ToShortTimeString() == "00:00")
+        //                    {
+        //                        item.RQSTD_SHIP_TIME = "";
+        //                    }
+        //                    else
+        //                    {
+        //                        item.RQSTD_SHIP_TIME = item.RQSTD_SHIP_DATE.Value.ToShortTimeString();
+        //                    }
+        //                }
+        //            }
+
+        //        return View(vm);
+        //}
+
+
+        public async Task<ActionResult> CallsTable(string searchString)
+        {
+            var user = User.Identity.Name;
+
+            var ctx = Request.GetOwinContext();
+            var authenticationManager = ctx.Authentication;
+            var tt = authenticationManager.User.Claims.SingleOrDefault(w => w.Type == ClaimTypes.Role);
+            string userStrms = tt.Value;
+            IEnumerable<VUMM_HH_OPEN_CALLS> dto;
+            if (searchString != null)
+            {
+                long n;
+                if (long.TryParse(searchString, out n))
+                {
+                    if (userStrms.Contains("*"))
+                    {
+                        dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => w.DOC_NBR.Equals(n));
+                    }
+                    else
+                    {
+                        dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => userStrms.Contains(w.STRM_CODE) && w.DOC_NBR.Equals(n));
+                    }
+                }
+                else
+                {
+                    if (userStrms.Contains("*"))
+                    {
+                        dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => w.CALL_DSCR.Contains(searchString) || w.APT_NAME.Contains(searchString) || w.CALL_STAT_FULL.Contains(searchString));
+                    }
+                    else
+                    {
+                        dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => userStrms.Contains(w.STRM_CODE) && (w.CALL_DSCR.Contains(searchString) || w.APT_NAME.Contains(searchString) || w.CALL_STAT_FULL.Contains(searchString)));
+                    }
+                }
+            }
+            else
+            {
+                if (userStrms.Contains("*"))
+                {
+                    dto = _conntext.VUMM_HH_OPEN_CALLS;
+                }
+                else
+                {
+                    dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => userStrms.Contains(w.STRM_CODE));
+                }
+            }
+            var vm = _callsMapper.Map<IEnumerable<VUMM_HH_OPEN_CALLS>, IEnumerable<CallsViewModel>>(dto);
+            if (vm.Count() > 0)
+            {
+                foreach (var item in vm)
+                {
+                    item.isOpen = true;
+                    if (item.RQSTD_SHIP_DATE.Value.ToShortTimeString() == "00:00")
+                    {
+                        item.RQSTD_SHIP_TIME = "";
+                    }
+                    else
+                    {
+                        item.RQSTD_SHIP_TIME = item.RQSTD_SHIP_DATE.Value.ToShortTimeString();
+                    }
+                }
+            }
+
+            return PartialView(vm);
+        }
+
+       // GET: OpenCalls
+        public async Task<ActionResult> Index(string searchString) //string searchString)
         {
             var user = User.Identity.Name;
             var ctx = Request.GetOwinContext();
             var authenticationManager = ctx.Authentication;
             var tt = authenticationManager.User.Claims.SingleOrDefault(w => w.Type == ClaimTypes.Role);
-            IEnumerable<VUMM_HH_OPEN_CALLS> dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => tt.Value.Contains(w.STRM_CODE));
-            var vm = _callsMapper.Map<IEnumerable<VUMM_HH_OPEN_CALLS>, IEnumerable<CallsViewModel>>(dto);
-            foreach (var item  in vm)
+            string userStrms = tt.Value;
+            //GetOpenCalls(searchString, userStrms);
+            IEnumerable<VUMM_HH_OPEN_CALLS> dto;
+            if (searchString != null)
             {
-                if (item.RQSTD_SHIP_DATE.Value.ToShortTimeString() == "00:00")
+                long n;
+                if (long.TryParse(searchString, out n))
                 {
-                    item.RQSTD_SHIP_TIME = "";
+                    if (userStrms.Contains("*"))
+                    {
+                        dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => w.DOC_NBR.Equals(n));
+                    }
+                    else
+                    {
+                        dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => userStrms.Contains(w.STRM_CODE) && w.DOC_NBR.Equals(n));
+                    }
                 }
                 else
                 {
-                    item.RQSTD_SHIP_TIME = item.RQSTD_SHIP_DATE.Value.ToShortTimeString();
+                    if (userStrms.Contains("*"))
+                    {
+                        dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => w.CALL_DSCR.Contains(searchString) || w.APT_NAME.Contains(searchString) || w.CALL_STAT_FULL.Contains(searchString));
+                    }
+                    else
+                    {
+                        dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => userStrms.Contains(w.STRM_CODE) && (w.CALL_DSCR.Contains(searchString) || w.APT_NAME.Contains(searchString) || w.CALL_STAT_FULL.Contains(searchString)));
+                    }
                 }
-                //if( item.line_nbr >1)
-                //{
-                //    //todo
-                //}
             }
-            return View(vm);
+            else
+            {
+                if (userStrms.Contains("*"))
+                {
+                    dto = _conntext.VUMM_HH_OPEN_CALLS;
+                }
+                else
+                {
+                    dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => userStrms.Contains(w.STRM_CODE));
+                }
+            }
+
+            var vm = _callsMapper.Map<IEnumerable<VUMM_HH_OPEN_CALLS>, IEnumerable<CallsViewModel>>(dto);
+            if (vm.Count() > 0)
+            {
+                foreach (var item in vm)
+                {
+                    item.isOpen = true;
+                    if (item.RQSTD_SHIP_DATE.Value.ToShortTimeString() == "00:00")
+                    {
+                        item.RQSTD_SHIP_TIME = "";
+                    }
+                    else
+                    {
+                        item.RQSTD_SHIP_TIME = item.RQSTD_SHIP_DATE.Value.ToShortTimeString();
+                    }
+                }
+            }
+            return PartialView(vm);
         }
 
         // GET: OpenCalls/Details/5
@@ -111,18 +255,28 @@ namespace HomeHelpCallsWebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VUMM_HH_OPEN_CALLS vUMM_HH_OPEN_CALLS =  _conntext.VUMM_HH_OPEN_CALLS.Find(id);
-            if (vUMM_HH_OPEN_CALLS == null)
+
+            VUMM_HH_OPEN_CALLS callO = _conntext.VUMM_HH_OPEN_CALLS.Find(id);
+            CallsViewModel vm;
+            if (callO == null)
             {
-                return HttpNotFound();
+               VUMM_HH_HNDL_CALLS callH = _conntext.VUMM_HH_HNDL_CALLS.Find(id);
+                if(callH == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+                  
+                vm = _hndlCallsMapper.Map<CallsViewModel>(callH);
             }
-            CallsViewModel vm = _callsMapper.Map<CallsViewModel>(vUMM_HH_OPEN_CALLS);
+            else
+            {
+                vm = _callsMapper.Map<CallsViewModel>(callO);
+            }
+           
             vm.StrmList = getStrmsList(vm.STRM_CODE);
               
             return View(vm);
         }
-
-
 
         [NonAction]
         public SelectList getStrmsList(string strm_code)
@@ -159,7 +313,6 @@ namespace HomeHelpCallsWebSite.Controllers
             return View(model);
         }
 
-      
         // GET: OpenCalls/Edit/5
         //public async Task<ActionResult> Close(long? id, int stat, string? rk)
         public async Task<ActionResult> Close([Bind(Include = "doc_nbr,stat_rmrk, status, line_nbr")] CallsViewModel iVm)
@@ -265,6 +418,19 @@ namespace HomeHelpCallsWebSite.Controllers
         //    await db.SaveChangesAsync();
         //    return RedirectToAction("Index");
         //}
+
+        public ActionResult Images(long? id)
+        {
+            if (id != null)
+            {
+                IEnumerable<VUMM_HH_IMAGES_LINKS> dto = _conntext.VUMM_HH_IMAGES_LINKS.Where(w => w.DOC_NBR == id);
+                IEnumerable<ImagesViewModelcs> vm = _imageMapper.Map<IEnumerable<VUMM_HH_IMAGES_LINKS>, IEnumerable<ImagesViewModelcs>>(dto);
+                return View(vm);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+        }
+
 
         protected override void Dispose(bool disposing)
         {

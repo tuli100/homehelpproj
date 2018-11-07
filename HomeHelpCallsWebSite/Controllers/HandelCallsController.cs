@@ -14,6 +14,7 @@ using System.Security.Claims;
 
 namespace HomeHelpCallsWebSite.Controllers
 {
+    [Authorize]
     public class HandelCallsController : Controller
     {
         private ApplicationDbContext _conntext;
@@ -26,16 +27,64 @@ namespace HomeHelpCallsWebSite.Controllers
         }
 
         // GET: HandelCalls
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string searchString)
         {
             var user = User.Identity.Name;
             var ctx = Request.GetOwinContext();
             var authenticationManager = ctx.Authentication;
             var tt = authenticationManager.User.Claims.SingleOrDefault(w => w.Type == ClaimTypes.Role);
-            IEnumerable<VUMM_HH_HNDL_CALLS> dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => tt.Value.Contains(w.STRM_CODE));
+            IEnumerable<VUMM_HH_HNDL_CALLS> dto;
+            if (searchString != null)
+            {
+                long n;
+                if (long.TryParse(searchString, out n))
+                {
+                    if (tt.Value.Contains("*"))
+                    {
+                        dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => w.DOC_NBR.Equals(n));
+                    }
+                    else
+                    {
+                        dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => tt.Value.Contains(w.STRM_CODE) && w.DOC_NBR.Equals(n));
+                    }
+                }
+                else
+                {
+                    if (tt.Value.Contains("*"))
+                    {
+                        dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => w.CALL_DSCR.Contains(searchString) || w.APT_NAME.Contains(searchString) || w.CALL_STAT_FULL.Contains(searchString));
+                    }
+                    else
+                    {
+                        dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => tt.Value.Contains(w.STRM_CODE) && (w.CALL_DSCR.Contains(searchString) || w.APT_NAME.Contains(searchString) || w.CALL_STAT_FULL.Contains(searchString)));
+                    }
+                }
+            }
+            else
+            {
+                if (tt.Value.Contains("*"))
+                {
+                    dto = _conntext.VUMM_HH_HNDL_CALLS;
+                }
+                else
+                {
+                    dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => tt.Value.Contains(w.STRM_CODE));
+                }
+            }
+
+
+            //if (tt.Value.Contains("*"))
+            //{
+            //    dto = _conntext.VUMM_HH_HNDL_CALLS;
+            //}
+            //else
+            //{
+            //    dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => tt.Value.Contains(w.STRM_CODE));
+            //}
             var vm = _mapper.Map<IEnumerable<VUMM_HH_HNDL_CALLS>, IEnumerable<CallsViewModel>>(dto);
             foreach (var item in vm)
             {
+                item.isOpen = false;
                 if (item.RQSTD_SHIP_DATE.Value.ToShortTimeString() == "00:00")
                 {
                     item.RQSTD_SHIP_TIME = "";
@@ -51,6 +100,73 @@ namespace HomeHelpCallsWebSite.Controllers
             }
             return View(vm);
         }
+
+        public async Task<ActionResult> CallsTable(string searchString)
+        {
+            var user = User.Identity.Name;
+
+            var ctx = Request.GetOwinContext();
+            var authenticationManager = ctx.Authentication;
+            var tt = authenticationManager.User.Claims.SingleOrDefault(w => w.Type == ClaimTypes.Role);
+            string userStrms = tt.Value;
+            IEnumerable<VUMM_HH_HNDL_CALLS> dto;
+            if (searchString != null)
+            {
+                long n;
+                if (long.TryParse(searchString, out n))
+                {
+                    if (userStrms.Contains("*"))
+                    {
+                        dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => w.DOC_NBR.Equals(n));
+                    }
+                    else
+                    {
+                        dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => userStrms.Contains(w.STRM_CODE) && w.DOC_NBR.Equals(n));
+                    }
+                }
+                else
+                {
+                    if (userStrms.Contains("*"))
+                    {
+                        dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => w.CALL_DSCR.Contains(searchString) || w.APT_NAME.Contains(searchString) || w.CALL_STAT_FULL.Contains(searchString));
+                    }
+                    else
+                    {
+                        dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => userStrms.Contains(w.STRM_CODE) && (w.CALL_DSCR.Contains(searchString) || w.APT_NAME.Contains(searchString) || w.CALL_STAT_FULL.Contains(searchString)));
+                    }
+                }
+            }
+            else
+            {
+                if (userStrms.Contains("*"))
+                {
+                    dto = _conntext.VUMM_HH_HNDL_CALLS;
+                }
+                else
+                {
+                    dto = _conntext.VUMM_HH_HNDL_CALLS.Where(w => userStrms.Contains(w.STRM_CODE));
+                }
+            }
+            var vm = _mapper.Map<IEnumerable<VUMM_HH_HNDL_CALLS>, IEnumerable<CallsViewModel>>(dto);
+            if (vm.Count() > 0)
+            {
+                foreach (var item in vm)
+                {
+                    item.isOpen = true;
+                    if (item.RQSTD_SHIP_DATE.Value.ToShortTimeString() == "00:00")
+                    {
+                        item.RQSTD_SHIP_TIME = "";
+                    }
+                    else
+                    {
+                        item.RQSTD_SHIP_TIME = item.RQSTD_SHIP_DATE.Value.ToShortTimeString();
+                    }
+                }
+            }
+
+            return PartialView(vm);
+        }
+
 
         // GET: HandelCalls/Details/5
         public async Task<ActionResult> Details(long? id)

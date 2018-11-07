@@ -12,7 +12,8 @@ namespace HomeHelpCallsWebSite
                         "~/Scripts/jquery-{version}.js",
                         //"~/Scripts/bootstrap.min.js",
                         "~/Scripts/bootstrap-rtl.min.js",
-                        "~/Scripts/jquery-ui-{version}.min.js"
+                        "~/Scripts/jquery-ui-{version}.min.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.min.js"
                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

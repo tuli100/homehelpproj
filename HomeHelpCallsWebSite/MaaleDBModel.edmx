@@ -61,6 +61,17 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_CALLS_LINES' does not have a prima
           <Property Name="PARENT_STRM_CODE" Type="varchar2" MaxLength="6" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6013: The table/view 'DBTRANS.VUMM_HH_DSTNS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="VUMM_HH_DSTNS">
+          <Property Name="DIRA" Type="varchar2" MaxLength="10" />
+          <Property Name="DSTN_CODE" Type="number" Precision="38" Scale="0" />
+          <Property Name="DSTN_NAME" Type="varchar2" MaxLength="41" />
+          <Property Name="CELL" Type="varchar2" MaxLength="15" />
+          <Property Name="EMAIL" Type="varchar2" MaxLength="40" />
+          <Property Name="ISPREF" Type="number" Precision="38" Scale="0" />
+          <Property Name="SALE_SUB_AREA" Type="varchar2" MaxLength="4" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_HNDL_CALLS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VUMM_HH_HNDL_CALLS">
           <Key>
@@ -92,6 +103,20 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_HNDL_CALLS' does not have a primar
           <Property Name="BILL_TO_CUST_CODE" Type="varchar2" MaxLength="10" />
           <Property Name="OPEN_DATE" Type="date" />
           <Property Name="HAS_IMAGES" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBTRANS.VUMM_HH_IMAGES_LINKS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VUMM_HH_IMAGES_LINKS">
+          <Key>
+            <PropertyRef Name="FIRM_CODE" />
+            <PropertyRef Name="PRMY_TRNS_CLSS" />
+            <PropertyRef Name="FILE_NAME" />
+          </Key>
+          <Property Name="FIRM_CODE" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="PRMY_TRNS_CLSS" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="DOC_NBR" Type="number" Precision="38" Scale="0" />
+          <Property Name="FILE_NAME" Type="varchar2" MaxLength="250" Nullable="false" />
+          <Property Name="SEQ" Type="number" Precision="38" Scale="0" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_OPEN_CALLS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -248,6 +273,15 @@ FROM "DBTRANS"."VUMM_HH_CALLS_LINES" "VUMM_HH_CALLS_LINES"</DefiningQuery>
 "VUMM_HH_HNDL_CALLS"."OPEN_DATE" AS "OPEN_DATE", 
 "VUMM_HH_HNDL_CALLS"."HAS_IMAGES" AS "HAS_IMAGES"
 FROM "DBTRANS"."VUMM_HH_HNDL_CALLS" "VUMM_HH_HNDL_CALLS"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VUMM_HH_IMAGES_LINKS" EntityType="Self.VUMM_HH_IMAGES_LINKS" store:Type="Views" store:Schema="DBTRANS">
+            <DefiningQuery>SELECT 
+"VUMM_HH_IMAGES_LINKS"."FIRM_CODE" AS "FIRM_CODE", 
+"VUMM_HH_IMAGES_LINKS"."PRMY_TRNS_CLSS" AS "PRMY_TRNS_CLSS", 
+"VUMM_HH_IMAGES_LINKS"."DOC_NBR" AS "DOC_NBR", 
+"VUMM_HH_IMAGES_LINKS"."FILE_NAME" AS "FILE_NAME", 
+"VUMM_HH_IMAGES_LINKS"."SEQ" AS "SEQ"
+FROM "DBTRANS"."VUMM_HH_IMAGES_LINKS" "VUMM_HH_IMAGES_LINKS"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VUMM_HH_OPEN_CALLS" EntityType="Self.VUMM_HH_OPEN_CALLS" store:Type="Views" store:Schema="DBTRANS">
             <DefiningQuery>SELECT 
@@ -434,6 +468,7 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <EntitySet Name="VUMM_HH_WORK_PARTS" EntityType="MaaleDBModel.VUMM_HH_WORK_PARTS" />
           <EntitySet Name="VUMM_HH_STRMS_USERS" EntityType="MaaleDBModel.VUMM_HH_STRMS_USERS" />
           <EntitySet Name="VUMM_HH_STATUS_LIST" EntityType="MaaleDBModel.VUMM_HH_STATUS_LIST" />
+          <EntitySet Name="VUMM_HH_IMAGES_LINKS" EntityType="MaaleDBModel.VUMM_HH_IMAGES_LINKS" />
         </EntityContainer>
         <EntityType Name="VUMM_HH_CALLS_LINES">
           <Key>
@@ -482,6 +517,18 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           </Key>
           <Property Name="STEP_CODE" Type="Int32" Nullable="false" />
           <Property Name="STEP_DSCR" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VUMM_HH_IMAGES_LINKS">
+          <Key>
+            <PropertyRef Name="FIRM_CODE" />
+            <PropertyRef Name="PRMY_TRNS_CLSS" />
+            <PropertyRef Name="FILE_NAME" />
+          </Key>
+          <Property Name="FIRM_CODE" Type="Int32" Nullable="false" />
+          <Property Name="PRMY_TRNS_CLSS" Type="Int32" Nullable="false" />
+          <Property Name="DOC_NBR" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="FILE_NAME" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SEQ" Type="Decimal" Precision="38" Scale="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -642,6 +689,17 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
               <MappingFragment StoreEntitySet="VUMM_HH_STATUS_LIST">
                 <ScalarProperty Name="STEP_DSCR" ColumnName="STEP_DSCR" />
                 <ScalarProperty Name="STEP_CODE" ColumnName="STEP_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VUMM_HH_IMAGES_LINKS">
+            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_IMAGES_LINKS">
+              <MappingFragment StoreEntitySet="VUMM_HH_IMAGES_LINKS">
+                <ScalarProperty Name="SEQ" ColumnName="SEQ" />
+                <ScalarProperty Name="FILE_NAME" ColumnName="FILE_NAME" />
+                <ScalarProperty Name="DOC_NBR" ColumnName="DOC_NBR" />
+                <ScalarProperty Name="PRMY_TRNS_CLSS" ColumnName="PRMY_TRNS_CLSS" />
+                <ScalarProperty Name="FIRM_CODE" ColumnName="FIRM_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

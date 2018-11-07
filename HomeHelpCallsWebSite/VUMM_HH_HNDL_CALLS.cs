@@ -19,9 +19,9 @@ namespace HomeHelpCallsWebSite
         public Nullable<System.DateTime> LINE_EVNT_DATE { get; set; }
         public Nullable<System.DateTime> RQSTD_SHIP_DATE { get; set; }
         public Nullable<System.DateTime> LINE_EXPR_DATE { get; set; }
+        public string PARENT_STRM_CODE { get; set; }
         public string STRM_CODE { get; set; }
         public string STRM_NAME { get; set; }
-        public string PARENT_STRM_CODE { get; set; }
         public string CALL_DSCR { get; set; }
         public string APT_CODE { get; set; }
         public string APT_NAME { get; set; }
