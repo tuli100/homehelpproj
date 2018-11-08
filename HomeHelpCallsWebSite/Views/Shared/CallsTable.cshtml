@@ -27,7 +27,7 @@
                 <td>
                     @if (item.isOpen)
                     {
-                        <a class="btn btn-outline-light align-self-end" title="פרטים נוספים" href="@Url.Action("Details", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-info-sign"></span></a>
+                        <a class="btn btn-outline-light align-self-end" style="color:cornflowerblue" title="פרטים נוספים" href="@Url.Action("Details", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-info-sign"></span></a>
                     }
                     else
                     {
@@ -37,15 +37,15 @@
                     @Html.DisplayFor(modelItem => item.CALL_DSCR)
                     @if (item.HAS_IMAGES.HasValue && item.HAS_IMAGES.Value)
                     {
-                        if (item.isOpen)
-                        {
-                            <a class="btn btn-outline-light" title="תמונות" href="@Url.Action("Images", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-camera"></span></a>
-                        }
+                        //if (item.isOpen)
+                        //{
+                            <a class="btn btn-outline-light" style="color:dimgray" title="תמונות" href="@Url.Action("Images", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-camera"></span></a>
+                        @*}
                         else
                         {
-                            <a class="btn btn-outline-light" title="תמונות" href="@Url.Action("Images", "HandelCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-camera"></span></a>
+                            <a class="btn btn-outline-light" style="color:dimgray" title="תמונות" href="@Url.Action("Images", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-camera"></span></a>
 
-                        }
+                        }*@
                     }
                 </td>
 

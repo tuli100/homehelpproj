@@ -425,6 +425,10 @@ namespace HomeHelpCallsWebSite.Controllers
             {
                 IEnumerable<VUMM_HH_IMAGES_LINKS> dto = _conntext.VUMM_HH_IMAGES_LINKS.Where(w => w.DOC_NBR == id);
                 IEnumerable<ImagesViewModelcs> vm = _imageMapper.Map<IEnumerable<VUMM_HH_IMAGES_LINKS>, IEnumerable<ImagesViewModelcs>>(dto);
+                //foreach (var item in vm)
+                //{
+                //    item.file_name = item.file_name.Replace("/", @"\");
+                //}
                 return View(vm);
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
