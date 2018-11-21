@@ -12,6 +12,9 @@ using HomeHelpCallsWebSite.Models;
 using AutoMapper;
 using HomeHelpCallsWebSite.Infrastructure.Data;
 using System.Security.Claims;
+using System.IO;
+using System.Drawing;
+using System.Text;
 
 namespace HomeHelpCallsWebSite.Controllers
 {
@@ -24,6 +27,7 @@ namespace HomeHelpCallsWebSite.Controllers
         private IMapper _strmsMapper;
         private IMapper _imageMapper;
         private readonly int firm = 25;
+        private readonly int ptc = 322;
 
         public OpenCallsController()
         {
@@ -34,7 +38,7 @@ namespace HomeHelpCallsWebSite.Controllers
             _strmsMapper = config2.CreateMapper();
             var config3 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_HNDL_CALLS, CallsViewModel>(MemberList.Source));
             _hndlCallsMapper = config3.CreateMapper();
-            var config4 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_HNDL_CALLS, CallsViewModel>(MemberList.Source));
+            var config4 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_HNDL_CALLS, CallsViewModel>(MemberList.Destination));
             _imageMapper = config4.CreateMapper();
         }
 
@@ -141,7 +145,15 @@ namespace HomeHelpCallsWebSite.Controllers
             return PartialView(vm);
         }
 
-       // GET: OpenCalls
+        //public async Task<ActionResult> Index()
+        //{
+        //    IEnumerable<VUMM_HH_OPEN_CALLS> dto = _conntext.VUMM_HH_OPEN_CALLS;
+        //    var vm = _callsMapper.Map<IEnumerable<VUMM_HH_OPEN_CALLS>, IEnumerable<CallsViewModel>>(dto);
+        //    return PartialView(vm);
+
+        //}
+
+        //GET: OpenCalls
         public async Task<ActionResult> Index(string searchString) //string searchString)
         {
             var user = User.Identity.Name;
@@ -188,7 +200,6 @@ namespace HomeHelpCallsWebSite.Controllers
                     dto = _conntext.VUMM_HH_OPEN_CALLS.Where(w => userStrms.Contains(w.STRM_CODE));
                 }
             }
-
             var vm = _callsMapper.Map<IEnumerable<VUMM_HH_OPEN_CALLS>, IEnumerable<CallsViewModel>>(dto);
             if (vm.Count() > 0)
             {
@@ -423,18 +434,86 @@ namespace HomeHelpCallsWebSite.Controllers
         {
             if (id != null)
             {
-                IEnumerable<VUMM_HH_IMAGES_LINKS> dto = _conntext.VUMM_HH_IMAGES_LINKS.Where(w => w.DOC_NBR == id);
-                IEnumerable<ImagesViewModelcs> vm = _imageMapper.Map<IEnumerable<VUMM_HH_IMAGES_LINKS>, IEnumerable<ImagesViewModelcs>>(dto);
-                //foreach (var item in vm)
-                //{
-                //    item.file_name = item.file_name.Replace("/", @"\");
-                //}
+                IEnumerable<MM_DOCS_FILES> dto = _conntext.MM_DOCS_FILE.Where(w => w.DOC_NBR == id && w.FIRM_CODE == firm && w.PRMY_TRNS_CLSS == ptc);
+                IEnumerable<ImagesViewModelcs> vm = _imageMapper.Map<IEnumerable<MM_DOCS_FILES>, IEnumerable<ImagesViewModelcs>>(dto);
+                foreach(var item in vm)
+                {
+                    string base64 = Convert.ToBase64String(item.BIN_FILE_DATA);
+                    item.MIME_TYPE = string.Format("data:{0};base64,{1}", item.MIME_TYPE, base64);
+                }
                 return View(vm);
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
         }
 
+        //public MvcHtmlString Image(this HtmlHelper html, byte[] image, string mime_type)
+        //{
+        //    var img = String.Format("data:{0};base64,{1}",mime_type ,Convert.ToBase64String(image));
+        //    return new MvcHtmlString("<img src='" + img + "' />");
+        //}
+
+        //public FileContentResult Image(int electedOfficialId)
+        //{
+        //    byte[] picture = GetPicture(electedOfficialId);
+        //    return new FileContentResult(picture, "image/jpeg");
+        //}
+
+        //public FileContentResult getImg(byte[] data , string mime_type)
+        //{
+        //    byte[] byteArray = data;
+        //    return byteArray != null ? new FileContentResult(byteArray, mime_type) : null;
+        //}
+
+        public ActionResult GetImage(byte[] data, string mime_type)
+        {
+
+            //string imageBase64Data = Convert.ToBase64String(data);
+            //string imageDataURL = string.Format("data:{0};base64,{1}",mime_type, imageBase64Data);
+            //ViewBag.ImageData = imageDataURL;
+            //return View();
+
+            //string base64 = Convert.ToBase64String(data);
+            ////base64 = "data:" + mime_type + ";base64," + base64;
+            //var ht = "<html><body><img src=data:" + mime_type + ";base64," + base64 + "/></body></html>";
+            ////var data64 = Convert.ToByte[](base64);
+            //////MemoryStream ms = new MemoryStream(data, 0, data.Length);
+            //////ms.Write(data, 0, data.Length);
+            //////returnImage = Image.FromStream(ms, true);    //Exception occurs here
+            ////base64 = base64.Replace('-', '+').Replace('_', '/').PadRight(4 * ((base64.Length + 3) / 4), '=');
+            ////var d = ASCIIEncoding.ASCII.GetBytes(base64);
+            ////return Convert.FromBase64String(data);
+            using (var ms = new MemoryStream(data))
+            {
+                return File(data, mime_type); // mime_type);
+            }
+
+            //return Content(ht, "text/html");
+        }
+
+        //public static System.Drawing.Image ByteArrayToImage(byte[] bArray)
+        //{
+        //    if (bArray == null)
+        //        return null;
+
+        //    System.Drawing.Image newImage;
+
+        //    try
+        //    {
+        //        using (MemoryStream ms = new MemoryStream(bArray, 0, bArray.Length))
+        //        {
+        //            ms.Write(bArray, 0, bArray.Length);
+        //            newImage = System.Drawing.Image.FromStream(ms, true);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        newImage = null;
+
+        //        //Log an error here
+        //    }
+
+        //    return newImage;
+        //}
 
         protected override void Dispose(bool disposing)
         {

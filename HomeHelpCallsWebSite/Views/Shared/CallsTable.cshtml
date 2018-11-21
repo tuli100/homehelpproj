@@ -64,7 +64,7 @@
                     @Html.DisplayFor(modelItem => item.CALL_STAT_FULL)
                 </td>
 
-                <td>
+                <td class="group-buttons-tbl">
                     <div class="btn-group" role="group">
                         <a class="btn btn-success" href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-wrench"></span> טיפול </a>
                         @if (item.isOpen)

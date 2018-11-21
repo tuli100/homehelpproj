@@ -93,7 +93,7 @@ namespace HomeHelpCallsWebSite.Controllers
                     else
                     {
                         // Setting.    
-                        ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                        ModelState.AddModelError(string.Empty, "שם המשתמש או הסיסמא שגויים.");
                     }
                 }
             }

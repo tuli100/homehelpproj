@@ -9,6 +9,7 @@
 @using (Ajax.BeginForm("CallsTable", "OpenCalls", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "CallsTable" , LoadingElementId = "progress" }))
 {
     @Html.AntiForgeryToken()
+    @*<div class="sticky">*@
     <div class="col-lg-offset-10 col-md-offset-8 col-sm-offset-8">
         @*<div class="align-self-end">*@
         <div id="imaginary_container">
@@ -22,6 +23,7 @@
             </div>
         </div>
     </div>
+    @*</div>*@
 }
 
 <div class="w-100"></div>

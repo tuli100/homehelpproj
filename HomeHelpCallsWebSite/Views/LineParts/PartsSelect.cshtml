@@ -21,7 +21,7 @@
     <tr>
         <td>
             
-                @Html.ActionLink(item.PART_CODE_NAME + " " + item.UNIT_NAME, null, null, new { id = Model.First().doc_nbr, part = item.PART_CODE_NAME }, null)
+                @Html.ActionLink(item.PART_CODE_NAME + " " + item.UNIT_NAME, null, null, new { id = Model.First().doc_nbr, part = item.PART_CODE_NAME }, new { @class="btn", @style = "width:70% align:center" })
                 @*<br />
             @Html.DisplayFor(modelItem => item.UNIT_NAME)*@
            

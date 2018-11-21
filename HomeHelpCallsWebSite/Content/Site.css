@@ -253,3 +253,16 @@ textarea {
         opacity: 1
     }
 }
+.group-buttons-tbl{
+    min-width:180px;
+}
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: yellow;
+    /*padding: 50px;*/
+    font-size: 20px;
+    position: fixed;
+    width: 100%;
+}

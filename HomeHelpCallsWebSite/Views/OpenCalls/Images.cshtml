@@ -6,7 +6,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<h2>Images</h2>*@
 <h2></h2>
 
 <div class="table-responsive">
@@ -15,11 +14,17 @@
         @foreach (var item in Model)
         {
             <tr>
+                          
                 <td>
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src=@item.file_name allowfullscreen></iframe>
+
+                        <img src="@item.MIME_TYPE" class="img-fluid embed-responsive-item" alt="no image" />
                     </div>
-                    
+                  
+                    @*<div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" scr=@item.MIME_TYPE allowfullscreen> </iframe>
+                        <iframe class="embed-responsive-item" src="@Url.Action("GetImage", "OpenCalls", new { data = item.BIN_FILE_DATA, mime_type = item.MIME_TYPE })" allowfullscreen alt="no image"></iframe>
+                    </div>*@
                 </td>
             </tr>
 

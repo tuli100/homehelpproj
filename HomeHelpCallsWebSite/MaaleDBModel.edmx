@@ -5,6 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MaaleDBModel.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="10.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MM_DOCS_FILES">
+          <Key>
+            <PropertyRef Name="FIRM_CODE" />
+            <PropertyRef Name="PRMY_TRNS_CLSS" />
+            <PropertyRef Name="DOC_NBR" />
+            <PropertyRef Name="SEQ" />
+          </Key>
+          <Property Name="FIRM_CODE" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="PRMY_TRNS_CLSS" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="DOC_NBR" Type="number" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="SEQ" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BIN_FILE_DATA" Type="blob" />
+          <Property Name="MIME_TYPE" Type="varchar2" MaxLength="64" />
+          <Property Name="FILE_EXTENSION" Type="varchar2" MaxLength="4" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.MM_HH_LGSTC_FRCST' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="MM_HH_LGSTC_FRCST">
@@ -60,17 +75,6 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_CALLS_LINES' does not have a prima
           <Property Name="TXT_DSCR" Type="varchar2" MaxLength="40" />
           <Property Name="PARENT_STRM_CODE" Type="varchar2" MaxLength="6" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'DBTRANS.VUMM_HH_DSTNS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="VUMM_HH_DSTNS">
-          <Property Name="DIRA" Type="varchar2" MaxLength="10" />
-          <Property Name="DSTN_CODE" Type="number" Precision="38" Scale="0" />
-          <Property Name="DSTN_NAME" Type="varchar2" MaxLength="41" />
-          <Property Name="CELL" Type="varchar2" MaxLength="15" />
-          <Property Name="EMAIL" Type="varchar2" MaxLength="40" />
-          <Property Name="ISPREF" Type="number" Precision="38" Scale="0" />
-          <Property Name="SALE_SUB_AREA" Type="varchar2" MaxLength="4" />
-        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_HNDL_CALLS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VUMM_HH_HNDL_CALLS">
@@ -206,6 +210,7 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_WORK_PARTS' does not have a primar
           <Property Name="DFLT_PART" Type="number" Precision="6" Scale="0" />
         </EntityType>
         <EntityContainer Name="MaaleDBModelStoreContainer">
+          <EntitySet Name="MM_DOCS_FILES" EntityType="Self.MM_DOCS_FILES" Schema="DBTRANS" store:Type="Tables" />
           <EntitySet Name="MM_HH_LGSTC_FRCST" EntityType="Self.MM_HH_LGSTC_FRCST" store:Type="Tables" store:Schema="DBTRANS">
             <DefiningQuery>SELECT 
 "MM_HH_LGSTC_FRCST"."PART_CODE" AS "PART_CODE", 
@@ -469,6 +474,7 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <EntitySet Name="VUMM_HH_STRMS_USERS" EntityType="MaaleDBModel.VUMM_HH_STRMS_USERS" />
           <EntitySet Name="VUMM_HH_STATUS_LIST" EntityType="MaaleDBModel.VUMM_HH_STATUS_LIST" />
           <EntitySet Name="VUMM_HH_IMAGES_LINKS" EntityType="MaaleDBModel.VUMM_HH_IMAGES_LINKS" />
+          <EntitySet Name="MM_DOCS_FILES" EntityType="MaaleDBModel.MM_DOCS_FILES" />
         </EntityContainer>
         <EntityType Name="VUMM_HH_CALLS_LINES">
           <Key>
@@ -529,6 +535,21 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <Property Name="DOC_NBR" Type="Decimal" Precision="38" Scale="0" />
           <Property Name="FILE_NAME" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="SEQ" Type="Decimal" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="MM_DOCS_FILES">
+          <Key>
+            <PropertyRef Name="FIRM_CODE" />
+            <PropertyRef Name="PRMY_TRNS_CLSS" />
+            <PropertyRef Name="DOC_NBR" />
+            <PropertyRef Name="SEQ" />
+          </Key>
+          <Property Name="FIRM_CODE" Type="Int32" Nullable="false" />
+          <Property Name="PRMY_TRNS_CLSS" Type="Int32" Nullable="false" />
+          <Property Name="DOC_NBR" Type="Int64" Nullable="false" />
+          <Property Name="SEQ" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="BIN_FILE_DATA" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="MIME_TYPE" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="FILE_EXTENSION" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -697,6 +718,19 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
               <MappingFragment StoreEntitySet="VUMM_HH_IMAGES_LINKS">
                 <ScalarProperty Name="SEQ" ColumnName="SEQ" />
                 <ScalarProperty Name="FILE_NAME" ColumnName="FILE_NAME" />
+                <ScalarProperty Name="DOC_NBR" ColumnName="DOC_NBR" />
+                <ScalarProperty Name="PRMY_TRNS_CLSS" ColumnName="PRMY_TRNS_CLSS" />
+                <ScalarProperty Name="FIRM_CODE" ColumnName="FIRM_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MM_DOCS_FILES">
+            <EntityTypeMapping TypeName="MaaleDBModel.MM_DOCS_FILES">
+              <MappingFragment StoreEntitySet="MM_DOCS_FILES">
+                <ScalarProperty Name="FILE_EXTENSION" ColumnName="FILE_EXTENSION" />
+                <ScalarProperty Name="MIME_TYPE" ColumnName="MIME_TYPE" />
+                <ScalarProperty Name="BIN_FILE_DATA" ColumnName="BIN_FILE_DATA" />
+                <ScalarProperty Name="SEQ" ColumnName="SEQ" />
                 <ScalarProperty Name="DOC_NBR" ColumnName="DOC_NBR" />
                 <ScalarProperty Name="PRMY_TRNS_CLSS" ColumnName="PRMY_TRNS_CLSS" />
                 <ScalarProperty Name="FIRM_CODE" ColumnName="FIRM_CODE" />

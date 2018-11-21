@@ -60,6 +60,18 @@
     <div>
         @Html.DisplayFor(Model => Model.unit_name)
     </div>
+    <br/>
+    <div>
+        @Html.DisplayFor(Model => Model.doc_nbr)
+    </div>
+    <br/>
+    <div>
+        @Html.DisplayFor(Model => Model.parent_strm_code)
+    </div>
+    <br/>
+    <div>
+        @Html.DisplayFor(Model => Model.part_code)
+    </div>
 
     <div>
         @Html.HiddenFor(Model => Model.doc_nbr)
@@ -68,13 +80,13 @@
     </div>
 
     @*<div class="form-group row">
-        <div class="col-sm-1 col-md-1 col-md-offset-2">
-            <input type="submit" value="הוסף" class="btn btn-default" />
-        </div>
-        <div class="col-sm-1 col-md-1 col-md-offset-2">
-            <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
-        </div>
-    </div>*@
+            <div class="col-sm-1 col-md-1 col-md-offset-2">
+                <input type="submit" value="הוסף" class="btn btn-default" />
+            </div>
+            <div class="col-sm-1 col-md-1 col-md-offset-2">
+                <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
+            </div>
+        </div>*@
 
     <div class="form-group container">
         <div class=" col-sm-1 col-sm-push-1">
@@ -86,7 +98,7 @@
     </div>
 
 </div>
-    }
+
 
 
 @*<div class="modal fade searchmodal">
@@ -157,7 +169,7 @@
 
 
 
-    @section Scripts {
+    @*@section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
 
         <link href="~/Content/search.css" rel="stylesheet" />
@@ -189,7 +201,7 @@
                 }
             });
 
-        </script>
+        </script>*@
 
 
         @*<script type="text/javascript">

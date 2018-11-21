@@ -138,11 +138,11 @@ namespace HomeHelpCallsWebSite.Controllers
             string strm;
             try
             {
-                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(doc_nbr).STRM_CODE;
+                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(doc_nbr).PARENT_STRM_CODE;
             }
             catch
             {
-                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(doc_nbr).STRM_CODE;
+                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(doc_nbr).PARENT_STRM_CODE;
             }
             return strm;
         }
@@ -288,11 +288,12 @@ namespace HomeHelpCallsWebSite.Controllers
         // GET: LineParts/Edit/5
         public async Task<ActionResult> Edit(decimal? id)
         {
+            //LINE_ID is doc_nbr with line_nbr
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VUMM_HH_CALLS_LINES dto = await _conntext.VUMM_HH_CALLS_LINES.SingleOrDefaultAsync(m => m.LINE_ID == id);
+            VUMM_HH_CALLS_LINES dto =  await _conntext.VUMM_HH_CALLS_LINES.FindAsync(id);
             //FindAsync(id);
             if (dto == null)
             {
@@ -331,11 +332,12 @@ namespace HomeHelpCallsWebSite.Controllers
        // GET: LineParts/Delete/5
         public async Task<ActionResult> Delete(decimal? id)
         {
+            //LINE_ID is doc_nbr with line_nbr
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VUMM_HH_CALLS_LINES dto = await _conntext.VUMM_HH_CALLS_LINES.SingleOrDefaultAsync(m => m.LINE_ID == id);
+            VUMM_HH_CALLS_LINES dto = await _conntext.VUMM_HH_CALLS_LINES.FindAsync(id);
             //FindAsync(id);
             if (dto == null)
             {
