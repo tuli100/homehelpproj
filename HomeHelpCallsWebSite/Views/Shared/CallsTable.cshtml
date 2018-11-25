@@ -27,11 +27,11 @@
                 <td>
                     @if (item.isOpen)
                     {
-                        <a class="btn btn-outline-light align-self-end" style="color:cornflowerblue" title="פרטים נוספים" href="@Url.Action("Details", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-info-sign"></span></a>
+                        <a class="btn btn-lg btn-outline-light align-self-end" style="color:cornflowerblue" title="פרטים נוספים" href="@Url.Action("Details", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-info-sign"></span></a>
                     }
                     else
                     {
-                        <a class="btn btn-outline-light" title="פרטים נוספים" href="@Url.Action("Details", "HandelCalls",  new { id = item.doc_nbr })"><span class="glyphicon glyphicon-info-sign"></span></a>
+                        <a class="btn btn-lg btn-outline-light" title="פרטים נוספים" href="@Url.Action("Details", "HandelCalls",  new { id = item.doc_nbr })"><span class="glyphicon glyphicon-info-sign"></span></a>
                     }
                     @Html.DisplayFor(modelItem => item.doc_nbr)
                     @Html.DisplayFor(modelItem => item.CALL_DSCR)
@@ -39,7 +39,7 @@
                     {
                         //if (item.isOpen)
                         //{
-                            <a class="btn btn-outline-light" style="color:dimgray" title="תמונות" href="@Url.Action("Images", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-camera"></span></a>
+                            <a class="btn btn-lg btn-outline-light" style="color:dimgray" title="תמונות" href="@Url.Action("Images", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-camera"></span></a>
                         @*}
                         else
                         {
@@ -65,7 +65,7 @@
                 </td>
 
                 <td class="group-buttons-tbl">
-                    <div class="btn-group" role="group">
+                    <div class="btn-group-lg" role="group">
                         <a class="btn btn-success" href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-wrench"></span> טיפול </a>
                         @if (item.isOpen)
                         {

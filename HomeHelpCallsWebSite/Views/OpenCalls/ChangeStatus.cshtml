@@ -6,8 +6,8 @@
     }
 
 
-    <h4>קריאה מספר - @Html.DisplayFor(model => Model.doc_nbr) </h4>
-    <h4> @Html.DisplayFor(model => Model.CALL_DSCR) </h4>
+    <h3>קריאה מספר - @Html.DisplayFor(model => Model.doc_nbr) </h3>
+    <h3> @Html.DisplayFor(model => Model.CALL_DSCR) </h3>
  
 
     @using (Html.BeginForm())
@@ -21,7 +21,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CALL_STAT_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CALL_STAT_CODE, Model.StatusList, htmlAttributes: new { @class = "btn btn-default dropdown-toggle" })
+                @Html.DropDownListFor(model => model.CALL_STAT_CODE, Model.StatusList, htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
 
                 @Html.ValidationMessageFor(model => model.CALL_STAT_CODE, "", new { @class = "text-danger" })
             </div>
@@ -57,10 +57,10 @@
 
         <div class="form-group container">
             <div class=" col-sm-1 col-sm-push-1">
-                <input type="submit" value="בצע" class="btn btn-default" />
+                <input type="submit" value="בצע" class="btn btn-default btn-lg" />
             </div>
             <div class="col-sm-1 col-sm-push-1">
-                <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "OpenCalls",  new { id = Model.doc_nbr })">ביטול </a>
+                <a class="btn btn-default btn-lg" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts", new { id = Model.doc_nbr })">ביטול </a>
             </div>
         </div>
 

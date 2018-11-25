@@ -7,8 +7,8 @@
 
 @*<h3>העברה</h3>*@
 
-<h4>קריאה מספר - @Html.DisplayFor(model => Model.doc_nbr) </h4>
-<h4> @Html.DisplayFor(model => Model.CALL_DSCR) </h4>
+<h3>קריאה מספר - @Html.DisplayFor(model => Model.doc_nbr) </h3>
+<h3> @Html.DisplayFor(model => Model.CALL_DSCR) </h3>
 @*<h5>  @Html.DisplayFor(model => Model.CALL_STAT_FULL) </h5>*@
 
 
@@ -59,10 +59,10 @@
 
     <div class="form-group row">
         <div class="col-sm-1 col-md-1 col-md-offset-2">
-            <input type="submit" value="הוסף" class="btn btn-default" />
+            <input type="submit" value="הוסף" class="btn btn-default btn-lg" />
         </div>
         <div class="col-sm-1 col-md-1 col-md-offset-2">
-            <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "HandelCalls",  new { id = Model.doc_nbr })">ביטול </a>
+            <a class="btn btn-default btn-lg" role="button" aria-pressed="true" href="@Url.Action("Index", "HandelCalls",  new { id = Model.doc_nbr })">ביטול </a>
         </div>
     </div>
 

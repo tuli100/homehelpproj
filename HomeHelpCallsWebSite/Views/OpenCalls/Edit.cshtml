@@ -7,8 +7,8 @@
 
 @*<h3>העברה</h3>*@
 
-<h4>קריאה מספר - @Html.DisplayFor(model => Model.doc_nbr) </h4>
-<h4> @Html.DisplayFor(model => Model.CALL_DSCR) </h4>
+<h3>קריאה מספר - @Html.DisplayFor(model => Model.doc_nbr) </h3>
+<h3> @Html.DisplayFor(model => Model.CALL_DSCR) </h3>
 @*<h5>  @Html.DisplayFor(model => Model.CALL_STAT_FULL) </h5>*@
 
 
@@ -21,27 +21,27 @@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
+    <div class="form-group input-group-lg">
         @Html.LabelFor(model => model.STRM_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.STRM_CODE, Model.StrmList, htmlAttributes: new { @class = "btn btn-default dropdown-toggle" })
+            @Html.DropDownListFor(model => model.STRM_CODE, Model.StrmList, htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
 
             @Html.ValidationMessageFor(model => model.STRM_NAME, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group input-group-lg">
         @Html.LabelFor(model => model.APT_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DisplayFor(model => model.APT_NAME, new { htmlAttributes = new { @value = Model.DSTN_NAME, @class = "form-control", @disabled = "disabled" } })
+            @Html.DisplayFor(model => model.APT_NAME, new { htmlAttributes = new { @value = Model.DSTN_NAME, @class = "form-control form-control-lg", @disabled = "disabled" } })
         </div>
     </div>
 
 
-    <div class="form-group">
+    <div class="form-group input-group-lg">
         @Html.LabelFor(model => model.CALL_STAT_FULL, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DisplayFor(model => model.CALL_STAT_FULL, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DisplayFor(model => model.CALL_STAT_FULL, new { htmlAttributes = new { @class = "form-control form-control-lg" } })
             @Html.ValidationMessageFor(model => model.CALL_STAT_FULL, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -57,12 +57,12 @@
         </div>
     </div>*@
 
-    <div class="form-group container">
+    <div class="form-group  input-group-lg container">
         <div class=" col-sm-1 col-sm-push-1">
-            <input type="submit" value="העבר" class="btn btn-default" />
+            <input type="submit" value="העבר" class="btn btn-default btn-lg" />
         </div>
         <div class="col-sm-1 col-sm-push-1">
-            <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "OpenCalls",  new { id = Model.doc_nbr })">ביטול </a>
+            <a class="btn btn-default btn-lg" role="button" aria-pressed="true" href="@Url.Action("Index", "OpenCalls",  new { id = Model.doc_nbr })">ביטול </a>
         </div>
     </div>
 

@@ -10,7 +10,7 @@
 <h2>קריאה מספר - @Html.DisplayFor(model => model.doc_nbr) </h2>
 
 <p>
-    <div class="btn-group" role="group">
+    <div class="btn-group btn-group-lg" role="group">
         <a class="btn btn-success" data-toggle="modal" data-target=".closemodal" title="סיום טיפול וסגירה"><span class="glyphicon glyphicon-check"></span> סגירה </a>
         <a class="btn btn-primary" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
         <a class="btn btn-info" href="@Url.Action("ChangeStatus", "OpenCalls",  new { id = Model.doc_nbr })" title="שינוי סטטוס"><span class=" glyphicon glyphicon-edit"></span> שינוי סטטוס </a>
@@ -28,7 +28,7 @@
         <dd>
             @Html.DisplayFor(model => model.LINE_EVNT_DATE)
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.RQSTD_SHIP_DATE)
         </dt>

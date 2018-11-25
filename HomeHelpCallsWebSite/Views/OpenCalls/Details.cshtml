@@ -7,7 +7,7 @@
 <h2>קריאה מספר - @Html.DisplayFor(model => model.doc_nbr) </h2>
 
 <p>
-    <div class="btn-group" role="group">
+    <div class="btn-group btn-group-lg" role="group">
         <a class="btn btn-success" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-wrench"></span> טיפול </a>
         @*<a class="btn btn-success" data-toggle="modal" data-target=".closemodal" title="סיום טיפול וסגירה"><span class="glyphicon glyphicon-check"></span> סגירה </a>*@
         <a class="btn btn-primary" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
@@ -26,7 +26,7 @@
         <dd>
             @Html.DisplayFor(model => model.LINE_EVNT_DATE)
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.RQSTD_SHIP_DATE)
         </dt>
@@ -34,7 +34,7 @@
         <dd>
             @Html.DisplayFor(model => model.RQSTD_SHIP_DATE)
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.STRM_NAME)
         </dt>
@@ -42,7 +42,7 @@
         <dd>
             @Html.DisplayFor(model => model.STRM_NAME)
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.CALL_DSCR)
         </dt>
@@ -50,7 +50,7 @@
         <dd>
             @Html.DisplayFor(model => model.CALL_DSCR)
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.APT_NAME)
         </dt>
@@ -58,7 +58,7 @@
         <dd>
             @Html.DisplayFor(model => model.APT_NAME)
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.CELL_PHONE)
         </dt>
@@ -66,7 +66,7 @@
         <dd>
             @Html.DisplayFor(model => model.CELL_PHONE)
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.EMAIL)
         </dt>
@@ -74,7 +74,7 @@
         <dd>
             @Html.DisplayFor(model => model.EMAIL)
         </dd>
-
+        <br />
         <dt>
             @Html.DisplayNameFor(model => model.CALL_STAT_FULL)
         </dt>
@@ -82,14 +82,13 @@
         <dd>
             @Html.DisplayFor(model => model.CALL_STAT_FULL)
         </dd>
-
+        <br />
     </dl>
 </div>
+
 <p>
     @*@Html.ActionLink("טיפול", "Edit", new { id = Model.DOC_NBR }) |*@
     @*@Html.ActionLink("", "Index")|*@
-
-  
 </p>
 
 

@@ -2,7 +2,7 @@
     padding-top: 50px;
     padding-bottom: 20px;
     direction: rtl !important;
-}
+    }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -119,13 +119,23 @@ textarea {
     float: right !important;
     text-align: right !important;
 }
+
+
+
 /*
 	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
 	*/
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-
-    /* Force table to not be like tables anymore */
-    table, thead, tbody, th, td, tr {
+    .body-content {
+        font-size:large;
+    }
+    input,
+    select,
+    textarea {
+        font-size: large;
+    }
+        /* Force table to not be like tables anymore */
+        table, thead, tbody, th, td, tr {
         display: block;
     }
 
@@ -253,8 +263,9 @@ textarea {
         opacity: 1
     }
 }
+
 .group-buttons-tbl{
-    min-width:180px;
+    min-width:250px;
 }
 div.sticky {
     position: -webkit-sticky;

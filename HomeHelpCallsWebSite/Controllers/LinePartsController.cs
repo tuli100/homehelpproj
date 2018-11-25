@@ -195,6 +195,11 @@ namespace HomeHelpCallsWebSite.Controllers
                         ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
                         return View(iVm);
                     }
+                    //if(iVm.txt_dscr.Length > 40)
+                    //{
+                    //    ModelState.AddModelError("txt_dscr", "ההערה אינה יכולה להיות ארוכה יותר מ-40 תווים.");
+                    //    return View(iVm);
+                    //}
                     iVm.part_code = partsList.First().PART_CODE;
                     await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
                     return RedirectToAction("Index", new { id = iVm.doc_nbr });
@@ -207,13 +212,10 @@ namespace HomeHelpCallsWebSite.Controllers
                 else
                 {
                     ModelState.AddModelError("part_code_name", "לא נמצא פריט מתאים");
-                    return View(iVm);
                 }
             }
-            else
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            return View(iVm);
+            
          }
 
         public ActionResult AddWork(long id, string part = "")
@@ -323,10 +325,7 @@ namespace HomeHelpCallsWebSite.Controllers
                 await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_update_qnty_lft", iVm.doc_nbr, iVm.line_nbr, iVm.qnty, iVm.txt_dscr);
                 return RedirectToAction("Index", new { id = iVm.doc_nbr });
             }
-            else
-            {
-                return View(iVm);
-            }
+            return View(iVm);
         }
 
        // GET: LineParts/Delete/5
