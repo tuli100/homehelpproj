@@ -6,99 +6,99 @@
 }
 
 @*<p>
-    <div>
-        @Html.ActionLink("חזרה לרשימת הפריטים", "Index", new { id = Model.doc_nbr })
-    </div>
-</p>*@
+        <div>
+            @Html.ActionLink("חזרה לרשימת הפריטים", "Index", new { id = Model.doc_nbr })
+        </div>
+    </p>*@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    @*<h4 class="col-md-offset-2">שעות עבודה</h4>*@
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        @*<h4 class="col-md-offset-2">שעות עבודה</h4>*@
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        <div class="ui-widget">
-            <label class="control-label col-md-2">עובד</label>
-            @*@Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })*@
-            <div class="col-md-10">
-                <div class="input-group">
-                    @*@Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control py-2 border-left-0 border", id = "part_code", type = "search" } })*@
-                    @Html.DropDownListFor(model => model.part_code, Model.WParts, htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
-                    @*<div class="input-group-btn ">
-                            <button type="submit" class="btn btn-default border-right-0 border">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                        </div>*@
+        <div class="form-group">
+            <div class="ui-widget">
+                <label class="control-label col-md-2">עובד</label>
+                @*@Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })*@
+                <div class="col-md-10">
+                    <div class="input-group">
+                        @*@Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control py-2 border-left-0 border", id = "part_code", type = "search" } })*@
+                        @Html.DropDownListFor(model => model.part_code, Model.WParts, htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
+                        @*<div class="input-group-btn ">
+                                <button type="submit" class="btn btn-default border-right-0 border">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>*@
+                    </div>
+                    @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
                 </div>
-                @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
             </div>
         </div>
-    </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
 
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.qnty, "שעות עבודה", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })*@
-            @Html.DropDownListFor(model => model.qnty, new SelectList(
-               new List<Object>{
-                    new { value = 0.25 , text = "0:15"  },
-                    new { value = 0.5 , text = "0:30"  },
-                    new { value = 0.25 , text = "0:45"},
-                    new { value = 1.0 , text = "1:00" },
-                    new { value = 1.5 , text = "1:30"},
-                    new { value = 2.0 , text = "2:00"  },
-                    new { value = 2.5 , text = "2:30" },
-                    new { value = 3.0 , text = "3:00"},
-                    new { value = 3.5 , text = "3:30"  },
-                    new { value = 4.0 , text = "4:00" },
+        <div class="form-group">
+            @Html.LabelFor(model => model.qnty, "שעות עבודה", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.DropDownListFor(model => model.qnty, new SelectList(
+                   new List<Object>{
+                        new { value = 0.25 , text = "0:15"  },
+                        new { value = 0.5 , text = "0:30"  },
+                        new { value = 0.75 , text = "0:45"},
+                        new { value = 1.0 , text = "1:00" },
+                        new { value = 1.5 , text = "1:30"},
+                        new { value = 2.0 , text = "2:00"  },
+                        new { value = 2.5 , text = "2:30" },
+                        new { value = 3.0 , text = "3:00"},
+                        new { value = 3.5 , text = "3:30"  },
+                        new { value = 4.0 , text = "4:00" },
 
-                 },
-               "value",
-               "text",
-                2), htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
-            @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
+                     },
+                   "value",
+                   "text",
+                    2), htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
+                @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div>
-        @Html.DisplayFor(Model => Model.unit_name)
-        @Html.HiddenFor(Model => Model.doc_nbr)
-        @Html.HiddenFor(Model => Model.parent_strm_code)
-        @Html.HiddenFor(Model => Model.part_code)
-    </div>
+        <div>
+            @Html.DisplayFor(Model => Model.unit_name)
+            @Html.HiddenFor(Model => Model.doc_nbr)
+            @Html.HiddenFor(Model => Model.parent_strm_code)
+            @Html.HiddenFor(Model => Model.part_code)
+        </div>
 
-    @*<div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="הוסף" class="btn btn-default" />
-            </div>
-        </div>*@
+        @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="הוסף" class="btn btn-default" />
+                </div>
+            </div>*@
 
-    @*<div class="form-group">
-            <div class="col-sm-1 col-md-10 col-md-offset-2">
-                <input type="submit" value="הוסף" class="btn btn-default" />
-            </div>
-            <div class="col-sm-1 col-md-10">
-                <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
-            </div>
-        </div>*@
+        @*<div class="form-group">
+                <div class="col-sm-1 col-md-10 col-md-offset-2">
+                    <input type="submit" value="הוסף" class="btn btn-default" />
+                </div>
+                <div class="col-sm-1 col-md-10">
+                    <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
+                </div>
+            </div>*@
 
-    <div class="form-group container">
+        <div class="form-group container">
             <div class="col-sm-2 col-md-2 col-md-push-2">
-                <input type="submit" value="הוסף" class="btn btn-default btn-lg"/>
+                <input type="submit" value="הוסף" class="btn btn-default btn-lg" />
             </div>
             <div class="col-sm-2 col-md-2 col-md-push-2">
                 <a class="btn btn-default btn-lg" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
@@ -107,16 +107,20 @@
 
 
         @*<div class="form-group row">
-            <div class="col-sm-1 col-md-10">
-                <input type="submit" value="הוסף" class="btn btn-default" />
-            </div>
-            <div class="col-sm-1 col-md-10">
-                <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
-            </div>
-        </div>*@
+                <div class="col-sm-1 col-md-10">
+                    <input type="submit" value="הוסף" class="btn btn-default" />
+                </div>
+                <div class="col-sm-1 col-md-10">
+                    <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
+                </div>
+            </div>*@
     </div>
 }
 
 @*<div>
-    @Html.ActionLink("חזרה לרשית הפריטים", "Index")
-</div>*@
+        @Html.ActionLink("חזרה לרשית הפריטים", "Index")
+    </div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

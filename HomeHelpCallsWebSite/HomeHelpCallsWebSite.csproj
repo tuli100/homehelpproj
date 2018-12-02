@@ -1017,7 +1017,6 @@
     <Content Include="Views\LineParts\Index.cshtml" />
     <Content Include="Views\Account\login.cshtml" />
     <Content Include="Views\Shared\LoginView.cshtml" />
-    <Content Include="Views\Parts\SelectPartView.cshtml" />
     <Content Include="Views\LineParts\PartsSelect.cshtml" />
     <Content Include="Views\LineParts\testView.cshtml" />
     <Content Include="Views\LineParts\AddWork.cshtml" />
@@ -1044,6 +1043,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Filters\" />
     <Folder Include="Views\Manage\" />
+    <Folder Include="Views\Parts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

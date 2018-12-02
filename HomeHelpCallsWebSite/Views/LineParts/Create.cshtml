@@ -7,68 +7,68 @@
 
 @using (Html.BeginForm()) // "Create", "LineParts", new AjaxOptions { HttpMethod = "POST"}))
 {
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
+    <div class="form-horizontal">
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        <div class="ui-widget">
-            @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })
-            <div class="col-md-10" direction="rtl">
-                <div class="input-group">
-                    @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control col-md-4", id = "autocomplete" } })
-                    @*<div class="input-group-btn input-group-prepend">
-                        <button type="submit" class="btn btn-default">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </div>*@
+        <div class="form-group">
+            <div class="ui-widget">
+                @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })
+                <div class="col-md-10" direction="rtl">
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control col-md-4", id = "autocomplete" } })
+                        @*<div class="input-group-btn input-group-prepend">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>*@
+                    </div>
+                    @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
                 </div>
-                @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.qnty, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div>
+            @Html.DisplayFor(Model => Model.unit_name)
+        </div>
+
+        <div>
+            @Html.HiddenFor(Model => Model.doc_nbr)
+            @Html.HiddenFor(Model => Model.parent_strm_code)
+            @Html.HiddenFor(Model => Model.part_code)
+        </div>
+
+        <div class="form-group container form-group-lg">
+            <div class="col-sm-2 col-md-2 col-md-push-2">
+                <input type="submit" value="הוסף" class="btn btn-default btn-lg" />
+            </div>
+            <div class="col-sm-2 col-md-2 col-md-push-2">
+                <a class="btn btn-default btn-lg" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
             </div>
         </div>
     </div>
 
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.txt_dscr, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.qnty, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div>
-        @Html.DisplayFor(Model => Model.unit_name)
-    </div>
- 
-    <div>
-        @Html.HiddenFor(Model => Model.doc_nbr)
-        @Html.HiddenFor(Model => Model.parent_strm_code)
-        @Html.HiddenFor(Model => Model.part_code)
-    </div>
-
-    <div class="form-group container form-group-lg">
-        <div class="col-sm-2 col-md-2 col-md-push-2">
-            <input type="submit" value="הוסף" class="btn btn-default btn-lg" />
-        </div>
-        <div class="col-sm-2 col-md-2 col-md-push-2">
-            <a class="btn btn-default btn-lg" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
-        </div>
-    </div>
-</div>
-
-    }
+}
 
 
 <script type="text/javascript">
@@ -94,3 +94,7 @@
         },
     });
 </script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
