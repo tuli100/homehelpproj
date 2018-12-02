@@ -20,7 +20,7 @@ namespace HomeHelpCallsWebSite.Models
         [DataType(DataType.Date)]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> LINE_EVNT_DATE { get; set; }
-        [Display(Name = "תאריך יעד")]
+        [Display(Name = "תאריך")]
         [DataType(DataType.DateTime)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> RQSTD_SHIP_DATE { get; set; }

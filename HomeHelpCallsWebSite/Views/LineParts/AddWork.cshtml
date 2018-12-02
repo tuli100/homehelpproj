@@ -55,14 +55,16 @@
             @*@Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })*@
             @Html.DropDownListFor(model => model.qnty, new SelectList(
                new List<Object>{
-                    new { value = 0.5 , text = "0:30 חצי שעה"  },
-                    new { value = 1.0 , text = "1 שעה" },
-                    new { value = 1.5 , text = "1:30 שעה וחצי"},
-                    new { value = 2.0 , text = "2 שעתיים"  },
-                    new { value = 2.5 , text = "2:30 שעתיים וחצי" },
-                    new { value = 3.0 , text = "3 שעות"},
-                    new { value = 3.5 , text = "3:30 שעות"  },
-                    new { value = 4.0 , text = "4 שעות" },
+                    new { value = 0.25 , text = "0:15"  },
+                    new { value = 0.5 , text = "0:30"  },
+                    new { value = 0.25 , text = "0:45"},
+                    new { value = 1.0 , text = "1:00" },
+                    new { value = 1.5 , text = "1:30"},
+                    new { value = 2.0 , text = "2:00"  },
+                    new { value = 2.5 , text = "2:30" },
+                    new { value = 3.0 , text = "3:00"},
+                    new { value = 3.5 , text = "3:30"  },
+                    new { value = 4.0 , text = "4:00" },
 
                  },
                "value",
@@ -94,25 +96,25 @@
             </div>
         </div>*@
 
-    <div class="form-group container form-group-lg">
-        <div class=" col-sm-1 col-sm-push-1">
-            <input type="submit" value="הוסף" class="btn btn-default" />
+    <div class="form-group container">
+            <div class="col-sm-2 col-md-2 col-md-push-2">
+                <input type="submit" value="הוסף" class="btn btn-default btn-lg"/>
+            </div>
+            <div class="col-sm-2 col-md-2 col-md-push-2">
+                <a class="btn btn-default btn-lg" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
+            </div>
         </div>
-        <div class="col-sm-1 col-sm-push-1">
-            <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
-        </div>
+
+
+        @*<div class="form-group row">
+            <div class="col-sm-1 col-md-10">
+                <input type="submit" value="הוסף" class="btn btn-default" />
+            </div>
+            <div class="col-sm-1 col-md-10">
+                <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
+            </div>
+        </div>*@
     </div>
-
-
-    @*<div class="form-group row">
-        <div class="col-sm-1 col-md-10">
-            <input type="submit" value="הוסף" class="btn btn-default" />
-        </div>
-        <div class="col-sm-1 col-md-10">
-            <a class="btn btn-default" role="button" aria-pressed="true" href="@Url.Action("Index", "LineParts",  new { id = Model.doc_nbr })">ביטול </a>
-        </div>
-    </div>*@
-</div>
 }
 
 @*<div>

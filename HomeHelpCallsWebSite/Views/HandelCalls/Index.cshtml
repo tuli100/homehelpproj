@@ -5,7 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>קריאות בטיפול</h2>
+<h3> @Model.Count() קריאות בטיפול </h3>
+@*<h2>קריאות בטיפול</h2>*@
 
 @using (Ajax.BeginForm("CallsTable", "HandelCalls", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "CallsTable", LoadingElementId = "progress" }))
 {

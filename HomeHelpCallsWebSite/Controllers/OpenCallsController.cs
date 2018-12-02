@@ -82,7 +82,6 @@ namespace HomeHelpCallsWebSite.Controllers
         public async Task<ActionResult> CallsTable(string searchString)
         {
             var user = User.Identity.Name;
-
             var ctx = Request.GetOwinContext();
             var authenticationManager = ctx.Authentication;
             var tt = authenticationManager.User.Claims.SingleOrDefault(w => w.Type == ClaimTypes.Role);
@@ -441,79 +440,11 @@ namespace HomeHelpCallsWebSite.Controllers
                     string base64 = Convert.ToBase64String(item.BIN_FILE_DATA);
                     item.MIME_TYPE = string.Format("data:{0};base64,{1}", item.MIME_TYPE, base64);
                 }
-                return View(vm);
+                return PartialView(vm);
             }
+            System.Threading.Thread.Sleep(500);
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-
-        //public MvcHtmlString Image(this HtmlHelper html, byte[] image, string mime_type)
-        //{
-        //    var img = String.Format("data:{0};base64,{1}",mime_type ,Convert.ToBase64String(image));
-        //    return new MvcHtmlString("<img src='" + img + "' />");
-        //}
-
-        //public FileContentResult Image(int electedOfficialId)
-        //{
-        //    byte[] picture = GetPicture(electedOfficialId);
-        //    return new FileContentResult(picture, "image/jpeg");
-        //}
-
-        //public FileContentResult getImg(byte[] data , string mime_type)
-        //{
-        //    byte[] byteArray = data;
-        //    return byteArray != null ? new FileContentResult(byteArray, mime_type) : null;
-        //}
-
-        public ActionResult GetImage(byte[] data, string mime_type)
-        {
-
-            //string imageBase64Data = Convert.ToBase64String(data);
-            //string imageDataURL = string.Format("data:{0};base64,{1}",mime_type, imageBase64Data);
-            //ViewBag.ImageData = imageDataURL;
-            //return View();
-
-            //string base64 = Convert.ToBase64String(data);
-            ////base64 = "data:" + mime_type + ";base64," + base64;
-            //var ht = "<html><body><img src=data:" + mime_type + ";base64," + base64 + "/></body></html>";
-            ////var data64 = Convert.ToByte[](base64);
-            //////MemoryStream ms = new MemoryStream(data, 0, data.Length);
-            //////ms.Write(data, 0, data.Length);
-            //////returnImage = Image.FromStream(ms, true);    //Exception occurs here
-            ////base64 = base64.Replace('-', '+').Replace('_', '/').PadRight(4 * ((base64.Length + 3) / 4), '=');
-            ////var d = ASCIIEncoding.ASCII.GetBytes(base64);
-            ////return Convert.FromBase64String(data);
-            using (var ms = new MemoryStream(data))
-            {
-                return File(data, mime_type); // mime_type);
-            }
-
-            //return Content(ht, "text/html");
-        }
-
-        //public static System.Drawing.Image ByteArrayToImage(byte[] bArray)
-        //{
-        //    if (bArray == null)
-        //        return null;
-
-        //    System.Drawing.Image newImage;
-
-        //    try
-        //    {
-        //        using (MemoryStream ms = new MemoryStream(bArray, 0, bArray.Length))
-        //        {
-        //            ms.Write(bArray, 0, bArray.Length);
-        //            newImage = System.Drawing.Image.FromStream(ms, true);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        newImage = null;
-
-        //        //Log an error here
-        //    }
-
-        //    return newImage;
-        //}
 
         protected override void Dispose(bool disposing)
         {

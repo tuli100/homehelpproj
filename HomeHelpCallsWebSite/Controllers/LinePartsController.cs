@@ -10,6 +10,8 @@ using HomeHelpCallsWebSite.Models;
 using HomeHelpCallsWebSite.Infrastructure.Data;
 using System.Linq.Dynamic.Core;
 using System;
+using System.Web;
+using System.Security.Claims;
 
 namespace HomeHelpCallsWebSite.Controllers
 {
@@ -22,7 +24,6 @@ namespace HomeHelpCallsWebSite.Controllers
         private IMapper _workPartsMapper;
         private IMapper _callMapper;
         private string _parent_strm_code;
-
 
         public LinePartsController()
         {
@@ -38,6 +39,7 @@ namespace HomeHelpCallsWebSite.Controllers
             _workPartsMapper = config3.CreateMapper();
         }
 
+       
          // GET: LineParts
         public async Task<ActionResult> Index(long id, bool isOpen = true )
         {
@@ -100,7 +102,16 @@ namespace HomeHelpCallsWebSite.Controllers
             return sl;
         }
 
-     
+        public IEnumerable<PartViewModel> FindPartSrch([Bind] IEnumerable<PartViewModel> iVm, string searchString)
+        {
+            if (1 == 1)
+            {
+                var t = 9;
+            }
+            return iVm.Where(w => w.PART_CODE_NAME.Contains(searchString));
+        }
+
+
         public IEnumerable<PartViewModel> FindPart(string strm, string inputcode)
         {
             if (string.IsNullOrEmpty(inputcode))
@@ -114,22 +125,28 @@ namespace HomeHelpCallsWebSite.Controllers
             return partsl;
         }
 
-        [HttpPost]
-        public JsonResult FindPartJson(long doc_nbr, string input)
+
+        //public JsonResult FindPartJson(long id)
+        //{
+        //    var strm = GetParentStrmCode(id);
+        //    var part_list = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm && w.PART_CODE_NAME.Contains("צינור")).Select(w => w.PART_CODE_NAME).ToList();
+        //    return Json(part_list, JsonRequestBehavior.AllowGet);
+        //}
+
+        public JsonResult FindPartJson(long id, string term)
         {
-            var strm = GetParentStrmCode(doc_nbr);
-            var part_list = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm);
-            var part = part_list.Where(p => p.PART_CODE_NAME.Contains(input));   //TODO CHECK CASE SENSETIVE  // StringComparison.CurrentCultureIgnoreCase));
-            return Json(part);
+           var strm = GetParentStrmCode(id);
+            var part_list = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm && w.PART_CODE_NAME.Contains(term)).Select(w => w.PART_CODE_NAME).ToList();
+            return Json(part_list, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetFilterdParts(long doc_nbr, string input="")
+        public List<string> GetFilterdParts(long id, string input="צינור")
         {
-            var strm = GetParentStrmCode(doc_nbr);
-            var res = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm);
-            IEnumerable<PartViewModel> parts = _partsMapper.Map<IEnumerable<VUMM_HH_PARTS>, IEnumerable<PartViewModel>>(res);
-            parts = parts.Where(x => x.PART_CODE_NAME.Contains(input));
-            return Json(parts, JsonRequestBehavior.AllowGet);
+            var strm = GetParentStrmCode(id);
+            var res = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm && w.PART_CODE_NAME.Contains(input)).Select(e =>e.PART_CODE_NAME).ToList();
+            //IEnumerable<PartViewModel> parts = _partsMapper.Map<IEnumerable<VUMM_HH_PARTS>, IEnumerable<PartViewModel>>(res);
+            //parts = parts.Where(x => x.PART_CODE_NAME.Contains(input)).ToList();
+            return res;
         }
 
         #endregion LineParts
@@ -178,7 +195,7 @@ namespace HomeHelpCallsWebSite.Controllers
             if (ModelState.IsValid)
             {
                 var strm = GetParentStrmCode(iVm.doc_nbr);
-                var input_part = iVm.part_code;
+                //var input_part = iVm.part_code;
                 var partsList = FindPart(strm, iVm.part_code_name);
                 if (string.IsNullOrEmpty(iVm.part_code_name))
                 {
@@ -195,11 +212,6 @@ namespace HomeHelpCallsWebSite.Controllers
                         ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
                         return View(iVm);
                     }
-                    //if(iVm.txt_dscr.Length > 40)
-                    //{
-                    //    ModelState.AddModelError("txt_dscr", "ההערה אינה יכולה להיות ארוכה יותר מ-40 תווים.");
-                    //    return View(iVm);
-                    //}
                     iVm.part_code = partsList.First().PART_CODE;
                     await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
                     return RedirectToAction("Index", new { id = iVm.doc_nbr });
@@ -207,7 +219,8 @@ namespace HomeHelpCallsWebSite.Controllers
                 if(partsList.Count() >1 )
                 { 
                     partsList.First().doc_nbr = iVm.doc_nbr;
-                    return PartialView("PartsSelect", partsList);
+                    //return PartialView("testView", iVm.doc_nbr);
+                    PartialView("PartsTableView", partsList);
                 }
                 else
                 {

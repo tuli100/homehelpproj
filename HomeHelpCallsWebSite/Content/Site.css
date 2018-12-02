@@ -9,6 +9,7 @@
     padding-left: 15px;
     padding-right: 15px;
     direction: rtl !important;
+    font-size: large;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -22,13 +23,15 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 500px;
     border-radius: 4px 4px;
+    font-size: x-large;
 }
 
 .input-group {
     max-width: 280px;
-    border-radius : 4px 4px;
+    border-radius: 4px 4px;
+    font-size: x-large;
 }
 /****************** 23/10/18 *************/
 .rounded {
@@ -127,12 +130,12 @@ textarea {
 	*/
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
     .body-content {
-        font-size:large;
+        font-size:medium;
     }
     input,
     select,
     textarea {
-        font-size: large;
+        font-size: medium;
     }
         /* Force table to not be like tables anymore */
         table, thead, tbody, th, td, tr {
@@ -193,43 +196,23 @@ textarea {
         }*/
   
 }
-
-.loader {
+.overlay {
+    z-index: 500;
     position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    width: 150px;
-    height: 150px;
-    margin: -75px 0 0 -75px;
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
 }
 
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
+.loading-spinner {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 25%;
+    left: 25%;
 }
 
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
 
-    100% {
-        transform: rotate(360deg);
-    }
-}
 
 /* Add animation to "page content" */
 .animate-bottom {

@@ -10,15 +10,14 @@ namespace HomeHelpCallsWebSite
         {
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
                         "~/Scripts/jquery-{version}.js",
-                        //"~/Scripts/bootstrap.min.js",
+                        "~/Scripts/jquery-ui-1.12.1.min.js",
                         "~/Scripts/bootstrap-rtl.min.js",
-                        "~/Scripts/jquery-ui-{version}.min.js",
                         "~/Scripts/jquery.unobtrusive-ajax.min.js"
                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*",
-                        "~/Scripts/namespaces.js",
+                        //"~/Scripts/namespaces.js",
                         "~/Scripts/site.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -26,13 +25,12 @@ namespace HomeHelpCallsWebSite
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-         
-                     
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //"~/Content/bootstrap.min.css",
                       "~/Content/DataTables/css/dataTables.bootstrap.min.css",
                       "~/Content/site.css",
-                       "~/Content/bootstrap-rtl.min.css"                       
+                       "~/Content/bootstrap-rtl.min.css" ,
+                       "~/Content/themes/base/jquery.ui.all.css"                      
                       ));
 
             #region LineParts
