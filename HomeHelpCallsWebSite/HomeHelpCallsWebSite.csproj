@@ -744,6 +744,7 @@
     <Content Include="Content\DataTables\jquery.dataTables_themeroller.css" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\favicon.png" />
     <Content Include="Content\images\sort_asc.png" />
     <Content Include="Content\images\sort_asc_disabled.png" />
     <Content Include="Content\images\sort_both.png" />
@@ -997,7 +998,9 @@
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

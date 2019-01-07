@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<h3>טיפול</h3>*@
-<h3>קריאה מספר - @Html.DisplayFor(model => Model.First().doc_nbr) </h3>
+<h3 style="color:red"><b> טיפול בקריאה - @Html.DisplayFor(model => Model.First().doc_nbr) </b> </h3>
 
 <h3> @Html.DisplayFor(model => Model.First().part_name)  @Html.DisplayFor(model => Model.First().txt_dscr)  </h3>
 
@@ -23,7 +23,7 @@
                     <a class="btn btn-success" data-toggle="modal" data-target=".closemodal" title="סיום טיפול וסגירה"><span class="glyphicon glyphicon-check"></span> סגירה </a>
                     <a class="btn btn-primary" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.First().doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
                     <a class="btn btn-info" href="@Url.Action("ChangeStatus", "OpenCalls",  new { id = Model.First().doc_nbr })" title="שינוי סטטוס"><span class="glyphicon glyphicon-edit"></span> שינוי סטטוס </a>
-                @*@Html.ActionLink("סגירה", "Close", "OpenCalls", new { id = Model.First().doc_nbr, stat = 300 }, new { @class = "btn glyphicon glyphicon-check btn-success", title = "סיום טיפול וסגירה" })
+                    @*@Html.ActionLink("סגירה", "Close", "OpenCalls", new { id = Model.First().doc_nbr, stat = 300 }, new { @class = "btn glyphicon glyphicon-check btn-success", title = "סיום טיפול וסגירה" })
                     @Html.ActionLink("העברה", "Edit", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary glyphicon glyphicon-share", title = "העברה למחסן אחר" })
                     @Html.ActionLink("שינוי סטטוס", "CangeStatus", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-info glyphicon glyphicon-edit", title = "שינוי סטטוס לטיפול עתידי" })*@
             </div>
@@ -76,13 +76,9 @@
             @*<td>
                     @Html.DisplayFor(modelItem => item.parent_strm_code)
                 </td>*@
-
             <td>
-
                 <a class="btn btn-default btn-lg" href="@Url.Action("Edit", "LineParts",  new { id = item.LINE_ID })" title="עריכה"><span class=" glyphicon glyphicon-pencil"></span> עריכה </a>
                 @* <a class="btn float-right right" style="color:red" href="@Url.Action("Delete", "LineParts",  new { id = item.line_nbr, doc_nbr = Model.First().doc_nbr })" title=""><span class=" glyphicon glyphicon-remove"></span> </a>*@
-
-
                 @Html.ActionLink(" ", "Delete", new { id = item.LINE_ID }, new { @onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');", @class = "glyphicon glyphicon-remove", @style = "color:red" })
 
             </td>
@@ -99,11 +95,16 @@
                     <div class="modal-header">
                         <button data-dismiss="modal" class="close"><span>&times;</span></button>
                         <div class="modal-title">
-                            <h3> סגירת קריאה מספר - @Html.DisplayFor(model => Model.First().doc_nbr)</h3>
+                            <h3><b>סגירת קריאה מספר - @Html.DisplayFor(model => Model.First().doc_nbr)</b> </h3>
                         </div>
 
                     </div>
                     <div class="modal-body">
+                        <p>רגע, האם יש צורך  בטיפול נוסף ?
+                       
+                            <a class="btn btn-link btn-lg" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.First().doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
+                        </p>
+                        <br />
                         <p>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.First().stat_rmrk, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -118,7 +119,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-default btn-lg glyphicon glyphicon-remove" data-dismiss="modal"> ביטול</button>
-                        <button class="btn btn-primary btn-lg glyphicon glyphicon-ok" type="submit"> סגור</button>
+                        <button class="btn btn-success btn-lg glyphicon glyphicon-ok" type="submit"> סגור</button>
                     </div>
                 </div>
             </div>

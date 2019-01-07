@@ -27,10 +27,10 @@ namespace HomeHelpCallsWebSite
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //"~/Content/bootstrap.min.css",
+                      "~/Content/themes/base/jquery-ui.min.css",
                       "~/Content/DataTables/css/dataTables.bootstrap.min.css",
                       "~/Content/site.css",
-                       "~/Content/bootstrap-rtl.min.css" ,
-                       "~/Content/themes/base/jquery.ui.all.css"                      
+                      "~/Content/bootstrap-rtl.min.css" 
                       ));
 
             #region LineParts

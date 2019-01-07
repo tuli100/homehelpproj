@@ -17,15 +17,15 @@
         <div class="form-group">
             <div class="ui-widget">
                 @Html.LabelFor(model => model.part_code_name, htmlAttributes: new { @class = "control-label col-md-2", id = "part_code" })
-                <div class="col-md-10" direction="rtl">
-                    <div class="input-group">
-                        @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control col-md-4", id = "autocomplete" } })
+                <div class="col-md-10">
+                    @*<div class="input-group">*@
+                        @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control", id = "autocomplete" } })
                         @*<div class="input-group-btn input-group-prepend">
                                 <button type="submit" class="btn btn-default">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </button>
                             </div>*@
-                    </div>
+                    @*</div>*@
                     @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -74,6 +74,8 @@
 <script type="text/javascript">
     var doc = document.getElementById("doc_nbr").value;
     $("#autocomplete").autocomplete({
+        delay: 500,
+        minLength: 3,
         source: function (request, response) {
             $.ajax({
                 url: "/LineParts/FindPartJson",

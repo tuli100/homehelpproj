@@ -23,13 +23,13 @@
 input,
 select,
 textarea {
-    max-width: 500px;
+    max-width: 340px;
     border-radius: 4px 4px;
     font-size: x-large;
 }
 
 .input-group {
-    max-width: 280px;
+    max-width: 340px;
     border-radius: 4px 4px;
     font-size: x-large;
 }
@@ -211,9 +211,6 @@ textarea {
     top: 25%;
     left: 25%;
 }
-
-
-
 /* Add animation to "page content" */
 .animate-bottom {
     position: relative;

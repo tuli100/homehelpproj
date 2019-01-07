@@ -135,8 +135,9 @@ namespace HomeHelpCallsWebSite.Controllers
 
         public JsonResult FindPartJson(long id, string term)
         {
-           var strm = GetParentStrmCode(id);
-            var part_list = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm && w.PART_CODE_NAME.Contains(term)).Select(w => w.PART_CODE_NAME).ToList();
+            var strm = GetParentStrmCode(id);
+            //var strm = "70";
+            var part_list = _conntext.VUMM_HH_PARTS.Where<VUMM_HH_PARTS>(w => w.PRMY_STRM_CODE == strm && w.PART_CODE_NAME.Contains(term)).Take(20).Select(w => w.PART_CODE_NAME).ToList();
             return Json(part_list, JsonRequestBehavior.AllowGet);
         }
 
@@ -152,6 +153,7 @@ namespace HomeHelpCallsWebSite.Controllers
         #endregion LineParts
         private string GetParentStrmCode( long doc_nbr)
         {
+            //return "70";
             string strm;
             try
             {
@@ -159,11 +161,40 @@ namespace HomeHelpCallsWebSite.Controllers
             }
             catch
             {
-                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(doc_nbr).PARENT_STRM_CODE;
+                try
+                {
+                    strm = _conntext.VUMM_HH_HNDL_CALLS.Find(doc_nbr).PARENT_STRM_CODE;
+                }
+                catch
+                {
+                    return "70";
+                }
             }
+            if (strm == " ." || strm == "613")  return "70";
             return strm;
         }
 
+        private string GetParentStrmCodeForWork(long doc_nbr)
+        {
+            string strm;
+            try
+            {
+                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(doc_nbr).PARENT_STRM_CODE;
+            }
+            catch
+            {
+                try
+                {
+                    strm = _conntext.VUMM_HH_HNDL_CALLS.Find(doc_nbr).PARENT_STRM_CODE;
+                }
+                catch
+                {
+                    return "70";
+                }
+            }
+            if (strm == " ." ) return "70";
+            return strm;
+        }
         // GET: LineParts/Create
         public ActionResult Create(long id, string part = "")
         {
@@ -264,11 +295,11 @@ namespace HomeHelpCallsWebSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                var strm = GetParentStrmCode(iVm.doc_nbr);
-                if(strm is null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                //var strm = GetParentStrmCodeForWork(iVm.doc_nbr);
+                //if(strm is null)
+                //{
+                //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //}
                 var input_part = iVm.part_code;
                 if (string.IsNullOrEmpty(iVm.part_code_name))
                 {

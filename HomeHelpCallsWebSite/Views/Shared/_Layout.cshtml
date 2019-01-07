@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - מענה לקריאות שירות</title>
+    <link rel="icon" href="~/Content/images/favicon.ico" />
+    <link rel="shortcut icon" href="~/Content/images/favicon.png" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/lib")
@@ -20,22 +22,19 @@
                     <span class="icon-bar"></span>
                 </button>
                 <ul class="nav navbar-nav navbar-right">
-
                 @if (Request.UrlReferrer != null)
                 {
-                    <a class="btn btn-link" onclick="history.go(-1); return false;" href="#"><span class=" glyphicon glyphicon-menu-right"></span></a>
+                    <a class="btn btn-link" onclick="history.go(-1); return false;" href="#"><span class="glyphicon glyphicon-menu-right" style="font-size:large"></span></a>
                 }
               
                 @if (Request.UrlReferrer != null)
                 {
-                    <a class="btn btn-link" onclick="history.go(+1); return false;" href="#"><span class="glyphicon glyphicon-menu-left"></span></a>
+                    <a class="btn btn-link" onclick="history.go(+1); return false;" href="#"><span class="glyphicon glyphicon-menu-left" style="font-size:large"></span></a>
                 }
-
                </ul>
             </div>
            
             <div class="navbar-collapse collapse">
-
                 <ul class="nav navbar-nav">
                     @Html.ActionLink("קריאות שירות", "Index", "OpenCalls", new { area = "" }, new { @class = "navbar-brand" })
                 </ul>

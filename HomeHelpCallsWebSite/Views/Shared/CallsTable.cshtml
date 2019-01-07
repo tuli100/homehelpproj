@@ -4,8 +4,8 @@
     <img src="~/Content/loader.png" class="loading-spinner"/>
 </div>
 
-<div class=" table">
-    <table class="table" id="CallsTable">
+<div class="table">
+    <table class="table table-hover" id="CallsTable">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.doc_nbr)
@@ -13,14 +13,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.RQSTD_SHIP_DATE)
             </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.APT_NAME)
             </th>
             <th>
                 @Html.DisplayNameFor(Model => Model.CALL_STAT_FULL)
             </th>
-
             <th></th>
         </tr>
 
@@ -28,7 +26,7 @@
         {
 
             <tr> 
-                <td>
+                <td class='clickable-row' data-href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })">
                     @if (item.isOpen)
                     {
                         <a class="btn btn-lg btn-outline-light align-self-end" style="color:cornflowerblue" title="פרטים נוספים" href="@Url.Action("Details", "OpenCalls", new { id = item.doc_nbr })"><span class="glyphicon glyphicon-info-sign"></span></a>
@@ -46,7 +44,7 @@
                         @*<span class="glyphicon glyphicon-camera"></span>*@
                     }
                 </td>
-                <td>
+                <td class='clickable-row' data-href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })">
                     תאריך יעד:
                     @Html.DisplayFor(modelItem => item.RQSTD_SHIP_DATE)
                     @if (!item.RQSTD_SHIP_TIME.Equals("00:00"))
@@ -56,17 +54,17 @@
                     נפתחה ב:
                     @Html.DisplayFor(ModelItem => item.LINE_EVNT_DATE)
                 </td>
-                <td>
+                <td class='clickable-row' data-href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })">
                     @Html.DisplayFor(modelItem => item.APT_NAME)
                     @Html.DisplayFor(modelItem => item.CELL_PHONE)
                 </td>
-                <td>
+                <td class='clickable-row' data-href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })">
                     @Html.DisplayFor(modelItem => item.CALL_STAT_FULL)
                 </td>
-
                 <td class="group-buttons-tbl">
                     <div class="btn-group-lg" role="group">
-                        <a class="btn btn-success" href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-wrench"></span> טיפול </a>
+                        @*<a class="btn btn-success" href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-wrench"></span> טיפול </a>*@
+                       
                         @if (item.isOpen)
                         {
                             <a class="btn btn-primary" href="@Url.Action("Edit", "OpenCalls", new { id = item.doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
@@ -85,39 +83,15 @@
     </table>
 </div>
 
-@*<div class="modal fade detailsmodal">
-        <div class="modal-dialog  modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button data-dismiss="modal" class="close"><span>&times;</span></button>
-                    <div class="modal-title">
-                        <h2>קריאה מספר - @Html.DisplayFor(model => model.item.doc_nbr) </h2>
-                    </div>
-
-                </div>
-                <div class="modal-body">
-                    <p>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.First().stat_rmrk, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.First().stat_rmrk, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.First().stat_rmrk, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(Model => Model.First().doc_nbr)
-                                @Html.HiddenFor(Model => Model.First().line_nbr)
-                            </div>
-                        </div>
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default btn-lg glyphicon glyphicon-remove" data-dismiss="modal"> ביטול</button>
-                    <button class="btn btn-primary btn-lg glyphicon glyphicon-ok" type="submit"> סגור</button>
-                </div>
-            </div>
-        </div>
-
-</div>*@
-
 <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
+
+@*<script type="text/javascript">
         $(document).ready(
         function () {
             $("#pics_btn").click(
@@ -132,4 +106,4 @@
             );
         }
     );
-</script>
+</script>*@
