@@ -59,13 +59,12 @@ warning 6002: The table/view 'DBTRANS.MM_HH_USERS' does not have a primary key d
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_CALLS_LINES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VUMM_HH_CALLS_LINES">
-          
           <Key>
             <PropertyRef Name="LINE_ID" />
           </Key>
           <Property Name="LINE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
-          <Property Name="DOC_NBR" Type="number" Precision="11" Scale="0" Nullable="false" />
-          <Property Name="LINE_NBR" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="DOC_NBR" Type="number" Precision="11" Scale="0" />
+          <Property Name="LINE_NBR" Type="number" Precision="6" Scale="0" />
           <Property Name="PART_CODE" Type="varchar2" MaxLength="20" />
           <Property Name="PART_NAME" Type="varchar2" MaxLength="40" />
           <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
@@ -74,6 +73,8 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_CALLS_LINES' does not have a prima
           <Property Name="UNIT_NAME" Type="varchar2" MaxLength="10" />
           <Property Name="TXT_DSCR" Type="varchar2" MaxLength="40" />
           <Property Name="PARENT_STRM_CODE" Type="varchar2" MaxLength="6" />
+          <Property Name="ORD" Type="number" Precision="38" Scale="0" />
+          <Property Name="RO" Type="number" Precision="38" Scale="0" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_HNDL_CALLS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -170,6 +171,7 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_PARTS' does not have a primary key
           <Property Name="TMP_PART_NAME_Y_N" Type="varchar2" MaxLength="1" />
           <Property Name="PART_GRP_CODE" Type="varchar2" MaxLength="4" />
           <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
+          <Property Name="RATE" Type="number" Precision="38" Scale="0" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBTRANS.VUMM_HH_STATUS_LIST' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -195,8 +197,10 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_STRMS_USERS' does not have a prima
 warning 6002: The table/view 'DBTRANS.VUMM_HH_WORK_PARTS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="VUMM_HH_WORK_PARTS">
           <Key>
+            <PropertyRef Name="WORK_PART_ID" />
             <PropertyRef Name="PART_CODE" />
           </Key>
+          <Property Name="WORK_PART_ID" Type="varchar2" MaxLength="26" Nullable="false" />
           <Property Name="PART_CODE" Type="varchar2" MaxLength="20" Nullable="false" />
           <Property Name="PART_LONG_NAME" Type="varchar2" MaxLength="40" />
           <Property Name="PART_SHRT_NAME" Type="varchar2" MaxLength="20" />
@@ -208,6 +212,7 @@ warning 6002: The table/view 'DBTRANS.VUMM_HH_WORK_PARTS' does not have a primar
           <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
           <Property Name="RSRV_STRM_CODE" Type="varchar2" MaxLength="6" />
           <Property Name="DFLT_PART" Type="number" Precision="6" Scale="0" />
+          <Property Name="TEST" Type="number" Precision="38" Scale="0" />
         </EntityType>
         <EntityContainer Name="MaaleDBModelStoreContainer">
           <EntitySet Name="MM_DOCS_FILES" EntityType="Self.MM_DOCS_FILES" Schema="DBTRANS" store:Type="Tables" />
@@ -247,7 +252,9 @@ FROM "DBTRANS"."MM_HH_USERS" "MM_HH_USERS"</DefiningQuery>
 "VUMM_HH_CALLS_LINES"."UNIT_CODE" AS "UNIT_CODE", 
 "VUMM_HH_CALLS_LINES"."UNIT_NAME" AS "UNIT_NAME", 
 "VUMM_HH_CALLS_LINES"."TXT_DSCR" AS "TXT_DSCR", 
-"VUMM_HH_CALLS_LINES"."PARENT_STRM_CODE" AS "PARENT_STRM_CODE"
+"VUMM_HH_CALLS_LINES"."PARENT_STRM_CODE" AS "PARENT_STRM_CODE", 
+"VUMM_HH_CALLS_LINES"."ORD" AS "ORD", 
+"VUMM_HH_CALLS_LINES"."RO" AS "RO"
 FROM "DBTRANS"."VUMM_HH_CALLS_LINES" "VUMM_HH_CALLS_LINES"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VUMM_HH_HNDL_CALLS" EntityType="Self.VUMM_HH_HNDL_CALLS" store:Type="Views" store:Schema="DBTRANS">
@@ -327,7 +334,8 @@ FROM "DBTRANS"."VUMM_HH_OPEN_CALLS" "VUMM_HH_OPEN_CALLS"</DefiningQuery>
 "VUMM_HH_PARTS"."PRMY_STRM_CODE" AS "PRMY_STRM_CODE", 
 "VUMM_HH_PARTS"."TMP_PART_NAME_Y_N" AS "TMP_PART_NAME_Y_N", 
 "VUMM_HH_PARTS"."PART_GRP_CODE" AS "PART_GRP_CODE", 
-"VUMM_HH_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME"
+"VUMM_HH_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME", 
+"VUMM_HH_PARTS"."RATE" AS "RATE"
 FROM "DBTRANS"."VUMM_HH_PARTS" "VUMM_HH_PARTS"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VUMM_HH_STATUS_LIST" EntityType="Self.VUMM_HH_STATUS_LIST" store:Type="Views" store:Schema="DBTRANS">
@@ -345,6 +353,7 @@ FROM "DBTRANS"."VUMM_HH_STRMS_USERS" "VUMM_HH_STRMS_USERS"</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VUMM_HH_WORK_PARTS" EntityType="Self.VUMM_HH_WORK_PARTS" store:Type="Views" store:Schema="DBTRANS">
             <DefiningQuery>SELECT 
+"VUMM_HH_WORK_PARTS"."WORK_PART_ID" AS "WORK_PART_ID", 
 "VUMM_HH_WORK_PARTS"."PART_CODE" AS "PART_CODE", 
 "VUMM_HH_WORK_PARTS"."PART_LONG_NAME" AS "PART_LONG_NAME", 
 "VUMM_HH_WORK_PARTS"."PART_SHRT_NAME" AS "PART_SHRT_NAME", 
@@ -355,7 +364,8 @@ FROM "DBTRANS"."VUMM_HH_STRMS_USERS" "VUMM_HH_STRMS_USERS"</DefiningQuery>
 "VUMM_HH_WORK_PARTS"."PART_GRP_CODE" AS "PART_GRP_CODE", 
 "VUMM_HH_WORK_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME", 
 "VUMM_HH_WORK_PARTS"."RSRV_STRM_CODE" AS "RSRV_STRM_CODE", 
-"VUMM_HH_WORK_PARTS"."DFLT_PART" AS "DFLT_PART"
+"VUMM_HH_WORK_PARTS"."DFLT_PART" AS "DFLT_PART", 
+"VUMM_HH_WORK_PARTS"."TEST" AS "TEST"
 FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -462,6 +472,7 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <Property Name="TMP_PART_NAME_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="PART_GRP_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="PART_CODE_NAME" Type="String" MaxLength="61" FixedLength="false" Unicode="false" />
+          <Property Name="RATE" Type="Decimal" Precision="38" Scale="0" />
         </EntityType>
         <EntityContainer Name="MaaleDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="MM_HH_LGSTC_FRCST" EntityType="Self.MM_HH_LGSTC_FRCST" />
@@ -469,45 +480,14 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <EntitySet Name="VUMM_HH_HNDL_CALLS" EntityType="Self.VUMM_HH_HNDL_CALLS" />
           <EntitySet Name="VUMM_HH_OPEN_CALLS" EntityType="Self.VUMM_HH_OPEN_CALLS" />
           <EntitySet Name="VUMM_HH_PARTS" EntityType="Self.VUMM_HH_PARTS" />
-          <EntitySet Name="VUMM_HH_CALLS_LINES" EntityType="MaaleDBModel.VUMM_HH_CALLS_LINES" />
-          <EntitySet Name="VUMM_HH_WORK_PARTS" EntityType="MaaleDBModel.VUMM_HH_WORK_PARTS" />
           <EntitySet Name="VUMM_HH_STRMS_USERS" EntityType="MaaleDBModel.VUMM_HH_STRMS_USERS" />
           <EntitySet Name="VUMM_HH_STATUS_LIST" EntityType="MaaleDBModel.VUMM_HH_STATUS_LIST" />
           <EntitySet Name="VUMM_HH_IMAGES_LINKS" EntityType="MaaleDBModel.VUMM_HH_IMAGES_LINKS" />
           <EntitySet Name="MM_DOCS_FILES" EntityType="MaaleDBModel.MM_DOCS_FILES" />
+          <EntitySet Name="VUMM_HH_CALLS_LINES" EntityType="MaaleDBModel.VUMM_HH_CALLS_LINES" />
+          <EntitySet Name="VUMM_HH_WORK_PARTS" EntityType="MaaleDBModel.VUMM_HH_WORK_PARTS" />
         </EntityContainer>
-        <EntityType Name="VUMM_HH_CALLS_LINES">
-          <Key>
-            <PropertyRef Name="LINE_ID" />
-          </Key>
-          <Property Name="DOC_NBR" Type="Int64" Nullable="false" />
-          <Property Name="LINE_NBR" Type="Int32" Nullable="false" />
-          <Property Name="PART_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="QNTY" Type="Decimal" Precision="17" Scale="9" />
-          <Property Name="UNIT_CODE" Type="Int32" />
-          <Property Name="PART_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="UNIT_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TXT_DSCR" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
-          <Property Name="LINE_ID" Type="Decimal" Nullable="false" />
-          <Property Name="PARENT_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="VUMM_HH_WORK_PARTS">
-          <Key>
-            <PropertyRef Name="PART_CODE" />
-          </Key>
-          <Property Name="PART_CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="PART_LONG_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="PART_SHRT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="UNIT_CODE" Type="Int32" />
-          <Property Name="PRMY_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="TMP_PART_NAME_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="PART_GRP_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
-          <Property Name="UNIT_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="RSRV_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="DFLT_PART" Type="Int32" />
-        </EntityType>
+
         <EntityType Name="VUMM_HH_STRMS_USERS">
           <Key>
             <PropertyRef Name="STRM_CODE" />
@@ -550,6 +530,43 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <Property Name="BIN_FILE_DATA" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="MIME_TYPE" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="FILE_EXTENSION" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VUMM_HH_CALLS_LINES">
+          <Key>
+            <PropertyRef Name="LINE_ID" />
+          </Key>
+          <Property Name="LINE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="DOC_NBR" Type="Int64" />
+          <Property Name="LINE_NBR" Type="Int32" />
+          <Property Name="PART_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PART_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
+          <Property Name="QNTY" Type="Decimal" Precision="17" Scale="9" />
+          <Property Name="UNIT_CODE" Type="Int32" />
+          <Property Name="UNIT_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TXT_DSCR" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PARENT_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="ORD" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="RO" Type="Decimal" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="VUMM_HH_WORK_PARTS">
+          <Key>
+            <PropertyRef Name="WORK_PART_ID" />
+            <PropertyRef Name="PART_CODE" />
+          </Key>
+          <Property Name="WORK_PART_ID" Type="String" Nullable="false" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="PART_CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PART_LONG_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PART_SHRT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UNIT_CODE" Type="Int32" />
+          <Property Name="UNIT_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PRMY_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="TMP_PART_NAME_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PART_GRP_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
+          <Property Name="RSRV_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="DFLT_PART" Type="Int32" />
+          <Property Name="TEST" Type="Decimal" Precision="38" Scale="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -650,6 +667,7 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
           <EntitySetMapping Name="VUMM_HH_PARTS">
             <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_PARTS">
               <MappingFragment StoreEntitySet="VUMM_HH_PARTS">
+                <ScalarProperty Name="RATE" ColumnName="RATE" />
                 <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
                 <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
                 <ScalarProperty Name="PART_LONG_NAME" ColumnName="PART_LONG_NAME" />
@@ -659,40 +677,6 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
                 <ScalarProperty Name="PRMY_STRM_CODE" ColumnName="PRMY_STRM_CODE" />
                 <ScalarProperty Name="TMP_PART_NAME_Y_N" ColumnName="TMP_PART_NAME_Y_N" />
                 <ScalarProperty Name="PART_GRP_CODE" ColumnName="PART_GRP_CODE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VUMM_HH_CALLS_LINES">
-            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_CALLS_LINES">
-              <MappingFragment StoreEntitySet="VUMM_HH_CALLS_LINES">
-                <ScalarProperty Name="PARENT_STRM_CODE" ColumnName="PARENT_STRM_CODE" />
-                <ScalarProperty Name="LINE_ID" ColumnName="LINE_ID" />
-                <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
-                <ScalarProperty Name="TXT_DSCR" ColumnName="TXT_DSCR" />
-                <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />
-                <ScalarProperty Name="PART_NAME" ColumnName="PART_NAME" />
-                <ScalarProperty Name="UNIT_CODE" ColumnName="UNIT_CODE" />
-                <ScalarProperty Name="QNTY" ColumnName="QNTY" />
-                <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
-                <ScalarProperty Name="LINE_NBR" ColumnName="LINE_NBR" />
-                <ScalarProperty Name="DOC_NBR" ColumnName="DOC_NBR" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VUMM_HH_WORK_PARTS">
-            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_WORK_PARTS">
-              <MappingFragment StoreEntitySet="VUMM_HH_WORK_PARTS">
-                <ScalarProperty Name="DFLT_PART" ColumnName="DFLT_PART" />
-                <ScalarProperty Name="RSRV_STRM_CODE" ColumnName="RSRV_STRM_CODE" />
-                <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />
-                <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
-                <ScalarProperty Name="PART_GRP_CODE" ColumnName="PART_GRP_CODE" />
-                <ScalarProperty Name="TMP_PART_NAME_Y_N" ColumnName="TMP_PART_NAME_Y_N" />
-                <ScalarProperty Name="PRMY_STRM_CODE" ColumnName="PRMY_STRM_CODE" />
-                <ScalarProperty Name="UNIT_CODE" ColumnName="UNIT_CODE" />
-                <ScalarProperty Name="PART_SHRT_NAME" ColumnName="PART_SHRT_NAME" />
-                <ScalarProperty Name="PART_LONG_NAME" ColumnName="PART_LONG_NAME" />
-                <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -737,6 +721,44 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VUMM_HH_CALLS_LINES">
+            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_CALLS_LINES">
+              <MappingFragment StoreEntitySet="VUMM_HH_CALLS_LINES">
+                <ScalarProperty Name="RO" ColumnName="RO" />
+                <ScalarProperty Name="ORD" ColumnName="ORD" />
+                <ScalarProperty Name="PARENT_STRM_CODE" ColumnName="PARENT_STRM_CODE" />
+                <ScalarProperty Name="TXT_DSCR" ColumnName="TXT_DSCR" />
+                <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />
+                <ScalarProperty Name="UNIT_CODE" ColumnName="UNIT_CODE" />
+                <ScalarProperty Name="QNTY" ColumnName="QNTY" />
+                <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
+                <ScalarProperty Name="PART_NAME" ColumnName="PART_NAME" />
+                <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
+                <ScalarProperty Name="LINE_NBR" ColumnName="LINE_NBR" />
+                <ScalarProperty Name="DOC_NBR" ColumnName="DOC_NBR" />
+                <ScalarProperty Name="LINE_ID" ColumnName="LINE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VUMM_HH_WORK_PARTS">
+            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_HH_WORK_PARTS">
+              <MappingFragment StoreEntitySet="VUMM_HH_WORK_PARTS">
+                <ScalarProperty Name="TEST" ColumnName="TEST" />
+                <ScalarProperty Name="DFLT_PART" ColumnName="DFLT_PART" />
+                <ScalarProperty Name="RSRV_STRM_CODE" ColumnName="RSRV_STRM_CODE" />
+                <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
+                <ScalarProperty Name="PART_GRP_CODE" ColumnName="PART_GRP_CODE" />
+                <ScalarProperty Name="TMP_PART_NAME_Y_N" ColumnName="TMP_PART_NAME_Y_N" />
+                <ScalarProperty Name="PRMY_STRM_CODE" ColumnName="PRMY_STRM_CODE" />
+                <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />
+                <ScalarProperty Name="UNIT_CODE" ColumnName="UNIT_CODE" />
+                <ScalarProperty Name="PART_SHRT_NAME" ColumnName="PART_SHRT_NAME" />
+                <ScalarProperty Name="PART_LONG_NAME" ColumnName="PART_LONG_NAME" />
+                <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
+                <ScalarProperty Name="WORK_PART_ID" ColumnName="WORK_PART_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -752,7 +774,7 @@ FROM "DBTRANS"."VUMM_HH_WORK_PARTS" "VUMM_HH_WORK_PARTS"</DefiningQuery>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

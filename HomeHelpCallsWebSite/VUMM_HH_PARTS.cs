@@ -23,5 +23,6 @@ namespace HomeHelpCallsWebSite
         public string TMP_PART_NAME_Y_N { get; set; }
         public string PART_GRP_CODE { get; set; }
         public string PART_CODE_NAME { get; set; }
+        public Nullable<decimal> RATE { get; set; }
     }
 }

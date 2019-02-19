@@ -55,6 +55,9 @@ namespace HomeHelpCallsWebSite.Models
         [MaxLength(60, ErrorMessage = "ההערה אינה יכולה להיות ארוכה יותר מ-60 תווים.")]
         public string stat_rmrk { get; set; }
 
+        [Column("RO")]
+        public  bool ro { get; set; }
+
         //public SelectList statusList { get; set { createStatusList(status)} }
         //public int status { get; set; }
 

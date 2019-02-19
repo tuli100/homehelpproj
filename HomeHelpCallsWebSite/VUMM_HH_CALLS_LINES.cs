@@ -14,16 +14,18 @@ namespace HomeHelpCallsWebSite
     
     public partial class VUMM_HH_CALLS_LINES
     {
-        public long DOC_NBR { get; set; }
-        public int LINE_NBR { get; set; }
+        public decimal LINE_ID { get; set; }
+        public Nullable<long> DOC_NBR { get; set; }
+        public Nullable<int> LINE_NBR { get; set; }
         public string PART_CODE { get; set; }
+        public string PART_NAME { get; set; }
+        public string PART_CODE_NAME { get; set; }
         public Nullable<decimal> QNTY { get; set; }
         public Nullable<int> UNIT_CODE { get; set; }
-        public string PART_NAME { get; set; }
         public string UNIT_NAME { get; set; }
         public string TXT_DSCR { get; set; }
-        public string PART_CODE_NAME { get; set; }
-        public decimal LINE_ID { get; set; }
         public string PARENT_STRM_CODE { get; set; }
+        public Nullable<decimal> ORD { get; set; }
+        public Nullable<decimal> RO { get; set; }
     }
 }

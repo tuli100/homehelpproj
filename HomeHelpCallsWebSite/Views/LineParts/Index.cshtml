@@ -50,40 +50,44 @@
 
     @foreach (var item in Model.Skip(1))
     {
-        <tr>
-            @if (item.part_code_name != null)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.part_code_name)
-                </td>
-            }
-            @if (item.qnty != null && item.unit_name != null)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.qnty)
-
-                    @Html.DisplayFor(modelItem => item.unit_name)
-
-                </td>
-            }
-
-            @*@if (item.txt_dscr != null)
-            {*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.txt_dscr)
-                </td>
-            @*}*@
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.parent_strm_code)
-                </td>*@
+    <tr>
+        @if (item.part_code_name != null)
+        {
             <td>
-                <a class="btn btn-default btn-lg" href="@Url.Action("Edit", "LineParts",  new { id = item.LINE_ID })" title="עריכה"><span class=" glyphicon glyphicon-pencil"></span> עריכה </a>
+                @Html.DisplayFor(modelItem => item.part_code_name)
+            </td>
+        }
+        @if (item.qnty != null && item.unit_name != null)
+        {
+            <td>
+                @Html.DisplayFor(modelItem => item.qnty)
+
+                @Html.DisplayFor(modelItem => item.unit_name)
+
+            </td>
+        }
+
+        @*@if (item.txt_dscr != null)
+        {*@
+        <td>
+            @Html.DisplayFor(modelItem => item.txt_dscr)
+        </td>
+        @*}*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.parent_strm_code)
+        </td>*@
+        
+        @if (item.ro == false)
+        {
+            <td>
+                <a class="btn btn-default btn-lg" href="@Url.Action("Edit", "LineParts", new { id = item.LINE_ID })" title="עריכה"><span class=" glyphicon glyphicon-pencil"></span> עריכה </a>
                 @* <a class="btn float-right right" style="color:red" href="@Url.Action("Delete", "LineParts",  new { id = item.line_nbr, doc_nbr = Model.First().doc_nbr })" title=""><span class=" glyphicon glyphicon-remove"></span> </a>*@
                 @Html.ActionLink(" ", "Delete", new { id = item.LINE_ID }, new { @onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');", @class = "glyphicon glyphicon-remove", @style = "color:red" })
 
             </td>
-            <td class="tr-for-media"></td>
-        </tr>
+        }
+        <td class="tr-for-media"></td>
+    </tr>
     }
 </table>
 

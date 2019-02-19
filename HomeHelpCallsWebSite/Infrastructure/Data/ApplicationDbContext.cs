@@ -53,7 +53,7 @@ namespace HomeHelpCallsWebSite.Infrastructure.Data
             modelBuilder.Entity<VUMM_HH_HNDL_CALLS>().HasKey(c => c.DOC_NBR);
             modelBuilder.Entity<VUMM_HH_OPEN_CALLS>().HasKey(c => c.DOC_NBR);
             modelBuilder.Entity<VUMM_HH_PARTS>().HasKey(c => c.PART_CODE);
-            modelBuilder.Entity<VUMM_HH_WORK_PARTS>().HasKey(c => c.PART_CODE);
+            modelBuilder.Entity<VUMM_HH_WORK_PARTS>().HasKey(c => c.WORK_PART_ID);
             modelBuilder.Entity<VUMM_HH_CALLS_LINES>().HasKey(c => c.LINE_ID);
             modelBuilder.Entity<MM_HH_USERS>().HasKey(c => c.USER_NAME);
             modelBuilder.Entity<VUMM_HH_STRMS_USERS>().HasKey(c => c.STRM_CODE);
