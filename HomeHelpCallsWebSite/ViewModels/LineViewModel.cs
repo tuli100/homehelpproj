@@ -58,6 +58,9 @@ namespace HomeHelpCallsWebSite.Models
         [Column("RO")]
         public  bool ro { get; set; }
 
+        [Column("ORD")]
+        public int ord { get; set; }
+
         //public SelectList statusList { get; set { createStatusList(status)} }
         //public int status { get; set; }
 

@@ -7,7 +7,14 @@
 @*<h3>טיפול</h3>*@
 <h3 style="color:red"><b> טיפול בקריאה - @Html.DisplayFor(model => Model.First().doc_nbr) </b> </h3>
 
-<h3> @Html.DisplayFor(model => Model.First().part_name)  @Html.DisplayFor(model => Model.First().txt_dscr)  </h3>
+@foreach (var item in Model)
+{
+    if (item.ord == 1) {
+    <h3> @Html.DisplayFor(model =>item.part_name)  @Html.DisplayFor(model => item.txt_dscr)  </h3>
+    @* <h3> @Html.DisplayFor(model => Model.First().part_name)  @Html.DisplayFor(model => Model.First().txt_dscr)  </h3> *@
+    }
+}
+
 
 <div class="container">
     <div class="row">
