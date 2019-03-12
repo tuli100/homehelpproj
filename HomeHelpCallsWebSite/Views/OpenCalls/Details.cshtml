@@ -64,7 +64,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CELL_PHONE)
+            <a href="tel:@Html.DisplayFor(model => model.CELL_PHONE)">@Html.DisplayFor(model => model.CELL_PHONE)</a>
         </dd>
         <br />
         <dt>
@@ -72,7 +72,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EMAIL)
+            <a href="mailto:@Html.DisplayFor(model => model.EMAIL)">@Html.DisplayFor(model => model.EMAIL)</a>
         </dd>
         <br />
         <dt>

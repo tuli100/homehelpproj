@@ -56,7 +56,7 @@
                 </td>
                 <td class='clickable-row' data-href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })">
                     @Html.DisplayFor(modelItem => item.APT_NAME)
-                    @Html.DisplayFor(modelItem => item.CELL_PHONE)
+                    <a href="tel:@Html.DisplayFor(modelItem => item.CELL_PHONE)">@Html.DisplayFor(modelItem => item.CELL_PHONE)</a>
                 </td>
                 <td class='clickable-row' data-href="@Url.Action("Index", "LineParts",  new { id = item.doc_nbr })">
                     @Html.DisplayFor(modelItem => item.CALL_STAT_FULL)
