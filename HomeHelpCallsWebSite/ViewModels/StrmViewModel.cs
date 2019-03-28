@@ -10,7 +10,6 @@ namespace HomeHelpCallsWebSite.ViewModels
     {
         [Column("STRM_CODE")]
         public string strm_code { get; set; }
-     
         public string strm_name { get; set; }
         public string user_name { get; set; }
     }

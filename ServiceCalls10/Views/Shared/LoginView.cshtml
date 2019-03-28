@@ -1,0 +1,48 @@
+﻿@model HomeHelpCallsWebSite.Models.LoginViewModel
+
+@if (User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("Logout", "Home", FormMethod.Post, new { area = "" }))
+    {
+        <div>
+            <button type="submit" class="btn btn-default">התנתק</button>
+        </div>
+    }
+}
+else
+{
+    @*@Html.ValidationSummary()
+    <div class="form-group">
+        <label class="control-label sr-only" for="UserName">
+            סלולארי:
+        </label>
+        @Html.TextBoxFor(m => m.USER_NAME, new { @class = "form-control", placeholder = "טלפון:" })
+    </div>*@
+
+
+    <input type="tel" value="טלפון סלולארי" class="text-right"/>
+
+    @*@using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "POST", OnBegin = "budget.approveCharge.enableLoading", OnComplete = "budget.approveCharge.disableLoading" }))
+    {
+        <div class="input-container">
+            @Html.TextBoxFor(m => m.SmsPassword, new { @class = "password-box" })
+
+        </div>
+        <div class="errors-container validation-summary-errors">
+
+        </div>
+        <div class="button-container">
+            <button type="submit" class="btn btn-default">
+                אישור
+            </button>
+            לא קיבלת?&nbsp;<a href="#">שלח שוב</a>
+        </div>
+    }*@
+    @*@using (Ajax.BeginForm("GetNewPassword", "Budget", new { }, new AjaxOptions { HttpMethod = "POST" }, new { @class = "hidden" }))
+    {
+        <button id="getPassword" type="submit" class="btn btn-default">
+            אישור
+        </button>
+    }*@
+
+}

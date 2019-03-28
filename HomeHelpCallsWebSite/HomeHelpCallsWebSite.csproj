@@ -552,6 +552,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CallModel.cs" />
     <Compile Include="Infrastructure\Data\Models\DestinationModel.cs" />
+    <Compile Include="Models\dstnModel.cs" />
     <Compile Include="Models\LineModel.cs" />
     <Compile Include="Infrastructure\Data\Models\Mapping\CallMap.cs" />
     <Compile Include="Infrastructure\Data\Models\Mapping\DestinationMap.cs" />
@@ -590,6 +591,8 @@
     </Compile>
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="ViewModels\CallsViewModel.cs" />
+    <Compile Include="ViewModels\DetailsViewTable.cs" />
+    <Compile Include="ViewModels\DstnViewModel.cs" />
     <Compile Include="ViewModels\ImagesViewModelcs.cs" />
     <Compile Include="ViewModels\LineViewModel.cs" />
     <Compile Include="ViewModels\PartCreateViewModel.cs" />
@@ -598,6 +601,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\StrmViewModel.cs" />
     <Compile Include="VUMM_HH_CALLS_LINES.cs">
+      <DependentUpon>MaaleDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VUMM_HH_DSTN_WEB.cs">
       <DependentUpon>MaaleDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="VUMM_HH_HNDL_CALLS.cs">
@@ -1042,6 +1048,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\OpenCalls\Imgs.cshtml" />
     <Content Include="Views\LineParts\partsTableView.cshtml" />
+    <Content Include="Views\Shared\dstn_prsn.cshtml" />
+    <Content Include="Views\Shared\addLine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

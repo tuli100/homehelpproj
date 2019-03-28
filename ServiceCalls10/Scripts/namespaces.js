@@ -1,0 +1,11 @@
+﻿Site = {};
+PartsLines = {};
+PartsLines.parts = {};
+supervisor = {};
+supervisor.pendingApproval = {};
+supervisor.pendingExecution = {};
+supervisor.pendingWithReference = {};
+roleManagement = {};
+roleManagement.allUsers = {};
+account = {};
+account.index = {};

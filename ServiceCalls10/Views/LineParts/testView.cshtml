@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "testView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>testView</h2>
+
+@*<div class="ui-widget">*@
+@*<label for="parts">פריט: </label>
+    <input id="parts">*@
+@*</div>*@
+
+
+<label for="autocomplete">חיפוש פריט: </label>
+<input id="autocomplete">
+
+<script>
+    $("#autocomplete").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/LineParts/FindPartJson",
+                dataType: "json",
+                data: {
+                    'id': 6027789,
+                    'term': request.term
+                },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item,
+                            value: item
+                        }
+                    }))
+                }
+            })
+        },
+    });
+
+</script>
+
+@*<div id="doc_nbr">6020970</div>*@
+
+
+   //source: ["701 צינור", "ום 8799", "789 בלה בלה", "אחד שתים שלוש", "123 אחד אחד אחד", "456 אחד שנתיים ", "778 עעעעעע"]
+        //source: function (request, response) {
+        //    $.getJSON("/LineParts/FindPartJson/?id=6027789&term=" + request.term, function (data) {
+        //        response($.map(data, function (value, key) {
+        //            return {
+        //                label: value,
+        //                value: key
+        //            };
+        //        }));
+        //    })
+        //}
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        $('#parts').autocomplete({
+            source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
+        });*@
+
+
+@*//        function (request, response) {
+    //        $.ajax({
+    //            url: '/LineParts/FindPartJson',
+    //            type:"POST",
+    //            dataType: "json",
+    //            data: {
+    //                id: $('#id').val(),
+    //                input: request.term
+
+    //                //maxRows: 15
+    //            },
+    //            success: function (data) {
+    //                response($.map(data, function (item) {
+    //                    return {
+    //                        label: item.label,
+    //                        value: item.value
+    //                    }
+    //                }))
+    //            }
+    //        })
+    //    }
+    //    //select: function (event, ui) {
+    //    //    $('#parts').value(ui.item.state);
+    //    //}
+    //});
+
+
+    //var myObject = { doc_nbr: $("#part").value, input: $("#part").value };
+    //$("#part").autocomplete({
+    //    source:
+    //$.getJSON('/LineParts/GetFilterdParts/json', myObject, function (dataVal) {
+    //    //Use Your result
+    //});
+
+    //$(function () {
+    //    function SelectPart(message) {
+    //        $("<div>").text(message).prependTo("#input_part");
+    //        $("#input_part").scrollTop(0);
+    //    }
+
+    //    function (request, response) {
+    //            $.ajax({
+    //                url: "search.php",
+    //                dataType: "jsonp",
+    //                data: {
+    //                    term: request.term
+    //                },
+    //                success: function (data) {
+    //                    response(data);
+    //                }
+    //            });
+    //        },
+    //        minLength: 2,
+    //        select: function (event, ui) {
+    //            SelectPart(ui.item.value);
+    //        }
+    //    });
+    //});*@
+
+

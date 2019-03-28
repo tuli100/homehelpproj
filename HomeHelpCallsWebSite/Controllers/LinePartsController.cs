@@ -39,7 +39,6 @@ namespace HomeHelpCallsWebSite.Controllers
             _workPartsMapper = config3.CreateMapper();
         }
 
-       
          // GET: LineParts
         public async Task<ActionResult> Index(long id, bool isOpen = true )
         {
@@ -63,7 +62,6 @@ namespace HomeHelpCallsWebSite.Controllers
             LineViewModel vm  = _linesMapper.Map<LineViewModel>(dto);  
             return View(vm);
         }
-
 
         #region LineParts
 
@@ -111,7 +109,6 @@ namespace HomeHelpCallsWebSite.Controllers
             return iVm.Where(w => w.PART_CODE_NAME.Contains(searchString));
         }
 
-
         public IEnumerable<PartViewModel> FindPart(string strm, string inputcode)
         {
             if (string.IsNullOrEmpty(inputcode))
@@ -124,7 +121,6 @@ namespace HomeHelpCallsWebSite.Controllers
 
             return partsl;
         }
-
 
         //public JsonResult FindPartJson(long id)
         //{

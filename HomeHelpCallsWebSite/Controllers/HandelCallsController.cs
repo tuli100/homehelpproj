@@ -11,6 +11,7 @@ using HomeHelpCallsWebSite.Models;
 using AutoMapper;
 using HomeHelpCallsWebSite.Infrastructure.Data;
 using System.Security.Claims;
+using HomeHelpCallsWebSite.ViewModels;
 
 namespace HomeHelpCallsWebSite.Controllers
 {
@@ -19,11 +20,14 @@ namespace HomeHelpCallsWebSite.Controllers
     {
         private ApplicationDbContext _conntext;
         private IMapper _mapper;
+        private IMapper _dstnMapper;
 
         public HandelCallsController() {
             _conntext = new ApplicationDbContext();
             var config = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_HNDL_CALLS, CallsViewModel>());
             _mapper = config.CreateMapper();
+            var config6 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_DSTN_WEB, DstnViewModel>());
+            _dstnMapper = config6.CreateMapper();
         }
 
         // GET: HandelCalls
@@ -175,13 +179,20 @@ namespace HomeHelpCallsWebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            DetailsViewTable mymodel = new DetailsViewTable();
             VUMM_HH_HNDL_CALLS dto = await _conntext.VUMM_HH_HNDL_CALLS.FindAsync(id);
             if (dto == null)
             {
                 return HttpNotFound();
             }
-            CallsViewModel vm = _mapper.Map<VUMM_HH_HNDL_CALLS,CallsViewModel>(dto);
-            return View(vm);
+            var dira = dto.APT_CODE;
+            IEnumerable<VUMM_HH_DSTN_WEB> dto2 = _conntext.VUMM_HH_DSTN_WEB.Where(x => x.DIRA == dira);
+            CallsViewModel vm = _mapper.Map<CallsViewModel>(dto);
+            var dstn = _dstnMapper.Map<IEnumerable<VUMM_HH_DSTN_WEB>, IEnumerable<DstnViewModel>>(dto2);
+            
+            mymodel.calls = vm;
+            mymodel.dstnPrsn = dstn;
+            return View(mymodel);
         }
 
         //// GET: HandelCalls/Create

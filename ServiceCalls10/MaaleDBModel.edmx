@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MaaleDBModel.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="10.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MM_SC10_USERS">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="STRM_CODE" Type="varchar2" MaxLength="100" />
+          <Property Name="SMSUSER" Type="varchar2" MaxLength="60" />
+          <Property Name="STC_NBR" Type="number" Precision="38" Scale="0" />
+          <Property Name="PASSWORDH" Type="varchar2" MaxLength="100" />
+          <Property Name="EMAIL_USER" Type="varchar2" MaxLength="60" />
+          <Property Name="USER_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'DBTRANS.VUMM_SC10_CALLS_LINES' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="VUMM_SC10_CALLS_LINES">
+          <Property Name="LINE_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="DOC_NBR" Type="number" Precision="11" Scale="0" />
+          <Property Name="LINE_NBR" Type="number" Precision="6" Scale="0" />
+          <Property Name="PART_CODE" Type="varchar2" MaxLength="20" />
+          <Property Name="PART_NAME" Type="varchar2" MaxLength="40" />
+          <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
+          <Property Name="QNTY" Type="number" Precision="17" Scale="9" />
+          <Property Name="UNIT_CODE" Type="number" Precision="6" Scale="0" />
+          <Property Name="UNIT_NAME" Type="varchar2" MaxLength="10" />
+          <Property Name="TXT_DSCR" Type="varchar2" MaxLength="40" />
+          <Property Name="PARENT_STRM_CODE" Type="varchar2" MaxLength="6" />
+          <Property Name="ORD" Type="number" Precision="38" Scale="0" />
+          <Property Name="RO" Type="number" Precision="38" Scale="0" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBTRANS.VUMM_SC10_OPEN_CALLS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VUMM_SC10_OPEN_CALLS">
+          <Key>
+            <PropertyRef Name="DOC_NBR" />
+            <PropertyRef Name="LINE_NBR" />
+          </Key>
+          <Property Name="DOC_NBR" Type="number" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="LINE_NBR" Type="number" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="LINE_EVNT_DATE" Type="date" />
+          <Property Name="RQSTD_SHIP_DATE" Type="date" />
+          <Property Name="LINE_EXPR_DATE" Type="date" />
+          <Property Name="PARENT_STRM_CODE" Type="varchar2" MaxLength="6" />
+          <Property Name="STRM_CODE" Type="varchar2" MaxLength="6" />
+          <Property Name="STRM_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="CALL_DSCR" Type="varchar2" MaxLength="81" />
+          <Property Name="CALL_RMRK" Type="varchar2" MaxLength="40" />
+          <Property Name="CUST_CODE" Type="varchar2" MaxLength="10" />
+          <Property Name="CNTCT_PRSN_CODE" Type="number" Precision="38" Scale="0" />
+          <Property Name="CNTCT_PRSN_NAME" Type="varchar2" MaxLength="40" />
+          <Property Name="CEL_PHONE" Type="varchar2" MaxLength="20" />
+          <Property Name="E_MAIL" Type="varchar2" MaxLength="40" />
+          <Property Name="CALL_STAT_CODE" Type="number" Precision="38" Scale="0" />
+          <Property Name="CALL_STAT" Type="varchar2" MaxLength="4000" />
+          <Property Name="CALL_STAT_DATE" Type="varchar2" MaxLength="4000" />
+          <Property Name="CALL_STAT_RMRK" Type="varchar2" MaxLength="4000" />
+          <Property Name="CALL_STAT_FULL" Type="varchar2" MaxLength="4000" />
+          <Property Name="DEPT_CODE" Type="varchar2" MaxLength="10" />
+          <Property Name="OPEN_DATE" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBTRANS.VUMM_SC10_PARTS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VUMM_SC10_PARTS">
+          <Key>
+            <PropertyRef Name="PART_CODE" />
+          </Key>
+          <Property Name="PART_CODE" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="PART_LONG_NAME" Type="varchar2" MaxLength="40" />
+          <Property Name="PART_SHRT_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="UNIT_CODE" Type="number" Precision="6" Scale="0" />
+          <Property Name="UNIT_NAME" Type="varchar2" MaxLength="10" />
+          <Property Name="PRMY_STRM_CODE" Type="varchar2" MaxLength="6" />
+          <Property Name="TMP_PART_NAME_Y_N" Type="varchar2" MaxLength="1" />
+          <Property Name="PART_GRP_CODE" Type="varchar2" MaxLength="4" />
+          <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
+          <Property Name="RATE" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DBTRANS.VUMM_SC10_WORK_PARTS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VUMM_SC10_WORK_PARTS">
+          <Key>
+            <PropertyRef Name="PART_CODE" />
+          </Key>
+          <Property Name="WORK_PART_ID" Type="varchar2" MaxLength="26" />
+          <Property Name="PART_CODE" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="PART_LONG_NAME" Type="varchar2" MaxLength="40" />
+          <Property Name="PART_SHRT_NAME" Type="varchar2" MaxLength="20" />
+          <Property Name="UNIT_CODE" Type="number" Precision="6" Scale="0" />
+          <Property Name="UNIT_NAME" Type="varchar2" MaxLength="10" />
+          <Property Name="PRMY_STRM_CODE" Type="varchar2" MaxLength="6" />
+          <Property Name="TMP_PART_NAME_Y_N" Type="varchar2" MaxLength="1" />
+          <Property Name="PART_GRP_CODE" Type="varchar2" MaxLength="4" />
+          <Property Name="PART_CODE_NAME" Type="varchar2" MaxLength="62" />
+          <Property Name="RSRV_STRM_CODE" Type="varchar2" MaxLength="6" />
+          <Property Name="DFLT_PART" Type="number" Precision="6" Scale="0" />
+          <Property Name="TEST" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityContainer Name="MaaleDBModelStoreContainer">
+          <EntitySet Name="MM_SC10_USERS" EntityType="Self.MM_SC10_USERS" Schema="DBTRANS" store:Type="Tables" />
+          <EntitySet Name="VUMM_SC10_OPEN_CALLS" EntityType="Self.VUMM_SC10_OPEN_CALLS" store:Type="Views" store:Schema="DBTRANS">
+            <DefiningQuery>SELECT 
+"VUMM_SC10_OPEN_CALLS"."DOC_NBR" AS "DOC_NBR", 
+"VUMM_SC10_OPEN_CALLS"."LINE_NBR" AS "LINE_NBR", 
+"VUMM_SC10_OPEN_CALLS"."LINE_EVNT_DATE" AS "LINE_EVNT_DATE", 
+"VUMM_SC10_OPEN_CALLS"."RQSTD_SHIP_DATE" AS "RQSTD_SHIP_DATE", 
+"VUMM_SC10_OPEN_CALLS"."LINE_EXPR_DATE" AS "LINE_EXPR_DATE", 
+"VUMM_SC10_OPEN_CALLS"."PARENT_STRM_CODE" AS "PARENT_STRM_CODE", 
+"VUMM_SC10_OPEN_CALLS"."STRM_CODE" AS "STRM_CODE", 
+"VUMM_SC10_OPEN_CALLS"."STRM_NAME" AS "STRM_NAME", 
+"VUMM_SC10_OPEN_CALLS"."CALL_DSCR" AS "CALL_DSCR", 
+"VUMM_SC10_OPEN_CALLS"."CALL_RMRK" AS "CALL_RMRK", 
+"VUMM_SC10_OPEN_CALLS"."CUST_CODE" AS "CUST_CODE", 
+"VUMM_SC10_OPEN_CALLS"."CNTCT_PRSN_CODE" AS "CNTCT_PRSN_CODE", 
+"VUMM_SC10_OPEN_CALLS"."CNTCT_PRSN_NAME" AS "CNTCT_PRSN_NAME", 
+"VUMM_SC10_OPEN_CALLS"."CEL_PHONE" AS "CEL_PHONE", 
+"VUMM_SC10_OPEN_CALLS"."E_MAIL" AS "E_MAIL", 
+"VUMM_SC10_OPEN_CALLS"."CALL_STAT_CODE" AS "CALL_STAT_CODE", 
+"VUMM_SC10_OPEN_CALLS"."CALL_STAT" AS "CALL_STAT", 
+"VUMM_SC10_OPEN_CALLS"."CALL_STAT_DATE" AS "CALL_STAT_DATE", 
+"VUMM_SC10_OPEN_CALLS"."CALL_STAT_RMRK" AS "CALL_STAT_RMRK", 
+"VUMM_SC10_OPEN_CALLS"."CALL_STAT_FULL" AS "CALL_STAT_FULL", 
+"VUMM_SC10_OPEN_CALLS"."DEPT_CODE" AS "DEPT_CODE", 
+"VUMM_SC10_OPEN_CALLS"."OPEN_DATE" AS "OPEN_DATE"
+FROM "DBTRANS"."VUMM_SC10_OPEN_CALLS" "VUMM_SC10_OPEN_CALLS"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VUMM_SC10_PARTS" EntityType="Self.VUMM_SC10_PARTS" store:Type="Views" store:Schema="DBTRANS">
+            <DefiningQuery>SELECT 
+"VUMM_SC10_PARTS"."PART_CODE" AS "PART_CODE", 
+"VUMM_SC10_PARTS"."PART_LONG_NAME" AS "PART_LONG_NAME", 
+"VUMM_SC10_PARTS"."PART_SHRT_NAME" AS "PART_SHRT_NAME", 
+"VUMM_SC10_PARTS"."UNIT_CODE" AS "UNIT_CODE", 
+"VUMM_SC10_PARTS"."UNIT_NAME" AS "UNIT_NAME", 
+"VUMM_SC10_PARTS"."PRMY_STRM_CODE" AS "PRMY_STRM_CODE", 
+"VUMM_SC10_PARTS"."TMP_PART_NAME_Y_N" AS "TMP_PART_NAME_Y_N", 
+"VUMM_SC10_PARTS"."PART_GRP_CODE" AS "PART_GRP_CODE", 
+"VUMM_SC10_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME", 
+"VUMM_SC10_PARTS"."RATE" AS "RATE"
+FROM "DBTRANS"."VUMM_SC10_PARTS" "VUMM_SC10_PARTS"</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VUMM_SC10_WORK_PARTS" EntityType="Self.VUMM_SC10_WORK_PARTS" store:Type="Views" store:Schema="DBTRANS">
+            <DefiningQuery>SELECT 
+"VUMM_SC10_WORK_PARTS"."WORK_PART_ID" AS "WORK_PART_ID", 
+"VUMM_SC10_WORK_PARTS"."PART_CODE" AS "PART_CODE", 
+"VUMM_SC10_WORK_PARTS"."PART_LONG_NAME" AS "PART_LONG_NAME", 
+"VUMM_SC10_WORK_PARTS"."PART_SHRT_NAME" AS "PART_SHRT_NAME", 
+"VUMM_SC10_WORK_PARTS"."UNIT_CODE" AS "UNIT_CODE", 
+"VUMM_SC10_WORK_PARTS"."UNIT_NAME" AS "UNIT_NAME", 
+"VUMM_SC10_WORK_PARTS"."PRMY_STRM_CODE" AS "PRMY_STRM_CODE", 
+"VUMM_SC10_WORK_PARTS"."TMP_PART_NAME_Y_N" AS "TMP_PART_NAME_Y_N", 
+"VUMM_SC10_WORK_PARTS"."PART_GRP_CODE" AS "PART_GRP_CODE", 
+"VUMM_SC10_WORK_PARTS"."PART_CODE_NAME" AS "PART_CODE_NAME", 
+"VUMM_SC10_WORK_PARTS"."RSRV_STRM_CODE" AS "RSRV_STRM_CODE", 
+"VUMM_SC10_WORK_PARTS"."DFLT_PART" AS "DFLT_PART", 
+"VUMM_SC10_WORK_PARTS"."TEST" AS "TEST"
+FROM "DBTRANS"."VUMM_SC10_WORK_PARTS" "VUMM_SC10_WORK_PARTS"</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MaaleDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MaaleDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MM_SC10_USERS" EntityType="MaaleDBModel.MM_SC10_USERS" />
+          <EntitySet Name="VUMM_SC10_OPEN_CALLS" EntityType="MaaleDBModel.VUMM_SC10_OPEN_CALLS" />
+          <EntitySet Name="VUMM_SC10_PARTS" EntityType="MaaleDBModel.VUMM_SC10_PARTS" />
+          <EntitySet Name="VUMM_SC10_WORK_PARTS" EntityType="MaaleDBModel.VUMM_SC10_WORK_PARTS" />
+        </EntityContainer>
+        <EntityType Name="MM_SC10_USERS">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="STRM_CODE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SMSUSER" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="STC_NBR" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="PASSWORDH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL_USER" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="USER_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="VUMM_SC10_OPEN_CALLS">
+          <Key>
+            <PropertyRef Name="DOC_NBR" />
+            <PropertyRef Name="LINE_NBR" />
+          </Key>
+          <Property Name="DOC_NBR" Type="Int64" Nullable="false" />
+          <Property Name="LINE_NBR" Type="Int32" Nullable="false" />
+          <Property Name="LINE_EVNT_DATE" Type="DateTime" />
+          <Property Name="RQSTD_SHIP_DATE" Type="DateTime" />
+          <Property Name="LINE_EXPR_DATE" Type="DateTime" />
+          <Property Name="PARENT_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="STRM_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CALL_DSCR" Type="String" MaxLength="81" FixedLength="false" Unicode="false" />
+          <Property Name="CALL_RMRK" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CUST_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CNTCT_PRSN_CODE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="CNTCT_PRSN_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CEL_PHONE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="E_MAIL" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CALL_STAT_CODE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="CALL_STAT" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="CALL_STAT_DATE" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="CALL_STAT_RMRK" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="CALL_STAT_FULL" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="DEPT_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OPEN_DATE" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="VUMM_SC10_PARTS">
+          <Key>
+            <PropertyRef Name="PART_CODE" />
+          </Key>
+          <Property Name="PART_CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PART_LONG_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PART_SHRT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UNIT_CODE" Type="Int32" />
+          <Property Name="UNIT_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PRMY_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="TMP_PART_NAME_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PART_GRP_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
+          <Property Name="RATE" Type="Decimal" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="VUMM_SC10_WORK_PARTS">
+          <Key>
+            <PropertyRef Name="PART_CODE" />
+          </Key>
+          <Property Name="WORK_PART_ID" Type="String" MaxLength="26" FixedLength="false" Unicode="false" />
+          <Property Name="PART_CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PART_LONG_NAME" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PART_SHRT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UNIT_CODE" Type="Int32" />
+          <Property Name="UNIT_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PRMY_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="TMP_PART_NAME_Y_N" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="PART_GRP_CODE" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="PART_CODE_NAME" Type="String" MaxLength="62" FixedLength="false" Unicode="false" />
+          <Property Name="RSRV_STRM_CODE" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="DFLT_PART" Type="Int32" />
+          <Property Name="TEST" Type="Decimal" Precision="38" Scale="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MaaleDBModelStoreContainer" CdmEntityContainer="MaaleDBEntities">
+          <EntitySetMapping Name="MM_SC10_USERS">
+            <EntityTypeMapping TypeName="MaaleDBModel.MM_SC10_USERS">
+              <MappingFragment StoreEntitySet="MM_SC10_USERS">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="EMAIL_USER" ColumnName="EMAIL_USER" />
+                <ScalarProperty Name="PASSWORDH" ColumnName="PASSWORDH" />
+                <ScalarProperty Name="STC_NBR" ColumnName="STC_NBR" />
+                <ScalarProperty Name="SMSUSER" ColumnName="SMSUSER" />
+                <ScalarProperty Name="STRM_CODE" ColumnName="STRM_CODE" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VUMM_SC10_OPEN_CALLS">
+            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_SC10_OPEN_CALLS">
+              <MappingFragment StoreEntitySet="VUMM_SC10_OPEN_CALLS">
+                <ScalarProperty Name="OPEN_DATE" ColumnName="OPEN_DATE" />
+                <ScalarProperty Name="DEPT_CODE" ColumnName="DEPT_CODE" />
+                <ScalarProperty Name="CALL_STAT_FULL" ColumnName="CALL_STAT_FULL" />
+                <ScalarProperty Name="CALL_STAT_RMRK" ColumnName="CALL_STAT_RMRK" />
+                <ScalarProperty Name="CALL_STAT_DATE" ColumnName="CALL_STAT_DATE" />
+                <ScalarProperty Name="CALL_STAT" ColumnName="CALL_STAT" />
+                <ScalarProperty Name="CALL_STAT_CODE" ColumnName="CALL_STAT_CODE" />
+                <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+                <ScalarProperty Name="CEL_PHONE" ColumnName="CEL_PHONE" />
+                <ScalarProperty Name="CNTCT_PRSN_NAME" ColumnName="CNTCT_PRSN_NAME" />
+                <ScalarProperty Name="CNTCT_PRSN_CODE" ColumnName="CNTCT_PRSN_CODE" />
+                <ScalarProperty Name="CUST_CODE" ColumnName="CUST_CODE" />
+                <ScalarProperty Name="CALL_RMRK" ColumnName="CALL_RMRK" />
+                <ScalarProperty Name="CALL_DSCR" ColumnName="CALL_DSCR" />
+                <ScalarProperty Name="STRM_NAME" ColumnName="STRM_NAME" />
+                <ScalarProperty Name="STRM_CODE" ColumnName="STRM_CODE" />
+                <ScalarProperty Name="PARENT_STRM_CODE" ColumnName="PARENT_STRM_CODE" />
+                <ScalarProperty Name="LINE_EXPR_DATE" ColumnName="LINE_EXPR_DATE" />
+                <ScalarProperty Name="RQSTD_SHIP_DATE" ColumnName="RQSTD_SHIP_DATE" />
+                <ScalarProperty Name="LINE_EVNT_DATE" ColumnName="LINE_EVNT_DATE" />
+                <ScalarProperty Name="LINE_NBR" ColumnName="LINE_NBR" />
+                <ScalarProperty Name="DOC_NBR" ColumnName="DOC_NBR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VUMM_SC10_PARTS">
+            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_SC10_PARTS">
+              <MappingFragment StoreEntitySet="VUMM_SC10_PARTS">
+                <ScalarProperty Name="RATE" ColumnName="RATE" />
+                <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
+                <ScalarProperty Name="PART_GRP_CODE" ColumnName="PART_GRP_CODE" />
+                <ScalarProperty Name="TMP_PART_NAME_Y_N" ColumnName="TMP_PART_NAME_Y_N" />
+                <ScalarProperty Name="PRMY_STRM_CODE" ColumnName="PRMY_STRM_CODE" />
+                <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />
+                <ScalarProperty Name="UNIT_CODE" ColumnName="UNIT_CODE" />
+                <ScalarProperty Name="PART_SHRT_NAME" ColumnName="PART_SHRT_NAME" />
+                <ScalarProperty Name="PART_LONG_NAME" ColumnName="PART_LONG_NAME" />
+                <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VUMM_SC10_WORK_PARTS">
+            <EntityTypeMapping TypeName="MaaleDBModel.VUMM_SC10_WORK_PARTS">
+              <MappingFragment StoreEntitySet="VUMM_SC10_WORK_PARTS">
+                <ScalarProperty Name="TEST" ColumnName="TEST" />
+                <ScalarProperty Name="DFLT_PART" ColumnName="DFLT_PART" />
+                <ScalarProperty Name="RSRV_STRM_CODE" ColumnName="RSRV_STRM_CODE" />
+                <ScalarProperty Name="PART_CODE_NAME" ColumnName="PART_CODE_NAME" />
+                <ScalarProperty Name="PART_GRP_CODE" ColumnName="PART_GRP_CODE" />
+                <ScalarProperty Name="TMP_PART_NAME_Y_N" ColumnName="TMP_PART_NAME_Y_N" />
+                <ScalarProperty Name="PRMY_STRM_CODE" ColumnName="PRMY_STRM_CODE" />
+                <ScalarProperty Name="UNIT_NAME" ColumnName="UNIT_NAME" />
+                <ScalarProperty Name="UNIT_CODE" ColumnName="UNIT_CODE" />
+                <ScalarProperty Name="PART_SHRT_NAME" ColumnName="PART_SHRT_NAME" />
+                <ScalarProperty Name="PART_LONG_NAME" ColumnName="PART_LONG_NAME" />
+                <ScalarProperty Name="PART_CODE" ColumnName="PART_CODE" />
+                <ScalarProperty Name="WORK_PART_ID" ColumnName="WORK_PART_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

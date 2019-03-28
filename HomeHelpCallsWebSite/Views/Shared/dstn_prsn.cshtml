@@ -1,0 +1,21 @@
+﻿@model HomeHelpCallsWebSite.ViewModels.DetailsViewTable
+
+    <p>
+       טלפונים נוספים
+    </p>
+
+
+<div>
+    <dl class="dl-horizontal">
+        @foreach (var item in Model.dstnPrsn)
+        {
+            <dt>
+                @Html.DisplayFor(modelItem => item.DSTN_NAME)
+            </dt>
+            <dd>
+                <a href="tel:@Html.DisplayFor(modelItem => item.CELL)">@Html.DisplayFor(modelItem => item.CELL)</a>
+            </dd>
+
+        }
+    </dl>
+</div>

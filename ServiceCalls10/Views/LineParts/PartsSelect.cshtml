@@ -1,0 +1,61 @@
+﻿@model  IEnumerable<HomeHelpCallsWebSite.Models.PartViewModel>
+
+@{
+    ViewBag.Title = "PartsSelect";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2> בחר פריט </h2>*@
+
+<h3></h3>
+
+@using (Ajax.BeginForm("FindPartSrch", "LineParts", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "partsTable" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="col-lg-offset-10 col-md-offset-8 col-sm-offset-8 sticky-top position-absolute">
+        @*<div class="align-self-end">*@
+        <div id="imaginary_container">
+            <div class="input-group stylish-input-group input-group-lg">
+                <input type="text" class="form-control form-group-lg" placeholder="חיפוש" name="searchString">
+                <div class="input-group-btn input-group-prepend">
+                    <button type="submit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+}
+
+    <div id="linePartsTable">
+        @Html.Partial("partsTable")
+    </div>
+
+@*<table class="table" id=" partsTable">
+    @*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PART_CODE_NAME) <br/>
+
+                @Html.DisplayNameFor(model => model.UNIT_NAME)
+            </th>
+        </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td align="right">
+
+                @Html.ActionLink(item.PART_CODE_NAME + " - " + item.UNIT_NAME, null, null, new { id = Model.First().doc_nbr, part = item.PART_CODE_NAME }, null)
+                @*new { @class = "btn" })*@
+                @*, @style ="min-width:70%" })*@
+                @*<br />
+                    @Html.DisplayFor(modelItem => item.UNIT_NAME)
+
+            </td>
+            <td class="tr-for-media"></td>
+        </tr>
+
+    }
+
+</table>*@
+

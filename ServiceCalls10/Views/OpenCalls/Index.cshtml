@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HomeHelpCallsWebSite.Models.CallsViewModel>
+
+@{
+    ViewBag.Title = "קריאות פתוחות";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>קריאות פתוחות</h2>*@
+<h3> @Model.Count() קריאות פתוחות </h3>
+
+
+@using (Ajax.BeginForm("CallsTable", "OpenCalls", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "CallsTable" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-lg-offset-10 col-md-offset-8 col-sm-offset-8">
+        @*<div class="align-self-end">*@
+        <div id="imaginary_container">
+            <div class="input-group stylish-input-group input-group-lg">
+                <input type="text" class="form-control form-group-lg" placeholder="חיפוש" name="searchString">
+                <div class="input-group-btn input-group-prepend">
+                    <button type="submit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+}
+
+<div class="w-100"></div>
+
+<div id="openCallTable">
+    @Html.Partial("CallsTable")
+    @*@{ Html.RenderPartial("CallsTable"); }*@
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

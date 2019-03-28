@@ -1,0 +1,259 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    direction: rtl !important;
+    }
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    direction: rtl !important;
+    font-size: large;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 340px;
+    border-radius: 4px 4px;
+    font-size: x-large;
+}
+
+.input-group {
+    max-width: 340px;
+    border-radius: 4px 4px;
+    font-size: x-large;
+}
+/****************** 23/10/18 *************/
+.rounded {
+    border-radius: 0.25rem !important;
+}
+
+.rounded-top {
+    border-top-left-radius: 0.25rem !important;
+    border-top-right-radius: 0.25rem !important;
+}
+
+.rounded-right {
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
+}
+
+.rounded-bottom {
+    border-bottom-right-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+.rounded-left {
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.rounded-0 {
+    border-radius: 0 !important;
+}
+/****************** 23/10/18 *************/
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.overlay {
+    z-index: 500;
+    position: absolute;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.loading-spinner {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+}
+
+/* Styles for dataTables
+-----------------------------------------------------------*/
+.dataTables_processing {
+    display: none !important;
+    color: transparent !important;
+    background-color: transparent !important;
+}
+
+.dataTables_wrapper .dataTables_length {
+    float: left !important;
+}
+
+.dataTables_wrapper .dataTables_filter {
+    float: right !important;
+    text-align: right !important;
+}
+
+
+
+/*
+	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
+	*/
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+    .body-content {
+        font-size:medium;
+    }
+    input,
+    select,
+    textarea {
+        font-size: medium;
+    }
+        /* Force table to not be like tables anymore */
+        table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+        th {
+            display: none;
+        }
+
+    /*tr {
+        margin: 0 0 1rem 0;
+    }*/
+    tr {
+        background: #eee;
+        /*border: groove*/
+    }
+    /*tr:nth-child(odd) {
+        background: #eee;
+        /*url() #ccc;*/
+        /* border: groove;
+    }
+
+        tr:nth-child(even) {
+            background: #eee;
+            border: groove; 
+        }*/
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        /*padding-right: 100%;*/
+        /*word-wrap: break-word; 
+        overflow-wrap: break-word;
+        white-space: nowrap;*/   
+    }
+    .tr-for-media{
+        /*border-bottom:groove;*/
+        background: #ffffff;
+        border:none;
+    }
+        /*td:before {
+            /* Now like a table header */
+            /*position: absolute;*/
+            /* Top/left values mimic padding */
+            /*top: 0;
+            right: 6px;
+            width: 45%;
+            padding-left: 10px;
+            white-space: nowrap;
+        }*/
+  
+}
+.overlay {
+    z-index: 500;
+    position: absolute;
+    background: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+.loading-spinner {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+}
+/* Add animation to "page content" */
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+
+    to {
+        bottom: 0px;
+        opacity: 1
+    }
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+
+    to {
+        bottom: 0;
+        opacity: 1
+    }
+}
+
+.group-buttons-tbl{
+    min-width:250px;
+}
+div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: yellow;
+    /*padding: 50px;*/
+    font-size: 20px;
+    position: fixed;
+    width: 100%;
+}

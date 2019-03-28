@@ -23,6 +23,7 @@ namespace HomeHelpCallsWebSite.Controllers
     {
         private ApplicationDbContext _conntext;
         private IMapper _callsMapper;
+        private IMapper _dstnMapper;
         private IMapper _hndlCallsMapper;
         private IMapper _strmsMapper;
         private IMapper _imageMapper;
@@ -32,6 +33,11 @@ namespace HomeHelpCallsWebSite.Controllers
         public OpenCallsController()
         {
             _conntext = new ApplicationDbContext();
+            var config6 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_DSTN_WEB, DstnViewModel>());
+            _dstnMapper = config6.CreateMapper();
+            //var _dstnMapper = new Mapper(config6);
+           
+            //cfg.ValidateInlineMaps = false;
             var config = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_OPEN_CALLS, CallsViewModel>());
             _callsMapper = config.CreateMapper();
             var config2 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_STRMS_USERS, StrmViewModel>());
@@ -40,6 +46,7 @@ namespace HomeHelpCallsWebSite.Controllers
             _hndlCallsMapper = config3.CreateMapper();
             var config4 = new MapperConfiguration(cfg => cfg.CreateMap<VUMM_HH_HNDL_CALLS, CallsViewModel>(MemberList.Destination));
             _imageMapper = config4.CreateMapper();
+           
         }
 
         //    // GET: OpenCalls
@@ -225,13 +232,25 @@ namespace HomeHelpCallsWebSite.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            DetailsViewTable mymodel = new DetailsViewTable();
             VUMM_HH_OPEN_CALLS dto = await _conntext.VUMM_HH_OPEN_CALLS.FindAsync(id);
+           
+           
             if (dto == null)
             {
                 return HttpNotFound();
             }
+            var dira = dto.APT_CODE;
+            IEnumerable<VUMM_HH_DSTN_WEB> dto2 = _conntext.VUMM_HH_DSTN_WEB.Where(x => x.DIRA == dira);
             CallsViewModel vm = _callsMapper.Map<CallsViewModel>(dto);
-            return View(vm);
+            //DstnViewModel dstn = _dstnMapper.Map<DstnViewModel>(dto2);
+            var dstn = _dstnMapper.Map<IEnumerable<VUMM_HH_DSTN_WEB>, IEnumerable<DstnViewModel>>(dto2);
+           // DstnViewModel dstn_2 = _dstnMapper.Map<DstnViewModel>(dto2); 
+            mymodel.calls = vm;
+            mymodel.dstnPrsn = dstn;
+            return View(mymodel);
+            // mymodel.dstns = dstn;
+            //return View(mymodel);
         }
 
         //// GET: OpenCalls/Create

@@ -15,7 +15,8 @@
         <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_IMAGES_LINKS" Width="2" PointX="9.625" PointY="1.875" />
         <EntityTypeShape EntityType="MaaleDBModel.MM_DOCS_FILES" Width="2" PointX="7.5" PointY="3.125" />
         <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_CALLS_LINES" Width="2.125" PointX="3" PointY="2.75" />
-        <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_WORK_PARTS" Width="2" PointX="14.125" PointY="0.5" />
+        <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_WORK_PARTS" Width="2" PointX="9.625" PointY="3.75" />
+        <EntityTypeShape EntityType="MaaleDBModel.VUMM_HH_DSTN_WEB" Width="2" PointX="5.375" PointY="4.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

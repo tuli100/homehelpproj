@@ -36,6 +36,7 @@ namespace HomeHelpCallsWebSite.Models
         public string CALL_DSCR { get; set; }
         [Display(Name = "דירה")]
         public string APT_NAME { get; set; }
+        [Display(Name = "איש קשר")]
         public string DSTN_NAME { get; set; }
         [Display(Name = "טלפון")]
         public string CELL_PHONE { get; set; }
