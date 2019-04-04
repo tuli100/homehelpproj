@@ -1,4 +1,5 @@
-﻿@model HomeHelpCallsWebSite.Models.LineViewModel
+﻿
+@model HomeHelpCallsWebSite.Models.LineViewModel
 
 
 @using (Html.BeginForm()) // "Create", "LineParts", new AjaxOptions { HttpMethod = "POST"}))
@@ -9,7 +10,7 @@
         <div class="form-group">
             <div class="ui-widget">
                 <div>
-                    @Html.EditorFor(model => model.part_code_name, new { htmlAttributes = new { @class = "form-control", id = "autocomplete" + Model.line_nbr } })
+                    @Html.DropDownListFor(model => model.part_code, Model.WParts, htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
                     @Html.ValidationMessageFor(model => model.part_code_name, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -17,13 +18,39 @@
     </td>
     <div class="form-group col-md-3">
         <td>
-            <div>
-                @Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.qnty, "שעות עבודה", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.DropDownListFor(model => model.qnty, new SelectList(
+                       new List<Object>{
+                            new { value = 0.25 , text = "0:15"  },
+                            new { value = 0.5 , text = "0:30"  },
+                            new { value = 0.75 , text = "0:45"},
+                            new { value = 1.0 , text = "1:00" },
+                            new { value = 1.5 , text = "1:30"},
+                            new { value = 2.0 , text = "2:00"  },
+                            new { value = 2.5 , text = "2:30" },
+                            new { value = 3.0 , text = "3:00"},
+                            new { value = 3.5 , text = "3:30"  },
+                            new { value = 4.0 , text = "4:00" },
+                            new { value = 4.5 , text = "4:30" },
+                            new { value = 5.0 , text = "5:00" },
+                            new { value = 5.5 , text = "5:30" },
+                            new { value = 6.0 , text = "6:00" },
+                            new { value = 6.5 , text = "6:30" },
+                            new { value = 7.0 , text = "7:00" },
+                            new { value = 7.5 , text = "7:30" },
+                            new { value = 8.0 , text = "8:00" },
+                            new { value = 8.5 , text = "8:30" },
+                            new { value = 9.0 , text = "9:00" },
+                              },
+                            "value",
+                            "text",
+                             2), htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
+                    @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </td>
-        <td>
-            @Html.DisplayFor(Model => Model.unit_name)
         </td>
     </div>
     <td>
@@ -112,12 +139,5 @@
 </script>
 
 @section Scripts {
-
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/addLine")
-
-    <script type="text/javascript">
-        addLine.addLineUrl = '@Url.Action("addPartEmptyEditor")';
-    </script>
-
 }

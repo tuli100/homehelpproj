@@ -44,6 +44,17 @@ namespace HomeHelpCallsWebSite.Controllers
         {
             var res = _conntext.VUMM_HH_CALLS_LINES.Where<VUMM_HH_CALLS_LINES>(w => w.DOC_NBR == id);
             var vm = _linesMapper.Map<IEnumerable<LineViewModel>>(res);
+            string strm;
+            try
+            {
+                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
+            }
+            catch
+            {
+                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
+            }
+            SelectList partsList = FindWorkPart(strm);
+            vm.First().WParts = partsList;
             return View(vm);
         }
 
@@ -392,6 +403,64 @@ namespace HomeHelpCallsWebSite.Controllers
             //return View(vm);
         }
 
+        public ActionResult addPartEmptyEditor(long id, string part = "")
+        {
+            LineViewModel model = new LineViewModel
+            {
+                doc_nbr = id,
+                part_code_name = part,
+                qnty = 1
+            };
+            return PartialView("addLine", model);
+        }
+
+        public ActionResult addWorkPartEmptyEditor(long id, string part = "")
+        {
+            string strm;
+            try
+            {
+                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
+            }
+            catch
+            {
+                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
+            }
+            SelectList partsList = FindWorkPart(strm);
+
+            LineViewModel vm = new LineViewModel
+            {
+                doc_nbr = id,
+                part_code_name = part,
+                qnty = 1,
+                WParts = partsList,
+                //part_code = part_code
+            };
+            return PartialView("addWorkLine", vm);
+        }
+
+        public LineViewModel addWorkPartEmptyModel(long id, string part = "")
+        {
+            string strm;
+            try
+            {
+                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
+            }
+            catch
+            {
+                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
+            }
+            SelectList partsList = FindWorkPart(strm);
+
+            LineViewModel vm = new LineViewModel
+            {
+                doc_nbr = id,
+                part_code_name = part,
+                qnty = 1,
+                WParts = partsList,
+                //part_code = part_code
+            };
+            return vm;
+        }
         //// POST: LineParts/Delete/5
         //[HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
