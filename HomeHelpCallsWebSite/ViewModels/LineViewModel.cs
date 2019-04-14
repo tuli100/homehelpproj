@@ -55,6 +55,9 @@ namespace HomeHelpCallsWebSite.Models
         [MaxLength(60, ErrorMessage = "ההערה אינה יכולה להיות ארוכה יותר מ-60 תווים.")]
         public string stat_rmrk { get; set; }
 
+        [Display(Name = "פרטי")]
+        public bool private_bill { get; set; }
+
         [Column("RO")]
         public  bool ro { get; set; }
 

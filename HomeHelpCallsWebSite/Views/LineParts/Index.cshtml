@@ -12,7 +12,6 @@
     if (item.ord == 1)
     {
         <h3> @Html.DisplayFor(model => item.part_name)  @Html.DisplayFor(model => item.txt_dscr)  </h3>
-        @* <h3> @Html.DisplayFor(model => Model.First().part_name)  @Html.DisplayFor(model => Model.First().txt_dscr)  </h3> *@
     }
 }
 
@@ -20,9 +19,10 @@
     <div class="row">
         <div class="col-md-4 col-sm-5 col-lg-4" role="rowgroup">
             <div class="btn-group-lg" role="group">
-                <a class="btn btn-primary" href="@Url.Action("Create", "LineParts",  new { id = Model.First().doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-plus"></span> פריטים </a>
-                <a class="btn btn-primary" href="@Url.Action("AddWork", "LineParts",  new { id = Model.First().doc_nbr })" title=""><span class=" glyphicon glyphicon-user"></span>שעות עבודה </a>
-               
+                @*<a class="btn btn-primary" href="@Url.Action("Create", "LineParts",  new { id = Model.First().doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-plus"></span> פריטים </a>
+        <a class="btn btn-primary" href="@Url.Action("AddWork", "LineParts",  new { id = Model.First().doc_nbr })" title=""><span class=" glyphicon glyphicon-user"></span>שעות עבודה </a>*@
+                <button class="btn btn-primary" data-toggle="collapse" data-target="#addPartsItem"><span class=" glyphicon glyphicon-plus"></span> פריטים</button>
+                <button class="btn btn-primary" data-toggle="collapse" data-target="#addWorkPartsItem"><span class=" glyphicon glyphicon-user"></span> שעות עבודה</button>
             </div>
         </div>
 
@@ -41,7 +41,7 @@
 <br />
 
 
-<table class="table" id="CallLinesTable">
+<table class="table" id="CallLinesTable" x-accordion-table="">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.part_code)
@@ -52,26 +52,37 @@
         <th>
             @Html.DisplayNameFor(model => model.txt_dscr)
         </th>
-
+        <th>
+            @Html.DisplayNameFor(model => model.private_bill)
+        </th>
     </tr>
-    <tr>
-        @Html.Partial("addLine", new HomeHelpCallsWebSite.Models.LineViewModel
-        {
-             doc_nbr = Model.First().doc_nbr,
-             qnty = 1
-        })
+
+    <tr class="collapse" id="addPartsItem">
+            @Html.Partial("addLine", new HomeHelpCallsWebSite.Models.LineViewModel
+                {
+                    doc_nbr = Model.First().doc_nbr,
+                    line_nbr = 0,
+                    qnty = 1,
+                    ord = 0,
+                    ro = false
+                })
+    </tr>
+    <tr id="addWorkPartsItem" class="collapse">
+        @Html.Partial("addWorkLine",new HomeHelpCallsWebSite.Models.LineViewModel
+           {
+               doc_nbr = Model.First().doc_nbr,
+               line_nbr = 0,
+               qnty = 1,
+               WParts = Model.First().WParts,
+               ord = 0,
+               ro = false
+           })
     </tr>
     @foreach (var item in Model)
     {
         if (item.ord != 1)
         {
 
-            if (item.ro == false)
-            {
-                <tr>
-                    @Html.Partial("addLine", item)
-                </tr>
-            }
             <tr>
                 @if (item.part_code_name != null)
                 {
@@ -91,21 +102,27 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.txt_dscr)
                 </td>
-              
+                <td>
+                    @if (item.private_bill)
+                    {
+                        <span class="glyphicon glyphicon-ok"></span>
+                    }
+                </td>
                 @if (item.ro == false)
                 {
-                <td>
-                    @*<a class="btn btn-default btn-lg" href="@Url.Action("Edit", "LineParts", new { id = item.LINE_ID })" title="עריכה"><span class=" glyphicon glyphicon-pencil"></span> עריכה</a>*@
-                    <a class="btn btn-default btn-lg" href="@Url.Action("addLine", "LineParts", new { id = item.LINE_ID })" title="עריכה"><span class=" glyphicon glyphicon-pencil"></span> עריכה</a>
+                    <td>
+                        @*<a class="btn btn-default btn-lg" href="@Url.Action("Edit", "LineParts", new { id = item.LINE_ID })" title="עריכה"><span class=" glyphicon glyphicon-pencil"></span> עריכה</a>*@
+                        <a class="btn btn-default btn-lg" href="@Url.Action("addLine", "LineParts", new { id = item.LINE_ID })" title="עריכה"><span class=" glyphicon glyphicon-pencil"></span> עריכה</a>
 
-                    @Html.ActionLink(" ", "Delete", new { id = item.LINE_ID }, new { @onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');", @class = "glyphicon glyphicon-remove", @style = "color:red" })
+                        @Html.ActionLink(" ", "Delete", new { id = item.LINE_ID }, new { @onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');", @class = "glyphicon glyphicon-remove", @style = "color:red" })
 
-                </td>
+                    </td>
                 }
                 <td class="tr-for-media"></td>
             </tr>
         }
     }
+
 </table>
 </br>
 
@@ -152,7 +169,30 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+   
+    $("#partsAddButton").on("click", function () {
+        var x = document.getElementById('#addPartsItem1');
+            if (x.style.display === 'none') {
+                x.style.display = 'show';
+            } else {
+                x.style.display = 'none';
+            }
+    });
+
+
+    $("#workPartsAddButton").click(function () {
+        var x = document.getElementById('#addWorkPartsItem');
+        if (x.style.display === 'none') {
+            x.style.display = 'show';
+        } else {
+            x.style.display = 'none';
+        }
+    });
+
+</script>
 }
+
 
 
 

@@ -27,5 +27,6 @@ namespace HomeHelpCallsWebSite
         public string PARENT_STRM_CODE { get; set; }
         public Nullable<decimal> ORD { get; set; }
         public Nullable<decimal> RO { get; set; }
+        public Nullable<int> PRIVATE_BILL { get; set; }
     }
 }

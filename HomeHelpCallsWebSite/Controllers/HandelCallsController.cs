@@ -230,7 +230,6 @@ namespace HomeHelpCallsWebSite.Controllers
             return sl;
         }
 
-
         // GET: HandelCalls/Edit/5
         public async Task<ActionResult> Edit(long? id)
         {

@@ -1050,10 +1050,8 @@
     <Content Include="Views\LineParts\partsTableView.cshtml" />
     <Content Include="Views\Shared\dstn_prsn.cshtml" />
     <Content Include="Views\Shared\addLine.cshtml" />
-    <Content Include="Q:\MaaleNX\IT\SOURCES\HomeHelpWebDev\addWorkLine.cshtml">
-      <Link>Views\Shared\addWorkLine.cshtml</Link>
-    </Content>
     <Content Include="Views\LineParts\Index.cshtml" />
+    <Content Include="Views\Shared\addWorkLine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

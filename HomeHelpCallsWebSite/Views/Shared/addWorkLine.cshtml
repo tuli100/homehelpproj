@@ -1,8 +1,7 @@
-﻿
-@model HomeHelpCallsWebSite.Models.LineViewModel
+﻿@model HomeHelpCallsWebSite.Models.LineViewModel
 
 
-@using (Html.BeginForm()) // "Create", "LineParts", new AjaxOptions { HttpMethod = "POST"}))
+@using (Html.BeginForm("AddWork", "LineParts", new AjaxOptions { HttpMethod = "POST" }))
 {
     @Html.AntiForgeryToken()
 
@@ -16,10 +15,11 @@
             </div>
         </div>
     </td>
-    <div class="form-group col-md-3">
+    <div class="form-group ">
+        @*col-md-3">*@
         <td>
             <div class="form-group">
-                @Html.LabelFor(model => model.qnty, "שעות עבודה", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.qnty, "שעות עבודה", htmlAttributes: new { @class = "control-label col-md-2" })*@
                 <div class="col-md-10">
                     @*@Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.DropDownListFor(model => model.qnty, new SelectList(
@@ -53,90 +53,39 @@
             </div>
         </td>
     </div>
+
     <td>
         <div class="form-group">
-            <div>
-                @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
-            </div>
+            @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
         </div>
     </td>
 
     <td>
-        <div>
-            @Html.HiddenFor(Model => Model.doc_nbr)
-            @Html.HiddenFor(Model => Model.parent_strm_code)
-            @Html.HiddenFor(Model => Model.part_code)
-        </div>
+    <td class="form-group">
+        @*@Html.CheckBoxFor(model => model.private_bill, new { htmlAttributes = new { @class = "form-control" } })*@
+        @Html.EditorFor(model => model.private_bill, new { htmlAttributes = new { @class = "form-control" } })
     </td>
 
-}
-<td>
-    <div class="btn-group">
-        <button class="btn btn-default button-remove" type="button" data-toggle="tooltip" title="מחק את השורה." id="button-remove">
-            <span class="glyphicon glyphicon-remove"></span>
+    </td>
+
+    <td>
+        <button type="submit" class="btn btn-default">
+            <i class="glyphicon glyphicon-save"></i>
         </button>
-        <button class="btn btn-default button-clone" type="button" data-toggle="tooltip" title="שכפל את השורה." id="button-clone">
-            <span class="glyphicon glyphicon-save"></span>
+
+        <button type="reset" class="btn btn-default">
+            <i class="glyphicon glyphicon-refresh"></i>
         </button>
+    </td>
+
+    <div>
+        @Html.HiddenFor(Model => Model.doc_nbr)
+        @Html.HiddenFor(Model => Model.line_nbr)
+        @Html.HiddenFor(Model => Model.parent_strm_code)
     </div>
-    @*@Html.ActionLink(" ", "Delete", new { id = model.LINE_ID }, new { @onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + model.part_code_name + " ?');", @class = "glyphicon glyphicon-remove", @style = "color:red" })*@
-    @*<a class="btn btn-default btn-lg" href="@Url.Action("Edit", "LineParts", new { id = model.LINE_ID })" title="עריכה"><span class=" glyphicon glyphicon-pencil"></span> עריכה </a>*@
-</td>
 
-<script type="text/javascript">
-    var doc = document.getElementById("doc_nbr").value;
-    var line = document.getElementById("line_nbr").value;
-    var id = "#autocomplete" + line;
-    $(id).autocomplete({
-        delay: 500,
-        minLength: 3,
-        source: function (request, response) {
-            $.ajax({
-                url: "/LineParts/FindPartJson",
-                dataType: "json",
-                data: {
-                    'id': doc,
-                    'term': request.term
-                },
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        return {
-                            label: item,
-                            value: item
-                        }
-                    }))
-                }
-            })
-        },
-    });
-</script>
-
-<script type="text/javascript">
-    var doc = document.getElementById("doc_nbr").value;
-    $("#autocomplete").autocomplete({
-        delay: 500,
-        minLength: 3,
-        source: function (request, response) {
-            $.ajax({
-                url: "/LineParts/FindPartJson",
-                dataType: "json",
-                data: {
-                    'id': doc,
-                    'term': request.term
-                },
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        return {
-                            label: item,
-                            value: item
-                        }
-                    }))
-                }
-            })
-        },
-    });
-</script>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

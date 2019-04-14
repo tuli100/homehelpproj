@@ -39,8 +39,8 @@ namespace HomeHelpCallsWebSite.Controllers
             _workPartsMapper = config3.CreateMapper();
         }
 
-         // GET: LineParts
-        public async Task<ActionResult> Index(long id, bool isOpen = true )
+        // GET: LineParts
+        public async Task<ActionResult> Index(long id, bool isOpen = true)
         {
             var res = _conntext.VUMM_HH_CALLS_LINES.Where<VUMM_HH_CALLS_LINES>(w => w.DOC_NBR == id);
             var vm = _linesMapper.Map<IEnumerable<LineViewModel>>(res);
@@ -55,6 +55,19 @@ namespace HomeHelpCallsWebSite.Controllers
             }
             SelectList partsList = FindWorkPart(strm);
             vm.First().WParts = partsList;
+            
+            //vm.Concat(new[] {new HomeHelpCallsWebSite.Models.LineViewModel
+            //{
+            //    doc_nbr = id,
+            //    line_nbr = 0,
+            //    qnty = 1,
+            //    part_code_name = "",
+            //    WParts = partsList,
+            //    ord = 0,
+            //    ro = false
+
+            //} });
+
             return View(vm);
         }
 
@@ -228,7 +241,7 @@ namespace HomeHelpCallsWebSite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "doc_nbr, part_code_name, qnty, txt_dscr, line_nbr, call")] LineViewModel iVm)
+        public async Task<ActionResult> Create([Bind(Include = "doc_nbr, part_code_name, part_code , qnty, txt_dscr,private_bill, line_nbr, call")] LineViewModel iVm)
         {
             if (ModelState.IsValid)
             {
@@ -250,8 +263,20 @@ namespace HomeHelpCallsWebSite.Controllers
                         ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
                         return View(iVm);
                     }
-                    iVm.part_code = partsList.First().PART_CODE;
-                    await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+                    iVm.part_code = partsList.FirstOrDefault().PART_CODE;
+              
+                    if (iVm.private_bill )
+                    {
+                        await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft_private", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+
+                    }
+                    else
+                    {
+                        await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+                    }
+                   // iVm.part_code = partsList.First().PART_CODE;
+                    //await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr,iVm.private_bill, iVm.line_nbr);
+                    //await _conntext.ExecuteStoreProcedureAsync("mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, pb, iVm.line_nbr);
                     return RedirectToAction("Index", new { id = iVm.doc_nbr });
                 }
                 if(partsList.Count() >1 )
@@ -298,19 +323,17 @@ namespace HomeHelpCallsWebSite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddWork([Bind(Include = "doc_nbr, part_code, qnty, txt_dscr, line_nbr")] LineViewModel iVm)
+        public async Task<ActionResult> AddWork([Bind(Include = "doc_nbr, part_code_name, qnty, txt_dscr, private_bill, line_nbr, WParts, part_code")] LineViewModel iVm)
         {
             if (ModelState.IsValid)
             {
-                //var strm = GetParentStrmCodeForWork(iVm.doc_nbr);
-                //if(strm is null)
-                //{
-                //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                //}
                 var input_part = iVm.part_code;
-                if (string.IsNullOrEmpty(iVm.part_code_name))
+
+                if (string.IsNullOrEmpty(iVm.part_code))
                 {
                     ModelState.AddModelError("part_code_name", "חובה להזין קלט בשדה חיפוש");
+                    return View(iVm);
+                    //return RedirectToAction("addWork", new { id = iVm.doc_nbr });
                 }
               
                 if (iVm.qnty == 0)
@@ -318,7 +341,17 @@ namespace HomeHelpCallsWebSite.Controllers
                     ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
                     return View(iVm);
                 }
-                await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+                if (iVm.private_bill)
+                {
+                    await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft_private", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+
+                }
+                else
+                {
+                    await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+                }
+                //await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.private_bill, iVm.line_nbr);
+                //await _conntext.ExecuteStoreProcedureAsync("mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.private_bill, iVm.line_nbr);
                 return RedirectToAction("Index", new { id = iVm.doc_nbr });
                 
             }
