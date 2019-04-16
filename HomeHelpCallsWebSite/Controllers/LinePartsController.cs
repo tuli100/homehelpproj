@@ -55,19 +55,6 @@ namespace HomeHelpCallsWebSite.Controllers
             }
             SelectList partsList = FindWorkPart(strm);
             vm.First().WParts = partsList;
-            
-            //vm.Concat(new[] {new HomeHelpCallsWebSite.Models.LineViewModel
-            //{
-            //    doc_nbr = id,
-            //    line_nbr = 0,
-            //    qnty = 1,
-            //    part_code_name = "",
-            //    WParts = partsList,
-            //    ord = 0,
-            //    ro = false
-
-            //} });
-
             return View(vm);
         }
 
@@ -396,7 +383,7 @@ namespace HomeHelpCallsWebSite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = " doc_nbr, line_nbr, part_code_name, part_code_name, qnty, txt_dscr")] LineViewModel iVm )
+        public async Task<ActionResult> Edit([Bind(Include = " doc_nbr, line_nbr, part_code_name, part_code_name, qnty, txt_dscr, private_bill")] LineViewModel iVm )
         {
             if (ModelState.IsValid)
             {
@@ -405,7 +392,14 @@ namespace HomeHelpCallsWebSite.Controllers
                     ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
                     return View(iVm);
                 }
-
+                if (iVm.private_bill)
+                {
+                    await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_update_qnty_lft_private", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+                }
+                else
+                {
+                    await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_update_qnty_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+                }
                 await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_update_qnty_lft", iVm.doc_nbr, iVm.line_nbr, iVm.qnty, iVm.txt_dscr);
                 return RedirectToAction("Index", new { id = iVm.doc_nbr });
             }

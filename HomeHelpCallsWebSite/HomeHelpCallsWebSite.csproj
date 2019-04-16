@@ -1052,6 +1052,7 @@
     <Content Include="Views\Shared\addLine.cshtml" />
     <Content Include="Views\LineParts\Index.cshtml" />
     <Content Include="Views\Shared\addWorkLine.cshtml" />
+    <Content Include="Views\Shared\lineInIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

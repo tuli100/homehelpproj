@@ -1,7 +1,9 @@
 ﻿@model HomeHelpCallsWebSite.Models.LineViewModel
 
 
-@using (Html.BeginForm("AddWork", "LineParts", new AjaxOptions { HttpMethod = "POST" }))
+@*@using (Html.BeginForm("AddWork", "LineParts", new AjaxOptions { HttpMethod = "POST" }))*@
+
+@using (Ajax.BeginForm("AddWork", "LineParts", new AjaxOptions { HttpMethod = "POST" }))
 {
     @Html.AntiForgeryToken()
 
@@ -23,7 +25,7 @@
                 <div class="col-md-10">
                     @*@Html.EditorFor(model => model.qnty, new { htmlAttributes = new { @class = "form-control" } })*@
                     @Html.DropDownListFor(model => model.qnty, new SelectList(
-                       new List<Object>{
+        new List<Object>{
                             new { value = 0.25 , text = "0:15"  },
                             new { value = 0.5 , text = "0:30"  },
                             new { value = 0.75 , text = "0:45"},
@@ -44,10 +46,10 @@
                             new { value = 8.0 , text = "8:00" },
                             new { value = 8.5 , text = "8:30" },
                             new { value = 9.0 , text = "9:00" },
-                              },
-                            "value",
-                            "text",
-                             2), htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
+               },
+             "value",
+             "text",
+              2), htmlAttributes: new { @class = "btn btn-default btn-lg dropdown-toggle" })
                     @Html.ValidationMessageFor(model => model.qnty, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -59,9 +61,7 @@
             @Html.EditorFor(model => model.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.txt_dscr, "", new { @class = "text-danger" })
         </div>
-    </td>
 
-    <td>
     <td class="form-group">
         @*@Html.CheckBoxFor(model => model.private_bill, new { htmlAttributes = new { @class = "form-control" } })*@
         @Html.EditorFor(model => model.private_bill, new { htmlAttributes = new { @class = "form-control" } })
