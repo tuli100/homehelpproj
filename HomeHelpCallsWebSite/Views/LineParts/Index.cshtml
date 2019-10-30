@@ -4,292 +4,219 @@
     ViewBag.Title = "שורות";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*<h3>טיפול</h3>*@
+
 <h3 style="color:red"><b> טיפול בקריאה - @Html.DisplayFor(model => Model.First().doc_nbr) </b> </h3>
 
 @foreach (var item in Model)
 {
+
     if (item.ord == 1)
     {
         <h3> @Html.DisplayFor(model => item.part_name)  @Html.DisplayFor(model => item.txt_dscr)  </h3>
     }
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-sm-5 col-lg-4" role="rowgroup">
-            <div class="btn-group-lg" role="group">
-                @*<a class="btn btn-primary" href="@Url.Action("Create", "LineParts",  new { id = Model.First().doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-plus"></span> פריטים </a>
-        <a class="btn btn-primary" href="@Url.Action("AddWork", "LineParts",  new { id = Model.First().doc_nbr })" title=""><span class=" glyphicon glyphicon-user"></span>שעות עבודה </a>*@
-                <button class="btn btn-primary" data-toggle="collapse" data-target="#addPartsItem"><span class=" glyphicon glyphicon-plus"></span> פריטים</button>
-                <button class="btn btn-primary" data-toggle="collapse" data-target="#addWorkPartsItem"><span class=" glyphicon glyphicon-user"></span> שעות עבודה</button>
-            </div>
-        </div>
-
-        <div class="col-md-5 col-md-offset-3 col-sm-7 col-lg-5 col-lg-ofsset-3" role="rowgroup">
-            <div class="btn-group-lg" role="group">
-                <a class="btn btn-success" data-toggle="modal" data-target=".closemodal" title="סיום טיפול וסגירה"><span class="glyphicon glyphicon-check"></span> סגירה </a>
-                <a class="btn btn-primary" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.First().doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
-                <a class="btn btn-info" href="@Url.Action("ChangeStatus", "OpenCalls",  new { id = Model.First().doc_nbr })" title="שינוי סטטוס"><span class="glyphicon glyphicon-edit"></span> שינוי סטטוס </a>
-                @*@Html.ActionLink("סגירה", "Close", "OpenCalls", new { id = Model.First().doc_nbr, stat = 300 }, new { @class = "btn glyphicon glyphicon-check btn-success", title = "סיום טיפול וסגירה" })
-                    @Html.ActionLink("העברה", "Edit", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary glyphicon glyphicon-share", title = "העברה למחסן אחר" })
-                    @Html.ActionLink("שינוי סטטוס", "CangeStatus", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-info glyphicon glyphicon-edit", title = "שינוי סטטוס לטיפול עתידי" })*@
-            </div>
-        </div>
+<div class="col-md-4 col-sm-5 col-lg-4" role="rowgroup">
+    <div class="btn-group-lg" role="group">
+        @*<a class="btn btn-primary" href="@Url.Action("Create", "LineParts",  new { id = Model.First().doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-plus"></span> פריטים </a>
+            <a class="btn btn-primary" href="@Url.Action("AddWork", "LineParts",  new { id = Model.First().doc_nbr })" title=""><span class=" glyphicon glyphicon-user"></span>שעות עבודה </a>*@
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#addPartsItem"><span class=" glyphicon glyphicon-plus"></span> פריטים</button>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#addWorkPartsItem"><span class=" glyphicon glyphicon-user"></span> שעות עבודה</button>
     </div>
 </div>
-<br />
 
-
-<table class="table" id="CallLinesTable" x-accordion-table="">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.part_code)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.qnty)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.txt_dscr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.private_bill)
-        </th>
-        <th>
-        </th>
-    </tr>
-
-    <tr class="collapse" id="addPartsItem">
-        @Html.Partial("addLine", new HomeHelpCallsWebSite.Models.LineViewModel
-            {
-                doc_nbr = Model.First().doc_nbr,
-                line_nbr = 0,
-                qnty = 1,
-                ord = 0,
-                ro = false
-            })
-    </tr>
-    <tr id="addWorkPartsItem" class="collapse">
-        @Html.Partial("addWorkLine",new HomeHelpCallsWebSite.Models.LineViewModel
-           {
-               doc_nbr = Model.First().doc_nbr,
-               line_nbr = 0,
-               qnty = 1,
-               WParts = Model.First().WParts,
-               ord = 0,
-               ro = false
-           })
-    </tr>
-
-
-
-
-
-
-    @foreach (var item in Model)
-    {
-        if (item.ord != 1)
-        {
-            using (Html.BeginForm("Edit", "LineParts", new AjaxOptions { HttpMethod = "POST" }))
-            {
-                @Html.AntiForgeryToken()
-
-        <tr id="lineNoEdit" class="collapse in">
-        <td>
-            @if (item.part_code_name != null)
-            {
-                @Html.DisplayFor(modelItem => item.part_code_name)
-
-            }
-        </td>
-        <td id="display_qnty">
-            @if (item.qnty != null && item.unit_name != null)
-            {
-                @Html.DisplayFor(modelItem => item.qnty)
-
-                @Html.DisplayFor(modelItem => item.unit_name)
-            }
-        </td>
-        <td id="editor_qnty" style="display:none">
-            @if (item.qnty != null && item.unit_name != null)
-            {
-                @Html.EditorFor(modelItem => item.qnty, new { htmlAttributes = new { @class = "form-control" } })
-
-                @Html.DisplayFor(modelItem => item.unit_name)
-            }
-        </td>
-        <td id="display_txt_dscr">
-            @Html.DisplayFor(modelItem => item.txt_dscr)
-        </td>
-        <td id="editor_txt_dscr" style="display:none">
-            @Html.EditorFor(modelItem => item.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
-        </td>
-        <td id="display_private">
-            @if (item.private_bill)
-            {
-                <span class="glyphicon glyphicon-ok"></span>
-            }
-        </td>
-        <td id="editor_private" style="display:none">
-            @Html.EditorFor(modelitem => item.private_bill, new { htmlAttributes = new { @class = "form-control" } })
-        <td id="display_edit_btn">
-            @if (item.ro == false)
-            {
-                <button class="btn btn-default" onclick="javascript:edit_on()"><span class="glyphicon glyphicon-pencil"></span></button>
-
-                @Html.ActionLink(" ", "Delete", new { id = item.LINE_ID }, new { @onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');", @class = "glyphicon glyphicon-remove", @style = "color:red" })
-            }
-        </td>
-        <div>
-            @Html.HiddenFor(ModelItem => item.doc_nbr, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.HiddenFor(ModelItem => item.line_nbr, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.HiddenFor(ModelItem => item.parent_strm_code, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.HiddenFor(ModelItem => item.part_code, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-        <td id="editor_save_btn" style="display:none">
-            <button type="submit" class="btn btn-default">
-                <i class="glyphicon glyphicon-save"></i>
-            </button>
-        </td>
-        <td class="tr-for-media"></td>
-    </tr>
-                }
-            }
-        }
-
-    </table>
-</br>
-
-<div class="modal fade closemodal">
-    <form class="form-inline" method="post" action="@Url.Action("Close", "OpenCalls")">
-        @Html.AntiForgeryToken()
-        <div class="modal-dialog  modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button data-dismiss="modal" class="close"><span>&times;</span></button>
-                    <div class="modal-title">
-                        <h3><b>סגירת קריאה מספר - @Html.DisplayFor(model => Model.First().doc_nbr)</b> </h3>
-                    </div>
-
-                </div>
-                <div class="modal-body">
-                    <p>
-                        רגע, האם יש צורך בטיפול נוסף?
-                        <a class="btn btn-link btn-lg" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.First().doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה</a>
-                    </p>
-                    <br />
-                    <p>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.First().stat_rmrk, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.First().stat_rmrk, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.First().stat_rmrk, "", new { @class = "text-danger" })
-                                @Html.HiddenFor(Model => Model.First().doc_nbr)
-                                @Html.HiddenFor(Model => Model.First().line_nbr)
-                            </div>
-                        </div>
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-default btn-lg glyphicon glyphicon-remove" data-dismiss="modal"> ביטול</button>
-                    <button class="btn btn-success btn-lg glyphicon glyphicon-ok" type="submit"> סגור</button>
-                </div>
-            </div>
-        </div>
-    </form>
+<div class="col-md-5 col-md-offset-3 col-sm-7 col-lg-5 col-lg-ofsset-3" role="rowgroup">
+    <div class="btn-group-lg" role="group">
+        <a class="btn btn-success" data-toggle="modal" data-target=".closemodal" title="סיום טיפול וסגירה"><span class="glyphicon glyphicon-check"></span> סגירה </a>
+        <a class="btn btn-primary" href="@Url.Action("Edit", "OpenCalls",  new { id = Model.First().doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה </a>
+        <a class="btn btn-info" href="@Url.Action("ChangeStatus", "OpenCalls",  new { id = Model.First().doc_nbr })" title="שינוי סטטוס"><span class="glyphicon glyphicon-edit"></span> שינוי סטטוס </a>
+        @*@Html.ActionLink("סגירה", "Close", "OpenCalls", new { id = Model.First().doc_nbr, stat = 300 }, new { @class = "btn glyphicon glyphicon-check btn-success", title = "סיום טיפול וסגירה" })
+            @Html.ActionLink("העברה", "Edit", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary glyphicon glyphicon-share", title = "העברה למחסן אחר" })
+            @Html.ActionLink("שינוי סטטוס", "CangeStatus", "OpenCalls", new { id = Model.First().doc_nbr }, new { @class = "btn btn-info glyphicon glyphicon-edit", title = "שינוי סטטוס לטיפול עתידי" })*@
+    </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
-    <script>
-        function edit_on() {
-            $("#editor_qnty").show();
-            $("#editor_txt_dscr").show();
-            $("#editor_private").show();
-            $("#editor_save_btn").show();
-            $("#display_qnty").hide();
-            $("#display_txt_dscr").hide();
-            $("#display_private").hide();
-            $("#display_edit_btn").hide();
-        }
-    </script>
-}
-
-
-
-
-
-
-
-
-@*<div>
-        @Html.HiddenFor(Model => Model.First().stat_rmrk);
-    </div>*@
-@*<p>
-        @Html.ActionLink("חזרה לרשימת הקריאות", "Index", "OpenCalls", null, null)
-    </p>*@
-@*<p>
-
-                <div class="btn-group" role="group">
-                    <a class="btn btn-primary" href="@Url.Action("Create", "LineParts",  new { id = Model.First().doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-plus"></span> פריטים </a>
-                    <a class="btn btn-primary" href="@Url.Action("AddWork", "LineParts",  new { id = Model.First().doc_nbr })" title=""><span class=" glyphicon glyphicon-user"></span>שעות עבודה </a>
-
-
-                        @Html.ActionLink("הוספת פריט", "Create", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary" })
-                        @Html.ActionLink("הוספת שעות עבודה", "AddWork", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary" })
+    <div id="partslinestableEditRows">
+        @Html.Partial("lineInIndex")
     </div>
-    <br />
 
-            </p>*@
+    <div id="partslinestablewh">
+        @Html.Partial("LinesTable")
+    </div>
 
-
-
-
-
-
-
-
-@*<div class="modal fade holdmodal">
-        <form class="form-inline" method="post" action="@Url.Action("StatChange", "OpenCalls")">
+    <div class="modal fade closemodal">
+        <form class="form-inline" method="post" action="@Url.Action("Close", "OpenCalls")">
             @Html.AntiForgeryToken()
-
-            <div class="modal-dialog">
+            <div class="modal-dialog  modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button data-dismiss="modal" class="close"><span>&times;</span></button>
-                        <div class="modal-title"><h3>שינוי סטטוס קריאה מספר - @Html.DisplayFor(model => Model.First().call.doc_nbr)</h3></div>
+                        <div class="modal-title">
+                            <h3><b>סגירת קריאה מספר - @Html.DisplayFor(model => Model.First().doc_nbr)</b> </h3>
+                        </div>
                     </div>
                     <div class="modal-body">
-                        <span>
+                        <p>
+                            רגע, האם יש צורך בטיפול נוסף?
+                            <a class="btn btn-link btn-lg" href="@Url.Action("Edit", "OpenCalls", new { id = Model.First().doc_nbr })" title="העברה למחסן אחר"><span class=" glyphicon glyphicon-share"></span> העברה</a>
+                        </p>
+                        <br />
+                        <p>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.First().call.stat_rmrk, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.First().stat_rmrk, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.First().call.stat_rmrk, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.First().call.stat_rmrk, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.First().stat_rmrk, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.First().stat_rmrk, "", new { @class = "text-danger" })
+                                    @Html.HiddenFor(Model => Model.First().doc_nbr)
+                                    @Html.HiddenFor(Model => Model.First().line_nbr)
                                 </div>
                             </div>
-                            <p></p>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.First().call.status, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.First().call.status, Model.First().call.StatusList, htmlAttributes: new { @class = "btn btn-default dropdown-toggle" })
-
-                                    @Html.ValidationMessageFor(model => model.First().call.status, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                        </span>
+                        </p>
                     </div>
-                    @Html.HiddenFor(Model => Model.First().doc_nbr)
-                    @Html.HiddenFor(Model => Model.First().line_nbr)
-
-
                     <div class="modal-footer">
-                        <button class="btn btn-default" data-dismiss="modal"> ביטול</button>
-                        <button class="btn btn-success" type="submit">בצע</button>
+                        <button class="btn btn-default btn-lg glyphicon glyphicon-remove" data-dismiss="modal"> ביטול</button>
+                        <button class="btn btn-success btn-lg glyphicon glyphicon-ok" type="submit"> סגור</button>
                     </div>
                 </div>
             </div>
+
         </form>
-    </div>*@
+    </div>
+
+    @section Scripts
+    {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+    @*if (item.ord != 1)
+            {
+                using (Html.BeginForm("Edit", "LineParts", new AjaxOptions { HttpMethod = "POST" }))
+                {
+                    @Html.AntiForgeryToken()
+
+            <tr id="lineNoEdit" class="collapse in">
+            <td>
+                @if (item.part_code_name != null)
+                {
+                    @Html.DisplayFor(modelItem => item.part_code_name)
+
+                }
+            </td>
+            <td id="display_qnty">
+                @if (item.qnty != null && item.unit_name != null)
+                {
+                    @Html.DisplayFor(modelItem => item.qnty)
+
+                    @Html.DisplayFor(modelItem => item.unit_name)
+                }
+            </td>
+            <td id="editor_qnty" style="display:none">
+                @if (item.qnty != null && item.unit_name != null)
+                {
+                    @Html.EditorFor(modelItem => item.qnty, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.DisplayFor(modelItem => item.unit_name)
+                }
+            </td>
+            <td id="display_txt_dscr">
+                @Html.DisplayFor(modelItem => item.txt_dscr)
+            </td>
+            <td id="editor_txt_dscr" style="display:none">
+                @Html.EditorFor(modelItem => item.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td id="display_private">
+                @if (item.private_bill)
+                {
+                    <span class="glyphicon glyphicon-ok"></span>
+                }
+            </td>
+            <td id="editor_private" style="display:none">
+                @Html.EditorFor(modelitem => item.private_bill, new { htmlAttributes = new { @class = "form-control" } })
+            <td id="display_edit_btn">
+                @if (item.ro == false)
+                {
+                    <button class="btn btn-default" onclick="javascript:edit_on()"><span class="glyphicon glyphicon-pencil"></span></button>
+
+                    @Html.ActionLink(" ", "Delete", new { id = item.LINE_ID }, new { @onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');", @class = "glyphicon glyphicon-remove", @style = "color:red" })
+                }
+            </td>
+            <div>
+                @Html.HiddenFor(ModelItem => item.doc_nbr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(ModelItem => item.line_nbr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(ModelItem => item.parent_strm_code, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(ModelItem => item.part_code, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <td id="editor_save_btn" style="display:none">
+                <button type="submit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-save"></i>
+                </button>
+            </td>
+            <td class="tr-for-media"></td>
+        </tr>
+                    }
+                }*@
+
+    @*<div>
+            @Html.HiddenFor(Model => Model.First().stat_rmrk);
+        </div>*@
+    @*<p>
+            @Html.ActionLink("חזרה לרשימת הקריאות", "Index", "OpenCalls", null, null)
+        </p>*@
+    @*<p>
+
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-primary" href="@Url.Action("Create", "LineParts",  new { id = Model.First().doc_nbr })" title="הוספת פריטים"><span class=" glyphicon glyphicon-plus"></span> פריטים </a>
+                        <a class="btn btn-primary" href="@Url.Action("AddWork", "LineParts",  new { id = Model.First().doc_nbr })" title=""><span class=" glyphicon glyphicon-user"></span>שעות עבודה </a>
+
+
+                            @Html.ActionLink("הוספת פריט", "Create", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("הוספת שעות עבודה", "AddWork", new { id = Model.First().doc_nbr }, new { @class = "btn btn-primary" })
+        </div>
+        <br />
+
+                </p>*@
+
+
+    @*<div class="modal fade holdmodal">
+            <form class="form-inline" method="post" action="@Url.Action("StatChange", "OpenCalls")">
+                @Html.AntiForgeryToken()
+
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button data-dismiss="modal" class="close"><span>&times;</span></button>
+                            <div class="modal-title"><h3>שינוי סטטוס קריאה מספר - @Html.DisplayFor(model => Model.First().call.doc_nbr)</h3></div>
+                        </div>
+                        <div class="modal-body">
+                            <span>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.First().call.stat_rmrk, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.First().call.stat_rmrk, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.First().call.stat_rmrk, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <p></p>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.First().call.status, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.First().call.status, Model.First().call.StatusList, htmlAttributes: new { @class = "btn btn-default dropdown-toggle" })
+
+                                        @Html.ValidationMessageFor(model => model.First().call.status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </span>
+                        </div>
+                        @Html.HiddenFor(Model => Model.First().doc_nbr)
+                        @Html.HiddenFor(Model => Model.First().line_nbr)
+
+
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal"> ביטול</button>
+                            <button class="btn btn-success" type="submit">בצע</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>*@

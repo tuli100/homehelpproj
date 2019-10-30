@@ -1,0 +1,93 @@
+﻿@model IEnumerable<HomeHelpCallsWebSite.Models.LineViewModel>
+
+<table class="table" id="linesTableId" x-accordion-table="">
+
+    @foreach (var item in Model)
+    {
+        if (item.ord != 1)
+        {
+            <tr>
+                <td>
+                    @if (item.part_code_name != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.part_code_name)
+                    }
+                </td>
+                <td class="inline-view" id="display_qnty">
+                    @if (item.qnty != null && item.unit_name != null)
+                    {
+                        @Html.DisplayFor(modelItem => item.qnty)
+
+                        @Html.DisplayFor(modelItem => item.unit_name)
+                    }
+                </td>
+                <td class="inline-edit" id="edit_qnty" style="display:none">
+                    @if (item.qnty != null && item.unit_name != null)
+                    {
+                        @Html.EditorFor(modelItem => item.qnty)
+
+                        @*@Html.DisplayFor(modelItem => item.unit_name)*@
+                    }
+                </td>
+
+                <td class="inline-view" id="display_txt_dscr">
+                    @Html.DisplayFor(modelItem => item.txt_dscr)
+                </td>
+
+                <td class="inline-edit" id="edit_txt_dscr" style="display:none">
+                    @Html.EditorFor(modelItem => item.txt_dscr)
+                </td>
+
+                <td class="inline-view" id="display_private">
+                    @if (item.private_bill)
+                    {
+                        <span class="glyphicon glyphicon-ok"></span>
+                    }
+                </td>
+
+                <td class="inline-view" id="display_edit_btn">
+                    @if (item.ro == false)
+                    {
+                        @*<button class="btn btn-default" onclick="javascript:edit_on()"><span class="glyphicon glyphicon-pencil"></span></button>*@
+
+                        @Html.ActionLink(" ", "Delete", new { id = item.LINE_ID }, new { @onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');", @class = "glyphicon glyphicon-remove", @style = "color:red" })
+                    }
+                </td>
+
+                <div>
+                    @Html.HiddenFor(modelItem => item.doc_nbr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HiddenFor(modelItem => item.line_nbr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HiddenFor(modelItem => item.parent_strm_code, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HiddenFor(modelItem => item.part_code, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <td id="editor_save_btn" style="display:none">
+                    <button type="submit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-save"></i>
+                    </button>
+                </td>
+                <td class="tr-for-media"></td>
+            </tr>
+        }
+    }
+</table>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function edit_on() {
+            $(".inline-edit").hide();
+            $(".inline-view").show();
+        }
+    </script>
+}
+
+
+@*//$("#editor_qnty").show();
+    //$("#editor_txt_dscr").show();
+    //$("#editor_private").show();
+    //$("#editor_save_btn").show();
+    //$("#display_qnty").hide();
+    //$("#display_txt_dscr").hide();
+    //$("#display_private").hide();
+    //$("#display_edit_btn").hide();*@
+

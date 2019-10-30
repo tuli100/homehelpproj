@@ -71,7 +71,7 @@ addLine.addRowToTable = function (row) {
     row.find('.button-clone').click(budget.sendMoney.cloneLine);
     $('.transactions-table tbody').append(row);
     Site.initializeValidation(form);
-    if ($('.select-button').length == 0) {
+    if ($('.select-button').length === 0) {
         row.find('td:nth-child(3) input').focus();
     } else {
         $('.select-button').focus();

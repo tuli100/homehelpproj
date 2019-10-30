@@ -11,7 +11,7 @@ if (typeof jQuery === 'undefined') {
 +function ($) {
     'use strict';
     var version = $.fn.jquery.split(' ')[0].split('.')
-    if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1) || (version[0] > 2)) {
+    if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] === 9 && version[2] < 1) || (version[0] > 2)) {
         throw new Error('Bootstrap\'s JavaScript requires jQuery version 1.9.1 or higher, but lower than version 3')
     }
 }(jQuery);
@@ -145,7 +145,7 @@ if (typeof jQuery === 'undefined') {
             var data = $this.data('bs.alert')
 
             if (!data) $this.data('bs.alert', (data = new Alert(this)))
-            if (typeof option == 'string') data[option].call($this)
+            if (typeof option === 'string') data[option].call($this)
         })
     }
 

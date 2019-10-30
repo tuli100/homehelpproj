@@ -85,7 +85,6 @@ namespace HomeHelpCallsWebSite.Controllers
         //        return View(vm);
         //}
 
-
         public async Task<ActionResult> CallsTable(string searchString)
         {
             var user = User.Identity.Name;

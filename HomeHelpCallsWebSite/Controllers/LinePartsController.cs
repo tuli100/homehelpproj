@@ -58,6 +58,26 @@ namespace HomeHelpCallsWebSite.Controllers
             return View(vm);
         }
 
+        // GET: LineParts
+        public async Task<ActionResult> LinesTable(long id, bool isOpen = true)
+        {
+            var res = _conntext.VUMM_HH_CALLS_LINES.Where<VUMM_HH_CALLS_LINES>(w => w.DOC_NBR == id);
+            var vm = _linesMapper.Map<IEnumerable<LineViewModel>>(res);
+            string strm;
+            try
+            {
+                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
+            }
+            catch
+            {
+                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
+            }
+            SelectList partsList = FindWorkPart(strm);
+            vm.First().WParts = partsList;
+            return PartialView(vm);
+        }
+
+
         // GET: LineParts/Details/5
         public async Task<ActionResult> Details(decimal? id)
         {
@@ -202,33 +222,101 @@ namespace HomeHelpCallsWebSite.Controllers
             if (strm == " ." ) return "70";
             return strm;
         }
-        // GET: LineParts/Create
-        public ActionResult Create(long id, string part = "")
+
+        public JsonResult GetProduct(long id)
         {
-            //string strm;
-            //try
-            //{
-            //    strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
-            //}
-            //catch
-            //{
-            //    strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
-            //}
-            LineViewModel vm = new LineViewModel
+            var res = _conntext.VUMM_HH_CALLS_LINES.Where<VUMM_HH_CALLS_LINES>(w => w.DOC_NBR == id);
+            var vm = _linesMapper.Map<IEnumerable<LineViewModel>>(res);
+            string strm;
+            try
             {
-                doc_nbr = id,
-                part_code_name = part,
-                qnty = 1
-            };
-            return View(vm);
+                strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
+            }
+            catch
+            {
+                strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
+            }
+            SelectList partsList = FindWorkPart(strm);
+            vm.First().WParts = partsList;
+            List<LineViewModel> _list = new List<LineViewModel>();
+
+            try
+            {
+                _list = vm.ToList<LineViewModel>();
+                var result = from c in _list
+                             select new[]
+                             {
+                          Convert.ToString( c.part_code ),  // 0     
+                          Convert.ToString( c.qnty ),  // 1     
+                          Convert.ToString( c.txt_dscr),  // 2     
+                          Convert.ToString( c.private_bill ),  // 3     
+                             };
+
+                return Json(new
+                {
+                    aaData = result
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            catch (Exception ex)
+            {
+                //ErrorLogers.ErrorLog(ex);
+                return Json(new
+                {
+                    aaData = new List<string[]> { }
+                }, JsonRequestBehavior.AllowGet);
+            }
+
         }
+
+        //[HttpPost]
+        //public JsonResult lineInIndex(long id, bool isOpen = true, string searchString ="")
+        //{
+        //    var res = _conntext.VUMM_HH_CALLS_LINES.Where<VUMM_HH_CALLS_LINES>(w => w.DOC_NBR == id);
+
+        //    var vm = _linesMapper.Map<IEnumerable<LineViewModel>>(res).ToList();
+        //    string strm;
+        //    try
+        //    {
+        //        strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
+        //    }
+        //    catch
+        //    {
+        //        strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
+        //    }
+        //    SelectList partsList = FindWorkPart(strm);
+        //    vm.First().WParts = partsList;
+        //    return Json(vm, JsonRequestBehavior.AllowGet);
+
+        //}
+
+        //// GET: LineParts/Create
+        //public ActionResult Create111(long id, string part = "")
+        //{
+        //    //string strm;
+        //    //try
+        //    //{
+        //    //    strm = _conntext.VUMM_HH_OPEN_CALLS.Find(id).STRM_CODE;
+        //    //}
+        //    //catch
+        //    //{
+        //    //    strm = _conntext.VUMM_HH_HNDL_CALLS.Find(id).STRM_CODE;
+        //    //}
+        //    LineViewModel vm = new LineViewModel
+        //    {
+        //        doc_nbr = id,
+        //        part_code_name = part,
+        //        qnty = 1
+        //    };
+        //    return View(vm);
+        //}
 
         // POST: LineParts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "doc_nbr, part_code_name, part_code , qnty, txt_dscr,private_bill, line_nbr, call")] LineViewModel iVm)
+        public async Task<ActionResult> addLine([Bind(Include = "doc_nbr, part_code_name, part_code , qnty, txt_dscr,private_bill, line_nbr, call")] LineViewModel iVm)
         {
             if (ModelState.IsValid)
             {
@@ -238,6 +326,7 @@ namespace HomeHelpCallsWebSite.Controllers
                 if (string.IsNullOrEmpty(iVm.part_code_name))
                 {
                     ModelState.AddModelError("part_code_name", "חובה להזין קלט בשדה חיפוש");
+                    return PartialView(iVm);
                 }
                 if (partsList == null)
                 {
@@ -248,38 +337,74 @@ namespace HomeHelpCallsWebSite.Controllers
                     if (iVm.qnty== 0)
                     {
                         ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
-                        return View(iVm);
+                        return PartialView(iVm);
+                        //return RedirectToAction("LinesTable", new { id = iVm.doc_nbr });
                     }
                     iVm.part_code = partsList.FirstOrDefault().PART_CODE;
               
                     if (iVm.private_bill )
                     {
                         await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft_private", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
-
                     }
                     else
                     {
                         await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
                     }
-                   // iVm.part_code = partsList.First().PART_CODE;
-                    //await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr,iVm.private_bill, iVm.line_nbr);
-                    //await _conntext.ExecuteStoreProcedureAsync("mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, pb, iVm.line_nbr);
-                    return RedirectToAction("Index", new { id = iVm.doc_nbr });
-                }
-                if(partsList.Count() >1 )
-                { 
-                    partsList.First().doc_nbr = iVm.doc_nbr;
-                    //return PartialView("testView", iVm.doc_nbr);
-                    PartialView("PartsTableView", partsList);
+                    return RedirectToAction("LinesTable", new { id = iVm.doc_nbr });
                 }
                 else
                 {
                     ModelState.AddModelError("part_code_name", "לא נמצא פריט מתאים");
                 }
             }
-            return View(iVm);
-            
-         }
+            //iVm = new LineViewModel();
+            return RedirectToAction("LinesTable", new { id = iVm.doc_nbr });
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public JsonResult Create([Bind(Include = "doc_nbr, part_code_name, part_code , qnty, txt_dscr,private_bill, line_nbr, call")] LineViewModel iVm)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var strm = GetParentStrmCode(iVm.doc_nbr);
+        //        //var input_part = iVm.part_code;
+        //        var partsList = FindPart(strm, iVm.part_code_name);
+        //        if (string.IsNullOrEmpty(iVm.part_code_name))
+        //        {
+        //            ModelState.AddModelError("part_code_name", "חובה להזין קלט בשדה חיפוש");
+        //        }
+        //        if (partsList == null)
+        //        {
+        //            return null; //new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //        }
+        //        if (partsList.Count<PartViewModel>() == 1)
+        //        {
+        //            if (iVm.qnty == 0)
+        //            {
+        //                ModelState.AddModelError("qnty", "חובה להזין כמות גדולה מאפס");
+        //                return null; // PartialView(iVm);
+        //            }
+        //            iVm.part_code = partsList.FirstOrDefault().PART_CODE;
+
+        //            if (iVm.private_bill)
+        //            {
+        //                 _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft_private", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+        //            }
+        //            else
+        //            {
+        //                 _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.line_nbr);
+        //            }
+        //           return Json(iVm, JsonRequestBehavior.AllowGet);
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("part_code_name", "לא נמצא פריט מתאים");
+        //        }
+        //    }
+        //    return Json(iVm, JsonRequestBehavior.AllowGet);
+
+        //}
 
         public ActionResult AddWork(long id, string part = "")
         {
@@ -339,8 +464,9 @@ namespace HomeHelpCallsWebSite.Controllers
                 }
                 //await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.private_bill, iVm.line_nbr);
                 //await _conntext.ExecuteStoreProcedureAsync("mm_hh_insert_lft", iVm.doc_nbr, iVm.part_code, iVm.qnty, iVm.txt_dscr, iVm.private_bill, iVm.line_nbr);
-                return RedirectToAction("Index", new { id = iVm.doc_nbr });
-                
+                //return RedirectToAction("Index", new { id = iVm.doc_nbr });
+                return RedirectToAction("LinesTable", new { id = iVm.doc_nbr });
+
             }
             else
             {
@@ -424,10 +550,9 @@ namespace HomeHelpCallsWebSite.Controllers
             {
                 await _conntext.ExecuteStoreProcedureAsync("mm_hh.mm_hh_delete_lft", dto.DOC_NBR, dto.LINE_NBR);
                 return RedirectToAction("Index", new { id = dto.DOC_NBR });
+                //return RedirectToAction("LinesTable", new { id = dto.DOC_NBR });
             }
-            //LineViewModel vm = new LineViewModel();
-            //vm = _linesMapper.Map<LineViewModel>(dto);
-            //return View(vm);
+    
         }
 
         public ActionResult addPartEmptyEditor(long id, string part = "")

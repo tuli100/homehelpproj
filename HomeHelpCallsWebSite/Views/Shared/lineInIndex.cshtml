@@ -1,37 +1,146 @@
-﻿@model HomeHelpCallsWebSite.Models.LineViewModel
+﻿@model IEnumerable<HomeHelpCallsWebSite.Models.LineViewModel>
 
-@using (Ajax.BeginForm("Edit", "LineParts", new AjaxOptions { HttpMethod = "POST" }))
+<div class="table">
+    <table class="table" id="lineInIndex" x-accordion-table="">
+       <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.part_code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.qnty)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.txt_dscr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.private_bill)
+                </th>
+            </>
+        </thead>
+        <tbody class="tbody">
+            <tr class="collapse" id="addPartsItem">
+                @Html.Partial("addLine", new HomeHelpCallsWebSite.Models.LineViewModel
+                    {
+                        doc_nbr = Model.First().doc_nbr,
+                        line_nbr = 0,
+                        qnty = 1,
+                        ord = 0,
+                        ro = false
+                    })
+            </tr>
+            <tr id="addWorkPartsItem" class="collapse">
+                @Html.Partial("addWorkLine",new HomeHelpCallsWebSite.Models.LineViewModel
+                   {
+                       doc_nbr = Model.First().doc_nbr,
+                       line_nbr = 0,
+                       qnty = 1,
+                       WParts = Model.First().WParts,
+                       ord = 0,
+                       ro = false
+                   })
+            </tr>
+        </tbody>
+           </table>
+</div>
+
+
+
+
+@*<table class="table" id="CallLinesTable" x-accordion-table="">
+
+    @foreach (var item in Model)
     {
-        @Html.AntiForgeryToken()
-
-        <tr id="lineEdit" class="collapse">
-            @if (item.part_code_name != null)
+        if (item.ord != 1)
+        {
+            using (Html.BeginForm("Edit", "LineParts", new AjaxOptions { HttpMethod = "POST" }))
             {
-                <td>
-                    @Html.DisplayFor(modelItem => item.part_code_name)
-                </td>
+                @Html.AntiForgeryToken()
+
+                <tr id="lineNoEdit" class="collapse in">
+                    <td>
+                        @if (item.part_code_name != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.part_code_name)
+
+                        }
+                    </td>
+                    <td id="display_qnty">
+                        @if (item.qnty != null && item.unit_name != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.qnty)
+
+                            @Html.DisplayFor(modelItem => item.unit_name)
+                        }
+                    </td>
+                    <td id="editor_qnty" style="display:none">
+                        @if (item.qnty != null && item.unit_name != null)
+                        {
+                            @Html.EditorFor(modelItem => item.qnty, new { htmlAttributes = new { @class = "form-control" } })
+
+                            @Html.DisplayFor(modelItem => item.unit_name)
+                        }
+                    </td>
+                    <td id="display_txt_dscr">
+                        @Html.DisplayFor(modelItem => item.txt_dscr)
+                    </td>
+                    <td id="editor_txt_dscr" style="display:none">
+                        @Html.EditorFor(modelItem => item.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
+                    </td>
+                    <td id="display_private">
+                        @if (item.private_bill)
+                        {
+                            <span class="glyphicon glyphicon-ok"></span>
+                        }
+                    </td>
+                    <td id="editor_private" style="display:none">
+                        @Html.EditorFor(modelItem => item.private_bill, new { htmlAttributes = new { @class = "form-control" } })
+                    <td id="display_edit_btn">
+                        @if (item.ro == false)
+                        {
+                            <button class="btn btn-default" onclick="javascript:edit_on()"><span class="glyphicon glyphicon-pencil"></span></button>
+
+                            @Html.ActionLink(" ", "Delete", new { id = item.LINE_ID },
+                            new { @onclick = "return confirm('האם אתה בטוח שברצונך למחוק פריט " + item.part_code_name + " ?');"
+                            , @class = "glyphicon glyphicon-remove", @style = "color:red" })
+                        }
+                    </td>
+                    <div>
+                        @Html.HiddenFor(modelItem => item.doc_nbr, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(modelItem => item.line_nbr, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(modelItem => item.parent_strm_code, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(modelItem => item.part_code, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <td id="editor_save_btn" style="display:none">
+                        <button type="submit" class="btn btn-default">
+                            <i class="glyphicon glyphicon-save"></i>
+                        </button>
+                    </td>
+                    <td class="tr-for-media"></td>
+                </tr>
             }
-            @if (item.qnty != null && item.unit_name != null)
-            {
-                <td>
-                    @Html.EditorFor(modelItem => item.qnty, new { htmlAttributes = new { @class = "form-control" } })
-
-                    @Html.DisplayFor(modelItem => item.unit_name)
-                </td>
-            }
-            <td>
-                @Html.EditorFor(modelItem => item.txt_dscr, new { htmlAttributes = new { @class = "form-control" } })
-            </td>
-            <td>
-                @Html.EditorFor(modelItem => item.private_bill, new { htmlAttributes = new { @class = "form-control" } })
-            </td>
-            <td>
-                <button type="submit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-save"></i>
-                </button>
-            </td>
-            <td class="tr-for-media"></td>
-        </tr>
-    }
+        }
+    }*@
 
 
+
+@*@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function edit_on() {
+            $("#editor_qnty").show();
+            $("#editor_txt_dscr").show();
+            $("#editor_private").show();
+            $("#editor_save_btn").show();
+            $("#display_qnty").hide();
+            $("#display_txt_dscr").hide();
+            $("#display_private").hide();
+            $("#display_edit_btn").hide();
+        }
+    </script>
+}*@
+
+
+   

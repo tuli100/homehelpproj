@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using HomeHelpCallsWebSite.ViewModels;
 
 namespace HomeHelpCallsWebSite.Models
 {
@@ -50,7 +49,7 @@ namespace HomeHelpCallsWebSite.Models
         public SelectList WParts { get; set; }
 
         public CallsViewModel call { get; set; }
-
+        
         [Display(Name = "הערה")]
         [MaxLength(60, ErrorMessage = "ההערה אינה יכולה להיות ארוכה יותר מ-60 תווים.")]
         public string stat_rmrk { get; set; }
